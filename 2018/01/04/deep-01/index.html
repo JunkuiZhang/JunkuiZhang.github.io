@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/01/04/deep-01/01.png">
 <meta property="og:image" content="http://yoursite.com/2018/01/04/deep-01/02.png">
 <meta property="og:image" content="http://yoursite.com/2018/01/04/deep-01/03.png">
-<meta property="og:updated_time" content="2018-01-04T14:53:58.302Z">
+<meta property="og:updated_time" content="2018-01-04T15:01:15.712Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度学习——神经网络基本内容（01）">
 <meta name="twitter:description" content="概述深度学习几乎就等于神经网络算法，该算法主要由两个模块构成：前向传播（Forward Propagation）、后向传播（Backward Propagation）。 前向传播来计算预测值$\hat{y}$，而后向传播则根据预测值与实际值的差别计算成本方程（Cost Function），并根据该值改进神经网络各节点的权重值。经过多次迭代，逐渐收敛。">
@@ -403,14 +403,14 @@
 <p>该函数图像与Sigmoid函数类似，唯一不同的是Sigmoid函数图像介于0，1之间，而tanh函数图像则介于-1，1之间。从实践来看，tanh函数作为激发函数表现总是要比sigmoid函数好。</p>
 <p>若$a = tanh(x)$，则该函数的导数$tanh’(x) = 1-a^2$。</p>
 <p>但是，两函数都存在同一个问题：当自变量的值过大或过小时，如$x = -1000$，此时，从图像上可以看出，函数的图像会变得十分扁平，意味着其导数会十分小，进而梯度下降法（Gradient Descent）对权重$W$的改变会十分的有限。进而，该神经网络的训练可能会十分的漫长。</p>
-<h3 id="ReLU函数"><a href="#ReLU函数" class="headerlink" title="ReLU函数"></a>ReLU函数</h3><p>该函数就为改变上面两个函数的缺点诞生的，其表达式十分简单：<br>$$<br>f(x) =<br>\begin{cases}<br>x, &amp; x &gt; 0 \<br>0, &amp; else<br>\end{cases}<br>$$</p>
+<h3 id="ReLU函数"><a href="#ReLU函数" class="headerlink" title="ReLU函数"></a>ReLU函数</h3><p>该函数就为改变上面两个函数的缺点诞生的，其表达式十分简单：<br>$$<br>f(x) =<br>\begin{cases}<br>x, &amp; x &gt; 0 \newline</p>
+<p>0, &amp; else<br>\end{cases}<br>$$</p>
 <p>其函数图象为：<br><img src="/2018/01/04/deep-01/03.png" title="ReLU函数图象"></p>
 <p>进而其导数也不存在上面两个函数的缺点，进而实践中，该函数的表现总是比以上两个函数都好。</p>
-<h2 id="前向传播总结"><a href="#前向传播总结" class="headerlink" title="前向传播总结"></a>前向传播总结</h2><p>用$A^{[l-1]}$表示第$l$层神经网络的输入值，即第$l-1$层神经网络的激发值，其维度为$(n^{[l-1]}, m)$，其中$n^{[l]}$表示该层神经网络的节点个数；用$W^{[l]}$表示第$l$层神经网络的权重，其维度为$(n^{[l]}, n^{[l-1]})$，则<br>$$<br>Z^{[l]} = W^{[l]}A^{[l-1]} + b^{[l]}</p>
-<p>A^{[l]} = g(Z^{[l]})<br>$$<br>其中，$Z^{[l]}$和$A^{[l]}$的维度均为$(n^{[l]}, m)$</p>
+<h2 id="前向传播总结"><a href="#前向传播总结" class="headerlink" title="前向传播总结"></a>前向传播总结</h2><p>用$A^{[l-1]}$表示第$l$层神经网络的输入值，即第$l-1$层神经网络的激发值，其维度为$(n^{[l-1]}, m)$，其中$n^{[l]}$表示该层神经网络的节点个数；用$W^{[l]}$表示第$l$层神经网络的权重，其维度为$(n^{[l]}, n^{[l-1]})$，则<br>$$<br>Z^{[l]} = W^{[l]}A^{[l-1]} + b^{[l]}<br>$$ $$<br>A^{[l]} = g(Z^{[l]})<br>$$<br>其中，$Z^{[l]}$和$A^{[l]}$的维度均为$(n^{[l]}, m)$</p>
 <h1 id="损失函数（Loss-Function）和成本函数（Cost-Function）"><a href="#损失函数（Loss-Function）和成本函数（Cost-Function）" class="headerlink" title="损失函数（Loss Function）和成本函数（Cost Function）"></a>损失函数（Loss Function）和成本函数（Cost Function）</h1><p>在正向传播和逆向传播之间还要先计算正向传播的损失（与实际值），再利用这个损失来进行逆向传播从而对权重进行修正。</p>
-<p>损失函数是对于整体$X$中的某一样本$X^{(i)}$而言的，即有：<br>$$<br>L(X^{(i)}) = (\hat{y}^{(i)} - y)^2<br>$$<br>而成本函数则是对整个整体$X$而言的，即有：<br>$$<br>J(X) = \frac1m\sum_{i=1}^{m}L(X^{(i)})<br>$$</p>
-<p>可用如下的代码计算<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>/m*np.sum(np.square(yhat-y))</span><br></pre></td></tr></table></figure></p>
+<p>损失函数是对于整体$X$中的某一样本$X^{(i)}$而言的，即有：<br>$$<br>L(X^{(i)}) = (\hat{y}^{(i)} - y)^2<br>$$<br>而成本函数则是对整个整体$X$而言的，即有：<br>$$<br>J(X) = \frac1{2m}\sum_{i=1}^{m}L(X^{(i)})<br>$$</p>
+<p>可用如下的代码计算<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>/<span class="number">2</span>/m*np.sum(np.square(yhat-y))</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
