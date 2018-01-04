@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[深度学习——神经网络基本内容（01）]]></title>
     <url>%2F2018%2F01%2F04%2Fdeep-01%2F</url>
-    <content type="text"><![CDATA[概述深度学习几乎就等于神经网络算法，该算法主要由两个模块构成：前向传播（Forward Propagation）、后向传播（Backward Propagation）。 前向传播来计算预测值$\hat{y}$，而后向传播则根据预测值与实际值的差别计算成本方程（Cost Function），并根据该值改进神经网络各节点的权重值。经过多次迭代，逐渐收敛。 Forward Propagation前向传播又有两个模块：线性模块、激发模块。 线性模块是本层神经节点根据输入$X = {X^{(1)}, X^{(2)}, … , X^{(m)}}$来计算输出：$$Z = WX + b$$这里$W$是本层神经节点的权重。有$m$个样本的情况下，假设每个样本有$n_x$个参数，即样本$X$的维度为$(n_x, m)$。假设本层共有$n^{[l]}$个神经节点，则$W$的维度为$(n^{[l]}, n_x$。]]></content>
+    <content type="text"><![CDATA[概述深度学习几乎就等于神经网络算法，该算法主要由两个模块构成：前向传播（Forward Propagation）、后向传播（Backward Propagation）。 前向传播来计算预测值$\hat{y}$，而后向传播则根据预测值与实际值的差别计算成本方程（Cost Function），并根据该值改进神经网络各节点的权重值。经过多次迭代，逐渐收敛。 Forward Propagation前向传播又有两个模块：线性模块、激发模块。 线性模块线性模块是本层神经节点根据输入$X = {X^{(1)}, X^{(2)}, … , X^{(m)}}$来计算输出：$$Z = WX + b$$这里$W$是本层神经节点的权重。有$m$个样本的情况下，假设每个样本有$n_x$个参数，即样本$X$的维度为$(n_x, m)$。假设本层共有$n^{[l]}$个神经节点，则$W$的维度为$(n^{[l]}, n_x)$。进而，$b$的维度为$(n^{[l]}, 1)$。 激发模块由于神经网络的输出值域等问题，由线性模块计算得到的输出不能直接作为整个模型的输出，而需要经过激发模块的处理。假设激发函数（Activation Function）为$g(\bullet)$，则最终本层神经节点的输出为：$$A = g(Z)$$ 常用的激发函数有几种： sigmoid函数该函数的表达式为：$$\sigma (x) = \frac{1}{1 + e^{-x}}$$]]></content>
       <categories>
         <category>深度学习</category>
       </categories>

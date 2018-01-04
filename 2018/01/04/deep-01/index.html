@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="张小白的小窝">
 <meta property="og:description" content="概述深度学习几乎就等于神经网络算法，该算法主要由两个模块构成：前向传播（Forward Propagation）、后向传播（Backward Propagation）。 前向传播来计算预测值$\hat{y}$，而后向传播则根据预测值与实际值的差别计算成本方程（Cost Function），并根据该值改进神经网络各节点的权重值。经过多次迭代，逐渐收敛。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-04T08:14:37.107Z">
+<meta property="og:updated_time" content="2018-01-04T11:12:26.646Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度学习——神经网络基本内容（01）">
 <meta name="twitter:description" content="概述深度学习几乎就等于神经网络算法，该算法主要由两个模块构成：前向传播（Forward Propagation）、后向传播（Backward Propagation）。 前向传播来计算预测值$\hat{y}$，而后向传播则根据预测值与实际值的差别计算成本方程（Cost Function），并根据该值改进神经网络各节点的权重值。经过多次迭代，逐渐收敛。">
@@ -390,7 +390,10 @@
 <p>前向传播来计算预测值$\hat{y}$，而后向传播则根据预测值与实际值的差别计算成本方程（Cost Function），并根据该值改进神经网络各节点的权重值。经过多次迭代，逐渐收敛。</p>
 <a id="more"></a>
 <h1 id="Forward-Propagation"><a href="#Forward-Propagation" class="headerlink" title="Forward Propagation"></a>Forward Propagation</h1><p>前向传播又有两个模块：线性模块、激发模块。</p>
-<p>线性模块是本层神经节点根据输入$X = {X^{(1)}, X^{(2)}, … , X^{(m)}}$来计算输出：<br>$$<br>Z = WX + b<br>$$<br>这里$W$是本层神经节点的权重。有$m$个样本的情况下，假设每个样本有$n_x$个参数，即样本$X$的维度为$(n_x, m)$。假设本层共有$n^{[l]}$个神经节点，则$W$的维度为$(n^{[l]}, n_x$。</p>
+<h2 id="线性模块"><a href="#线性模块" class="headerlink" title="线性模块"></a>线性模块</h2><p>线性模块是本层神经节点根据输入$X = {X^{(1)}, X^{(2)}, … , X^{(m)}}$来计算输出：<br>$$<br>Z = WX + b<br>$$<br>这里$W$是本层神经节点的权重。有$m$个样本的情况下，假设每个样本有$n_x$个参数，即样本$X$的维度为$(n_x, m)$。假设本层共有$n^{[l]}$个神经节点，则$W$的维度为$(n^{[l]}, n_x)$。进而，$b$的维度为$(n^{[l]}, 1)$。</p>
+<h2 id="激发模块"><a href="#激发模块" class="headerlink" title="激发模块"></a>激发模块</h2><p>由于神经网络的输出值域等问题，由线性模块计算得到的输出不能直接作为整个模型的输出，而需要经过激发模块的处理。假设激发函数（Activation Function）为$g(\bullet)$，则最终本层神经节点的输出为：<br>$$<br>A = g(Z)<br>$$</p>
+<p>常用的激发函数有几种：</p>
+<h3 id="sigmoid函数"><a href="#sigmoid函数" class="headerlink" title="sigmoid函数"></a>sigmoid函数</h3><p>该函数的表达式为：<br>$$<br>\sigma (x) = \frac{1}{1 + e^{-x}}<br>$$</p>
 
       
     </div>
@@ -595,7 +598,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Forward-Propagation"><span class="nav-number">2.</span> <span class="nav-text">Forward Propagation</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Forward-Propagation"><span class="nav-number">2.</span> <span class="nav-text">Forward Propagation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线性模块"><span class="nav-number">2.1.</span> <span class="nav-text">线性模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激发模块"><span class="nav-number">2.2.</span> <span class="nav-text">激发模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sigmoid函数"><span class="nav-number">2.2.1.</span> <span class="nav-text">sigmoid函数</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
