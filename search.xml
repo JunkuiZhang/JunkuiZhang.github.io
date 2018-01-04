@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[小窝的新生]]></title>
     <url>%2F2018%2F01%2F03%2FHello%2F</url>
-    <content type="text"><![CDATA[1. 代码测试import os import numpy print(&#39;Hello World!&#39;) 2. 数学公式测试$$E = mc^2$$ 3. 网页测试这是个网页(https://www.baidu.com)]]></content>
+    <content type="text"><![CDATA[1. 代码测试1234import osimport numpyprint('Hello World!') 2. 数学公式测试$$E = mc^2$$ 3. 网页测试这是个网页(https://www.baidu.com)]]></content>
       <categories>
         <category>测试</category>
       </categories>
@@ -15,6 +15,6 @@
   <entry>
     <title><![CDATA[Hello World]]></title>
     <url>%2F2018%2F01%2F03%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post$ hexo new &quot;My New Post&quot; More info: Writing Run server$ hexo server More info: Server Generate static files$ hexo generate More info: Generating Deploy to remote sites$ hexo deploy More info: Deployment]]></content>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
   </entry>
 </search>
