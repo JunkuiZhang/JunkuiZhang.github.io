@@ -88,7 +88,9 @@
 <meta property="og:description" content="概述深度学习几乎就等于神经网络算法，该算法主要由两个模块构成：前向传播（Forward Propagation）、后向传播（Backward Propagation）。 前向传播来计算预测值$\hat{y}$，而后向传播则根据预测值与实际值的差别计算成本方程（Cost Function），并根据该值改进神经网络各节点的权重值。经过多次迭代，逐渐收敛。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/01/04/deep-01/01.png">
-<meta property="og:updated_time" content="2018-01-04T13:59:42.079Z">
+<meta property="og:image" content="http://yoursite.com/2018/01/04/deep-01/02.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/04/deep-01/03.png">
+<meta property="og:updated_time" content="2018-01-04T14:39:25.539Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度学习——神经网络基本内容（01）">
 <meta name="twitter:description" content="概述深度学习几乎就等于神经网络算法，该算法主要由两个模块构成：前向传播（Forward Propagation）、后向传播（Backward Propagation）。 前向传播来计算预测值$\hat{y}$，而后向传播则根据预测值与实际值的差别计算成本方程（Cost Function），并根据该值改进神经网络各节点的权重值。经过多次迭代，逐渐收敛。">
@@ -395,7 +397,16 @@
 <h2 id="线性模块"><a href="#线性模块" class="headerlink" title="线性模块"></a>线性模块</h2><p>线性模块是本层神经节点根据输入$X = {X^{(1)}, X^{(2)}, … , X^{(m)}}$来计算输出：<br>$$<br>Z = WX + b<br>$$<br>这里$W$是本层神经节点的权重。有$m$个样本的情况下，假设每个样本有$n_x$个参数，即样本$X$的维度为$(n_x, m)$。假设本层共有$n^{[l]}$个神经节点，则$W$的维度为$(n^{[l]}, n_x)$。进而，$b$的维度为$(n^{[l]}, 1)$。</p>
 <h2 id="激发模块"><a href="#激发模块" class="headerlink" title="激发模块"></a>激发模块</h2><p>由于神经网络的输出值域等问题，由线性模块计算得到的输出不能直接作为整个模型的输出，而需要经过激发模块的处理。假设激发函数（Activation Function）为$g(\bullet)$，则最终本层神经节点的输出为：<br>$$<br>A = g(Z)<br>$$</p>
 <p>常用的激发函数有几种：</p>
-<h3 id="sigmoid函数"><a href="#sigmoid函数" class="headerlink" title="sigmoid函数"></a>sigmoid函数</h3><p>该函数的表达式为：<br>$$<br>\sigma (x) = \frac{1}{1 + e^{-x}}<br>$$<br>该函数的图象为：<br><img src="/2018/01/04/deep-01/01.png" title="Sigmoid函数图像}</p>"></p>
+<h3 id="sigmoid函数"><a href="#sigmoid函数" class="headerlink" title="sigmoid函数"></a>sigmoid函数</h3><p>该函数的表达式为：<br>$$<br>\sigma (x) = \frac{1}{1 + e^{-x}}<br>$$<br>该函数的图象为：<br><img src="/2018/01/04/deep-01/01.png" title="Sigmoid函数图像"></p>
+<p>从图像上可以看出，该函数的值域介于0，1之间，当处理分类问题（Classification）时，该函数能较好的进行最后的输出预测。<br>若$a = \sigma (z)$，则该函数的导数为：$\sigma’(z) = a(1-a)$</p>
+<h3 id="tanh函数"><a href="#tanh函数" class="headerlink" title="tanh函数"></a>tanh函数</h3><p>该函数的表达式为：<br>$$<br>\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}<br>$$<br>函数图象为：<br><img src="/2018/01/04/deep-01/02.png" title="tanh函数图象"></p>
+<p>该函数图像与Sigmoid函数类似，唯一不同的是Sigmoid函数图像介于0，1之间，而tanh函数图像则介于-1，1之间。从实践来看，tanh函数作为激发函数表现总是要比sigmoid函数好。</p>
+<p>但是，两函数都存在同一个问题：当自变量的值过大或过小时，如$x = -1000$，此时，从图像上可以看出，函数的图像会变得十分扁平，意味着其导数会十分小，进而梯度下降法（Gradient Descent）对权重$W$的改变会十分的有限。进而，该神经网络的训练可能会十分的漫长。</p>
+<h3 id="ReLU函数"><a href="#ReLU函数" class="headerlink" title="ReLU函数"></a>ReLU函数</h3><p>该函数就为改变上面两个函数的缺点诞生的，其表达式十分简单：<br>$$<br>f(x) =<br>\begin{cases}<br>x, &amp; x &gt; 0<br>0, &amp; else<br>\end{cases}<br>$$</p>
+<p>其函数图象为：<br><img src="/2018/01/04/deep-01/03.png" title="ReLU函数图象"></p>
+<p>进而其导数也不存在上面两个函数的缺点，进而实践中，该函数的表现总是比以上两个函数都好。</p>
+<h2 id="前向传播总结"><a href="#前向传播总结" class="headerlink" title="前向传播总结"></a>前向传播总结</h2><p>用$A^{[l-1]}$表示第$l$层神经网络的输入值，即第$l-1$层神经网络的激发值，其维度为$(n^{[l-1]}, m)$，其中$n^{[l]}$表示该层神经网络的节点个数；用$W^{[l]}$表示第$l$层神经网络的权重，其维度为$(n^{[l]}, n^{[l-1]})$，则<br>$$<br>Z^{[l]} = W^{[l]}A^{[l-1]} + b^{[l]}<br>$$<br>$$<br>A^{[l]} = g(Z^{[l]})<br>$$<br>其中，$Z^{[l]}$和$A^{[l]}$的维度均为$(n^{\l]}, m)$</p>
+
       
     </div>
     
@@ -599,7 +610,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Forward-Propagation"><span class="nav-number">2.</span> <span class="nav-text">Forward Propagation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线性模块"><span class="nav-number">2.1.</span> <span class="nav-text">线性模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激发模块"><span class="nav-number">2.2.</span> <span class="nav-text">激发模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sigmoid函数"><span class="nav-number">2.2.1.</span> <span class="nav-text">sigmoid函数</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Forward-Propagation"><span class="nav-number">2.</span> <span class="nav-text">Forward Propagation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线性模块"><span class="nav-number">2.1.</span> <span class="nav-text">线性模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激发模块"><span class="nav-number">2.2.</span> <span class="nav-text">激发模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sigmoid函数"><span class="nav-number">2.2.1.</span> <span class="nav-text">sigmoid函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tanh函数"><span class="nav-number">2.2.2.</span> <span class="nav-text">tanh函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReLU函数"><span class="nav-number">2.2.3.</span> <span class="nav-text">ReLU函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前向传播总结"><span class="nav-number">2.3.</span> <span class="nav-text">前向传播总结</span></a></li></ol></li></ol></div>
             
 
           </div>
