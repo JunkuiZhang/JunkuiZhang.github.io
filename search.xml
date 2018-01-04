@@ -4,8 +4,12 @@
     <title><![CDATA[小窝的新生]]></title>
     <url>%2F2018%2F01%2F03%2FHello%2F</url>
     <content type="text"><![CDATA[1. 代码测试import os import numpy print(&#39;Hello World!&#39;) 2. 数学公式测试$$E = mc^2$$ 3. 网页测试这是个网页(https://www.baidu.com)]]></content>
+      <categories>
+        <category>测试</category>
+      </categories>
       <tags>
-        <tag>Python, 测试</tag>
+        <tag>Python</tag>
+        <tag>Testing</tag>
       </tags>
   </entry>
   <entry>

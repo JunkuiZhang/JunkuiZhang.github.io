@@ -3,24 +3,29 @@
 
 
     
-    
-    
   <url>
     <loc>http://yoursite.com/2018/01/03/Hello/</loc>
-    <lastmod>2018-01-04T05:20:12.160Z</lastmod>
+    <lastmod>2018-01-04T06:57:29.666Z</lastmod>
     <data>
         <display>
         <title>小窝的新生</title>
         <pubTime>2018-01-03T15:14:58.000Z</pubTime>
         
-        <tag>Python, 测试</tag>
+        <tag>Python</tag>
+         
+        <tag>Testing</tag>
          
          
            
+             
+              <breadCrumb title="测试" url="http://yoursite.com/categories/%E6%B5%8B%E8%AF%95/"/>
+          
         </display>
     </data>
     </url>
 
+    
+    
     
   <url>
     <loc>http://yoursite.com/2018/01/03/hello-world/</loc>
