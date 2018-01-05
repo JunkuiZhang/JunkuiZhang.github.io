@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/01/04/deep-01/01.png">
 <meta property="og:image" content="http://yoursite.com/2018/01/04/deep-01/02.png">
 <meta property="og:image" content="http://yoursite.com/2018/01/04/deep-01/03.png">
-<meta property="og:updated_time" content="2018-01-05T07:52:13.025Z">
+<meta property="og:updated_time" content="2018-01-05T07:58:05.488Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度学习——神经网络基本内容（01）">
 <meta name="twitter:description" content="概述深度学习几乎就等于神经网络算法，该算法主要由两个模块构成：前向传播（Forward Propagation）、后向传播（Backward Propagation）。 前向传播来计算预测值$\hat{y}$，而后向传播则根据预测值与实际值的差别计算成本方程（Cost Function），并根据该值改进神经网络各节点的权重值。经过多次迭代，逐渐收敛。">
@@ -413,7 +413,7 @@
 <h1 id="Backward-Propagation"><a href="#Backward-Propagation" class="headerlink" title="Backward Propagation"></a>Backward Propagation</h1><p>反向传播的基础是成本函数，下面用逻辑回归（Logistical Regression）做例子说明。</p>
 <h2 id="一个例子：逻辑回归"><a href="#一个例子：逻辑回归" class="headerlink" title="一个例子：逻辑回归"></a>一个例子：逻辑回归</h2><p>逻辑回归下，一个常用的损失函数是：<br>$$<br>L(\hat{y}, y) = -(y\ln \hat{y} + (1-y)\ln(1-\hat{y}))<br>$$</p>
 <p>当该神经网络一共有$L$层时，该损失函数对$A^{[L]}$的导数即为：<br>$$<br>\frac{dL}{dA^{[L]}} = -\frac{y}{A^{[L]}} + \frac{1-y}{1-A^{[L]}}<br>$$<br>已知$dA^{[L]}/dZ^{[L]} = A^{[L]}(1-A^{[L]})$，则<br>$$<br>\begin{aligned}<br>    \frac{dL}{dZ^{[L]}} &amp;= \frac{dL}{dA^{[L]}}\frac{dA^{[L]}}{dZ^{[L]}} \\<br>    &amp;= A^{[L]} - Y<br>\end{aligned}<br>$$</p>
-<p>又由于$Z^{[L]} = W^{[L]}A^{[L-1]} + b^{[L]}$，则<br>$$<br>\frac{dZ^{[L]}}{dW^{[L]}} = A^{[L-1]T}<br>$$<br>那么，根据链式求导法则有：<br>$$<br>\begin{aligned}<br>    \frac{dL}{dW^{[L]}} &amp;= \frac{dL}{dZ^{[L]}}\frac{dZ^{[L]}}{dW^{[L]}} \\<br>    &amp;= (A^{[L]} - Y)A^{[L-1]T}<br>\end{aligned}<br>$$<br>进而对第$L$层神经网络有<br>$$<br>\frac{dJ}{dW^{[L]}} = \frac{1}{m}(A^{[L]}-Y)A^{[L-1]T}<br>$$ $$<br>\frac{dJ}{db^{[L]}} = \frac{1}{m}\sum(A^{[L]}-Y)<br>$$<br>对任意第$l$层神经网络有<br>$$<br>\begin{aligned}<br>    \frac{dJ}{dZ^{[l]}} &amp;= \frac{dJ}{dZ^{[l+1]}}\frac{dZ^{[l+1]}}{dZ^{[l]}} \\<br>    &amp;= \frac{dJ}{dZ^{[l+1]}}\frac{dZ^{[l+1]}}{dA^{[l]}}\frac{dA^{[l]}}{dZ^{[l]}} \\<br>    &amp;= \frac{dJ}{dZ^{[l+1]}}W^{[l]}g’(Z^{[l]})<br>$$</p>
+<p>又由于$Z^{[L]} = W^{[L]}A^{[L-1]} + b^{[L]}$，则<br>$$<br>\frac{dZ^{[L]}}{dW^{[L]}} = A^{[L-1]T}<br>$$<br>那么，根据链式求导法则有：<br>$$<br>\begin{aligned}<br>    \frac{dL}{dW^{[L]}} &amp;= \frac{dL}{dZ^{[L]}}\frac{dZ^{[L]}}{dW^{[L]}} \\<br>    &amp;= (A^{[L]} - Y)A^{[L-1]T}<br>\end{aligned}<br>$$<br>进而对第$L$层神经网络有<br>$$<br>\frac{dJ}{dW^{[L]}} = \frac{1}{m}(A^{[L]}-Y)A^{[L-1]T}<br>$$ $$<br>\frac{dJ}{db^{[L]}} = \frac{1}{m}\sum(A^{[L]}-Y)<br>$$<br>对任意第$l$层神经网络有<br>$$<br>\begin{aligned}<br>    \frac{dJ}{dZ^{[l]}} &amp;= \frac{dJ}{dZ^{[l+1]}}\frac{dZ^{[l+1]}}{dZ^{[l]}} \\<br>    &amp;= \frac{dJ}{dZ^{[l+1]}}\frac{dZ^{[l+1]}}{dA^{[l]}}\frac{dA^{[l]}}{dZ^{[l]}} \\<br>    &amp;= \frac{dJ}{dZ^{[l+1]}}W^{[l]}g’(Z^{[l]})<br>\end{aligned}<br>$$</p>
 
       
     </div>
