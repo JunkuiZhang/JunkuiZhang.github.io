@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="张小白的小窝">
 <meta property="og:description" content="概述本文建立在前一篇文章的基础上进行讨论，这一系列文章的本意是记录本人的学习历程，避免“后面学，前面忘”的窘境。 前文讨论到超参数，本文继续讨论如何处理上文的问题。具体而言，主要涉及到：  对欠拟合、过拟合的处理 正则化方法（Regularization） $L2$正则化 Dropout正则化   标准化方法（Normalization） 梯度消失（Vanishing Gradient） 梯度爆炸">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-05T14:14:11.247Z">
+<meta property="og:updated_time" content="2018-01-05T14:39:09.874Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度学习——神经网络超参数的处理（02）">
 <meta name="twitter:description" content="概述本文建立在前一篇文章的基础上进行讨论，这一系列文章的本意是记录本人的学习历程，避免“后面学，前面忘”的窘境。 前文讨论到超参数，本文继续讨论如何处理上文的问题。具体而言，主要涉及到：  对欠拟合、过拟合的处理 正则化方法（Regularization） $L2$正则化 Dropout正则化   标准化方法（Normalization） 梯度消失（Vanishing Gradient） 梯度爆炸">
@@ -419,12 +419,25 @@
 <p>处理欠拟合的方法有：</p>
 <ul>
 <li>增加神经网络深度</li>
-<li>调整超参数<br>处理过拟合的方法有：</li>
+<li>调整超参数</li>
+</ul>
+<p>处理过拟合的方法有：</p>
+<ul>
 <li>正则化</li>
 <li>标准化</li>
 </ul>
-<h2 id="L2-正则化（Regularization）"><a href="#L2-正则化（Regularization）" class="headerlink" title="$L2$正则化（Regularization）"></a>$L2$正则化（Regularization）</h2><p>一般而言，避免过拟合的标准方法是$L2$正则化，它从改变成本函数开始。<br>正常的成本函数是：<br>$$<br>J = -\frac1m\sum<em>{i=1}^{m}(y^{(i)}\ln(a^{<a href="i">L</a>}) + (1-y^{(i)})\ln(1-a^{<a href="i">L</a>}))<br>$$<br>改变为：<br>$$<br>J = -\frac1m\sum</em>{i=1}^{m}(y^{(i)}\ln(a^{<a href="i">L</a>})+(1-y^{(i)})\ln(1-a^{<a href="i">L</a>})) + \frac1m\frac\lambda2\sum_l\sum_k\sum<em>jW</em>{k,j}^{[l]2}<br>$$<br>这里$\lambda$成为正则化常数，是一个需要我们不断测试来选择最佳值的超参数。</p>
+<h2 id="L2-正则化（Regularization）"><a href="#L2-正则化（Regularization）" class="headerlink" title="$L2$正则化（Regularization）"></a>$L2$正则化（Regularization）</h2><p>一般而言，避免过拟合的标准方法是$L2$正则化，它从改变成本函数开始。<br>正常的成本函数是：<br>$$<br>J = -\frac1m\sum_{i=1}^{m}(y^{(i)}\ln(a^{<a href="i">L</a>}) + (1-y^{(i)})\ln(1-a^{<a href="i">L</a>}))<br>$$</p>
+<p>改变为：<br>$$<br>J = -\frac1m\sum_{i=1}^{m}(y^{(i)}\ln(a^{<a href="i">L</a>})+(1-y^{(i)})\ln(1-a^{<a href="i">L</a>})) + \frac1m\frac\lambda2\sum_l\sum_k\sum<em>jW</em>{k,j}^{[l]2}<br>$$</p>
+<p>这里$\lambda$成为正则化常数，是一个需要我们不断测试来选择最佳值的超参数。</p>
 <p>进而，反向传播的计算公式也有所改变：<br>$$<br>dW^{[l]} = \frac1mdZ^{[l]}A^{[l-1]T} + \frac{\lambda}{m}\times W^{[l]}<br>db^{[l]} = \frac1m\sum_{row}dZ^{[l]}<br>$$</p>
+<h2 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h2><p>Dropout也是常用的一种正则化手段，其在每次迭代过程中随机关闭一些神经节点，看起来不可思议，问题是它居然真的有用。</p>
+<p>代码中通过一个由0和1为元素构成的矩阵来实现神经节点的开关。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Dl = np.random.rand(Al.shape[<span class="number">0</span>], Al.shape[<span class="number">1</span>]) <span class="comment">#随机产生0-1间的数字</span></span><br><span class="line">Dl = (Dl &lt; keep_prob) <span class="comment">#keep_prob是保持概率，小于这个数的将被设置为1</span></span><br><span class="line">Al *= Dl</span><br><span class="line">Al /= keep_prob</span><br></pre></td></tr></table></figure></p>
+<h2 id="规范化（Normalization）"><a href="#规范化（Normalization）" class="headerlink" title="规范化（Normalization）"></a>规范化（Normalization）</h2><p>也称为标准化，是对输入数据进行的处理：把输入数据的均值变为0，方差变为1。<br>$$<br>\begin{aligned}<br>    X &amp;= X - \bar{X}<br>    x &amp;= \frac{X}{\sqrt{Var(X)}}<br>\end{aligned}<br>$$</p>
+<p>经过这样的处理后，模型收敛速度更快。</p>
+<h2 id="梯度检测（Gradient-Checking）"><a href="#梯度检测（Gradient-Checking）" class="headerlink" title="梯度检测（Gradient Checking）"></a>梯度检测（Gradient Checking）</h2><p>根据导数的定义，即<br>$$<br>f’(x) = \lim_{\epsilon\rightarrow0}\frac{f(x+\epsilon)-f(x)}{\epsilon}<br>$$</p>
+<p>进而赋予$\epsilon$一个很小的值来近似计算倒数来比较。</p>
+<h1 id="算法优化"><a href="#算法优化" class="headerlink" title="算法优化"></a>算法优化</h1><h2 id="数据量-1"><a href="#数据量-1" class="headerlink" title="数据量"></a>数据量</h2><p>这里是指前文提到的，当数据量很大时，把整体数据$X$分成一些小数据集$X^{\{i\}}$，在小数据集上训练数据。</p>
+<h2 id="指数化权重平均"><a href="#指数化权重平均" class="headerlink" title="指数化权重平均"></a>指数化权重平均</h2><p>…to do</p>
 
       
     </div>
@@ -629,7 +642,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#神经网络训练数据"><span class="nav-number">2.</span> <span class="nav-text">神经网络训练数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据集"><span class="nav-number">2.1.</span> <span class="nav-text">数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据量"><span class="nav-number">2.2.</span> <span class="nav-text">数据量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化参数"><span class="nav-number">3.</span> <span class="nav-text">初始化参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#欠拟合与过拟合"><span class="nav-number">4.</span> <span class="nav-text">欠拟合与过拟合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#L2-正则化（Regularization）"><span class="nav-number">4.1.</span> <span class="nav-text">$L2$正则化（Regularization）</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#神经网络训练数据"><span class="nav-number">2.</span> <span class="nav-text">神经网络训练数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据集"><span class="nav-number">2.1.</span> <span class="nav-text">数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据量"><span class="nav-number">2.2.</span> <span class="nav-text">数据量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化参数"><span class="nav-number">3.</span> <span class="nav-text">初始化参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#欠拟合与过拟合"><span class="nav-number">4.</span> <span class="nav-text">欠拟合与过拟合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#L2-正则化（Regularization）"><span class="nav-number">4.1.</span> <span class="nav-text">$L2$正则化（Regularization）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dropout"><span class="nav-number">4.2.</span> <span class="nav-text">Dropout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规范化（Normalization）"><span class="nav-number">4.3.</span> <span class="nav-text">规范化（Normalization）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#梯度检测（Gradient-Checking）"><span class="nav-number">4.4.</span> <span class="nav-text">梯度检测（Gradient Checking）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法优化"><span class="nav-number">5.</span> <span class="nav-text">算法优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据量-1"><span class="nav-number">5.1.</span> <span class="nav-text">数据量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指数化权重平均"><span class="nav-number">5.2.</span> <span class="nav-text">指数化权重平均</span></a></li></ol></li></ol></div>
             
 
           </div>
