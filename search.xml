@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[大糖帝国（The Great Sugar Empire）]]></title>
     <url>%2F2019%2F01%2F15%2FNew-Society%2F</url>
-    <content type="text"><![CDATA[概述模型附录源码代码见GitHub 基尼系数的计算由于这里数据量较小，故可使用直接计算法计算 $$\Delta = /frac{1}{n^2}\sum^{n}_{j=1}\sum^{n}_{i=1}|Y_j-Y_i|$$ 这里$\Delta$是基尼平均差，$|Y_j-Y_i|$是任意一对样本差的绝对值，$n$是样本容量 则基尼系数可以计算为： $$G = \frac{\Delta}{2u}$$ 这里$G$表示基尼系数，$u$是样本均值。]]></content>
+    <content type="text"><![CDATA[概述模型附录源码代码见GitHub 基尼系数的计算由于这里数据量较小，故可使用直接计算法计算 $$\Delta = \frac{1}{n^2}\sum^{n}_{j=1}\sum^{n}_{i=1}|Y_j-Y_i|$$ 这里$\Delta$是基尼平均差，$|Y_j-Y_i|$是任意一对样本差的绝对值，$n$是样本容量 则基尼系数可以计算为： $$G = \frac{\Delta}{2u}$$ 这里$G$表示基尼系数，$u$是样本均值。]]></content>
       <categories>
         <category>模型</category>
       </categories>
