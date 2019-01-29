@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Python中的重载]]></title>
+    <url>%2F2019%2F01%2F29%2Fpython-1-chongzai%2F</url>
+    <content type="text"><![CDATA[概述重载，即overwrite 字符串函数重载repr与strrepr函数用于print函数调用，str则用于str函数调用 1234567def __repr__(self): ... return some string heredef __str__(self): ... return some string here 内建函数重载部分内建函数abslenbool bool函数重载用于bool函数取值，或if、while等判断中 a. 当类内有bool(self)函数时，用此函数的返回值作为bool函数的返回值b. 当不存在bool(self)函数时，用len(self)的返回值是否为0来作为bool函数的返回值c. 也不存在len(self)函数时，直接返回True 运算符重载算术运算符重载 函数 表达式 说明 add(self, rhs) self + rhs 加法 sub(self, rhs) self - rhs 减法 mul(self, rhs) self * rhs 乘法 truediv(self, rhs) self / rhs 除法 floordiv(self, rhs) self // rhs 地板除法 mod(self, rhs) self % rhs 求余 pow(self, rhs) self ** rhs 求幂 反向算术运算符重载 函数 表达式 说明 radd(self, lhs) lhs + self 加法 rsub(self, lhs) lhs - self 减法 rmul(self, lhs) lhs * self 乘法 … … … 复合赋值算术运算符重载 函数 表达式 说明 iadd(self, rhs) self += rhs 自加 isub(self, rhs) self -= rhs 自减 imul(self, rhs) self *= rhs 自乘 … … … a. 若add与iadd同时存在，则对于+=运算优先iaddb. 若iadd不存在，add存在，则+=运算使用add 比较运算符重载 函数 表达式 说明 lt(self, num) self &lt; num 小于，less than]]></content>
+      <categories>
+        <category>技巧</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[大糖帝国（The Great Sugar Empire）]]></title>
     <url>%2F2019%2F01%2F15%2FNew-Society%2F</url>
     <content type="text"><![CDATA[概述模型附录源码代码见GitHub 基尼系数的计算由于这里数据量较小，故可使用直接计算法计算 $$\Delta = \frac{1}{n^2}\sum^{n}_{j=1}\sum^{n}_{i=1}|Y_j-Y_i|$$ 这里$\Delta$是基尼平均差，$|Y_j-Y_i|$是任意一对样本差的绝对值，$n$是样本容量 则基尼系数可以计算为： $$G = \frac{\Delta}{2u}$$ 这里$G$表示基尼系数，$u$是样本均值。]]></content>
