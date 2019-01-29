@@ -4,8 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2019/01/29/python-2-iteration/</loc>
+    <lastmod>2019-01-29T13:50:38.498Z</lastmod>
+    <data>
+        <display>
+        <title>Python中的迭代</title>
+        <pubTime>2019-01-29T13:49:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+         
+           
+             
+              <breadCrumb title="技巧" url="http://yoursite.com/categories/%E6%8A%80%E5%B7%A7/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2019/01/29/python-1-chongzai/</loc>
-    <lastmod>2019-01-29T13:26:10.142Z</lastmod>
+    <lastmod>2019-01-29T13:48:00.867Z</lastmod>
     <data>
         <display>
         <title>Python中的重载</title>

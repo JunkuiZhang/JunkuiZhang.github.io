@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="张小白的小窝">
 <meta property="og:description" content="概述重载，即overwrite">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-29T13:26:10.142Z">
+<meta property="og:updated_time" content="2019-01-29T13:48:00.867Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python中的重载">
 <meta name="twitter:description" content="概述重载，即overwrite">
@@ -390,9 +390,9 @@
 <a id="more"></a>
 <h1 id="字符串函数重载"><a href="#字符串函数重载" class="headerlink" title="字符串函数重载"></a>字符串函数重载</h1><h2 id="repr与str"><a href="#repr与str" class="headerlink" title="repr与str"></a>repr与str</h2><p>repr函数用于print函数调用，str则用于str函数调用</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> some string here</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> some string here</span><br></pre></td></tr></table></figure>
-<h1 id="内建函数重载"><a href="#内建函数重载" class="headerlink" title="内建函数重载"></a>内建函数重载</h1><h2 id="部分内建函数"><a href="#部分内建函数" class="headerlink" title="部分内建函数"></a>部分内建函数</h2><p><strong>abs</strong><br><strong>len</strong><br><strong>bool</strong></p>
+<h1 id="内建函数重载"><a href="#内建函数重载" class="headerlink" title="内建函数重载"></a>内建函数重载</h1><h2 id="部分内建函数"><a href="#部分内建函数" class="headerlink" title="部分内建函数"></a>部分内建函数</h2><p>__abs__<br>__len__<br>__bool__</p>
 <h2 id="bool函数重载"><a href="#bool函数重载" class="headerlink" title="bool函数重载"></a>bool函数重载</h2><p>用于bool函数取值，或if、while等判断中</p>
-<p>a. 当类内有<strong>bool</strong>(self)函数时，用此函数的返回值作为bool函数的返回值<br>b. 当不存在<strong>bool</strong>(self)函数时，用<strong>len</strong>(self)的返回值是否为0来作为bool函数的返回值<br>c. 也不存在<strong>len</strong>(self)函数时，直接返回True</p>
+<p>a. 当类内有__bool__(self)函数时，用此函数的返回值作为bool函数的返回值<br>b. 当不存在__bool__(self)函数时，用__len__(self)的返回值是否为0来作为bool函数的返回值<br>c. 也不存在__len__(self)函数时，直接返回True</p>
 <h1 id="运算符重载"><a href="#运算符重载" class="headerlink" title="运算符重载"></a>运算符重载</h1><h2 id="算术运算符重载"><a href="#算术运算符重载" class="headerlink" title="算术运算符重载"></a>算术运算符重载</h2><table>
 <thead>
 <tr>
@@ -403,37 +403,37 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><strong>add</strong>(self, rhs)</td>
+<td style="text-align:center">__add__(self, rhs)</td>
 <td style="text-align:center">self + rhs</td>
 <td style="text-align:center">加法</td>
 </tr>
 <tr>
-<td style="text-align:center"><strong>sub</strong>(self, rhs)</td>
+<td style="text-align:center">__sub__(self, rhs)</td>
 <td style="text-align:center">self - rhs</td>
 <td style="text-align:center">减法</td>
 </tr>
 <tr>
-<td style="text-align:center"><strong>mul</strong>(self, rhs)</td>
+<td style="text-align:center">__mul__(self, rhs)</td>
 <td style="text-align:center">self * rhs</td>
 <td style="text-align:center">乘法</td>
 </tr>
 <tr>
-<td style="text-align:center"><strong>truediv</strong>(self, rhs)</td>
+<td style="text-align:center">__truediv__(self, rhs)</td>
 <td style="text-align:center">self / rhs</td>
 <td style="text-align:center">除法</td>
 </tr>
 <tr>
-<td style="text-align:center"><strong>floordiv</strong>(self, rhs)</td>
+<td style="text-align:center">__floordiv__(self, rhs)</td>
 <td style="text-align:center">self // rhs</td>
 <td style="text-align:center">地板除法</td>
 </tr>
 <tr>
-<td style="text-align:center"><strong>mod</strong>(self, rhs)</td>
+<td style="text-align:center">__mod__(self, rhs)</td>
 <td style="text-align:center">self % rhs</td>
 <td style="text-align:center">求余</td>
 </tr>
 <tr>
-<td style="text-align:center"><strong>pow</strong>(self, rhs)</td>
+<td style="text-align:center">__pow__(self, rhs)</td>
 <td style="text-align:center">self ** rhs</td>
 <td style="text-align:center">求幂</td>
 </tr>
@@ -449,17 +449,17 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><strong>radd</strong>(self, lhs)</td>
+<td style="text-align:center">__radd__(self, lhs)</td>
 <td style="text-align:center">lhs + self</td>
 <td style="text-align:center">加法</td>
 </tr>
 <tr>
-<td style="text-align:center"><strong>rsub</strong>(self, lhs)</td>
+<td style="text-align:center">__rsub__(self, lhs)</td>
 <td style="text-align:center">lhs - self</td>
 <td style="text-align:center">减法</td>
 </tr>
 <tr>
-<td style="text-align:center"><strong>rmul</strong>(self, lhs)</td>
+<td style="text-align:center">__rmul__(self, lhs)</td>
 <td style="text-align:center">lhs * self</td>
 <td style="text-align:center">乘法</td>
 </tr>
@@ -480,17 +480,17 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><strong>iadd</strong>(self, rhs)</td>
+<td style="text-align:center">__iadd__(self, rhs)</td>
 <td style="text-align:center">self += rhs</td>
 <td style="text-align:center">自加</td>
 </tr>
 <tr>
-<td style="text-align:center"><strong>isub</strong>(self, rhs)</td>
+<td style="text-align:center">__isub__(self, rhs)</td>
 <td style="text-align:center">self -= rhs</td>
 <td style="text-align:center">自减</td>
 </tr>
 <tr>
-<td style="text-align:center"><strong>imul</strong>(self, rhs)</td>
+<td style="text-align:center">__imul__(self, rhs)</td>
 <td style="text-align:center">self *= rhs</td>
 <td style="text-align:center">自乘</td>
 </tr>
@@ -512,9 +512,71 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><strong>lt</strong>(self, num)</td>
+<td style="text-align:center">__lt__(self, num)</td>
 <td style="text-align:center">self &lt; num</td>
 <td style="text-align:center">小于，less than</td>
+</tr>
+<tr>
+<td style="text-align:center">__le__(self, num)</td>
+<td style="text-align:center">self &lt;= num</td>
+<td style="text-align:center">小于等于，less equal</td>
+</tr>
+<tr>
+<td style="text-align:center">__gt__(self, num)</td>
+<td style="text-align:center">self &gt; num</td>
+<td style="text-align:center">大于，greater than</td>
+</tr>
+<tr>
+<td style="text-align:center">__ge__(self, num)</td>
+<td style="text-align:center">self &gt;= num</td>
+<td style="text-align:center">大于等于</td>
+</tr>
+<tr>
+<td style="text-align:center">__eq__(self, num)</td>
+<td style="text-align:center">self == num</td>
+<td style="text-align:center">等于</td>
+</tr>
+<tr>
+<td style="text-align:center">__ne__(self, num)</td>
+<td style="text-align:center">self != num</td>
+<td style="text-align:center">不等</td>
+</tr>
+</tbody>
+</table>
+<h2 id="in运算符重载"><a href="#in运算符重载" class="headerlink" title="in运算符重载"></a>in运算符重载</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">函数</th>
+<th style="text-align:center">表达式</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">__contains__(self, v)</td>
+<td style="text-align:center">v in self</td>
+<td style="text-align:center">成员运算</td>
+</tr>
+</tbody>
+</table>
+<h2 id="索引及切片运算符重载"><a href="#索引及切片运算符重载" class="headerlink" title="索引及切片运算符重载"></a>索引及切片运算符重载</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">函数</th>
+<th style="text-align:center">表达式</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">__getitem__(self, i)</td>
+<td style="text-align:center">self[i]</td>
+<td style="text-align:center">索引取值</td>
+</tr>
+<tr>
+<td style="text-align:center">__setitem__(self, i, val)</td>
+<td style="text-align:center">self[i] = val</td>
+<td style="text-align:center">索引赋值</td>
 </tr>
 </tbody>
 </table>
@@ -557,6 +619,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/29/python-2-iteration/" rel="prev" title="Python中的迭代">
+                Python中的迭代 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -637,7 +703,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -720,7 +786,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串函数重载"><span class="nav-number">2.</span> <span class="nav-text">字符串函数重载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#repr与str"><span class="nav-number">2.1.</span> <span class="nav-text">repr与str</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内建函数重载"><span class="nav-number">3.</span> <span class="nav-text">内建函数重载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#部分内建函数"><span class="nav-number">3.1.</span> <span class="nav-text">部分内建函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bool函数重载"><span class="nav-number">3.2.</span> <span class="nav-text">bool函数重载</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运算符重载"><span class="nav-number">4.</span> <span class="nav-text">运算符重载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算术运算符重载"><span class="nav-number">4.1.</span> <span class="nav-text">算术运算符重载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#反向算术运算符重载"><span class="nav-number">4.1.1.</span> <span class="nav-text">反向算术运算符重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复合赋值算术运算符重载"><span class="nav-number">4.1.2.</span> <span class="nav-text">复合赋值算术运算符重载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较运算符重载"><span class="nav-number">4.2.</span> <span class="nav-text">比较运算符重载</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串函数重载"><span class="nav-number">2.</span> <span class="nav-text">字符串函数重载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#repr与str"><span class="nav-number">2.1.</span> <span class="nav-text">repr与str</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内建函数重载"><span class="nav-number">3.</span> <span class="nav-text">内建函数重载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#部分内建函数"><span class="nav-number">3.1.</span> <span class="nav-text">部分内建函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bool函数重载"><span class="nav-number">3.2.</span> <span class="nav-text">bool函数重载</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运算符重载"><span class="nav-number">4.</span> <span class="nav-text">运算符重载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算术运算符重载"><span class="nav-number">4.1.</span> <span class="nav-text">算术运算符重载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#反向算术运算符重载"><span class="nav-number">4.1.1.</span> <span class="nav-text">反向算术运算符重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复合赋值算术运算符重载"><span class="nav-number">4.1.2.</span> <span class="nav-text">复合赋值算术运算符重载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较运算符重载"><span class="nav-number">4.2.</span> <span class="nav-text">比较运算符重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#in运算符重载"><span class="nav-number">4.3.</span> <span class="nav-text">in运算符重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引及切片运算符重载"><span class="nav-number">4.4.</span> <span class="nav-text">索引及切片运算符重载</span></a></li></ol></li></ol></div>
             
 
           </div>

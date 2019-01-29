@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Python中的迭代]]></title>
+    <url>%2F2019%2F01%2F29%2Fpython-2-iteration%2F</url>
+    <content type="text"><![CDATA[概述本文记录遇到的部分迭代技巧 This is a placeholder.]]></content>
+      <categories>
+        <category>技巧</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Python中的重载]]></title>
     <url>%2F2019%2F01%2F29%2Fpython-1-chongzai%2F</url>
-    <content type="text"><![CDATA[概述重载，即overwrite 字符串函数重载repr与strrepr函数用于print函数调用，str则用于str函数调用 1234567def __repr__(self): ... return some string heredef __str__(self): ... return some string here 内建函数重载部分内建函数abslenbool bool函数重载用于bool函数取值，或if、while等判断中 a. 当类内有bool(self)函数时，用此函数的返回值作为bool函数的返回值b. 当不存在bool(self)函数时，用len(self)的返回值是否为0来作为bool函数的返回值c. 也不存在len(self)函数时，直接返回True 运算符重载算术运算符重载 函数 表达式 说明 add(self, rhs) self + rhs 加法 sub(self, rhs) self - rhs 减法 mul(self, rhs) self * rhs 乘法 truediv(self, rhs) self / rhs 除法 floordiv(self, rhs) self // rhs 地板除法 mod(self, rhs) self % rhs 求余 pow(self, rhs) self ** rhs 求幂 反向算术运算符重载 函数 表达式 说明 radd(self, lhs) lhs + self 加法 rsub(self, lhs) lhs - self 减法 rmul(self, lhs) lhs * self 乘法 … … … 复合赋值算术运算符重载 函数 表达式 说明 iadd(self, rhs) self += rhs 自加 isub(self, rhs) self -= rhs 自减 imul(self, rhs) self *= rhs 自乘 … … … a. 若add与iadd同时存在，则对于+=运算优先iaddb. 若iadd不存在，add存在，则+=运算使用add 比较运算符重载 函数 表达式 说明 lt(self, num) self &lt; num 小于，less than]]></content>
+    <content type="text"><![CDATA[概述重载，即overwrite 字符串函数重载repr与strrepr函数用于print函数调用，str则用于str函数调用 1234567def __repr__(self): ... return some string heredef __str__(self): ... return some string here 内建函数重载部分内建函数__abs____len____bool__ bool函数重载用于bool函数取值，或if、while等判断中 a. 当类内有__bool__(self)函数时，用此函数的返回值作为bool函数的返回值b. 当不存在__bool__(self)函数时，用__len__(self)的返回值是否为0来作为bool函数的返回值c. 也不存在__len__(self)函数时，直接返回True 运算符重载算术运算符重载 函数 表达式 说明 __add__(self, rhs) self + rhs 加法 __sub__(self, rhs) self - rhs 减法 __mul__(self, rhs) self * rhs 乘法 __truediv__(self, rhs) self / rhs 除法 __floordiv__(self, rhs) self // rhs 地板除法 __mod__(self, rhs) self % rhs 求余 __pow__(self, rhs) self ** rhs 求幂 反向算术运算符重载 函数 表达式 说明 __radd__(self, lhs) lhs + self 加法 __rsub__(self, lhs) lhs - self 减法 __rmul__(self, lhs) lhs * self 乘法 … … … 复合赋值算术运算符重载 函数 表达式 说明 __iadd__(self, rhs) self += rhs 自加 __isub__(self, rhs) self -= rhs 自减 __imul__(self, rhs) self *= rhs 自乘 … … … a. 若add与iadd同时存在，则对于+=运算优先iaddb. 若iadd不存在，add存在，则+=运算使用add 比较运算符重载 函数 表达式 说明 __lt__(self, num) self &lt; num 小于，less than __le__(self, num) self &lt;= num 小于等于，less equal __gt__(self, num) self &gt; num 大于，greater than __ge__(self, num) self &gt;= num 大于等于 __eq__(self, num) self == num 等于 __ne__(self, num) self != num 不等 in运算符重载 函数 表达式 说明 __contains__(self, v) v in self 成员运算 索引及切片运算符重载 函数 表达式 说明 __getitem__(self, i) self[i] 索引取值 __setitem__(self, i, val) self[i] = val 索引赋值]]></content>
       <categories>
         <category>技巧</category>
       </categories>
