@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"junkuizhang.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="编程入门 CS106L Standard C++ Programming，这门课会深入到很多标准C++的特性和语法，让你编写出高质量的C++代码。例如auto binding，uniform initialization，lambda function，move semantics，RAII等技巧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS自学教程">
+<meta property="og:url" content="https://junkuizhang.github.io/2022/03/27/cs-self-learn/index.html">
+<meta property="og:site_name" content="张小白的小窝">
+<meta property="og:description" content="编程入门 CS106L Standard C++ Programming，这门课会深入到很多标准C++的特性和语法，让你编写出高质量的C++代码。例如auto binding，uniform initialization，lambda function，move semantics，RAII等技巧。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-26T21:13:55.000Z">
+<meta property="article:modified_time" content="2022-04-06T16:41:29.148Z">
+<meta property="article:author" content="张小白">
+<meta property="article:tag" content="coding">
+<meta property="article:tag" content="studying">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://junkuizhang.github.io/2022/03/27/cs-self-learn/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://junkuizhang.github.io/2022/03/27/cs-self-learn/","path":"2022/03/27/cs-self-learn/","title":"CS自学教程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CS自学教程 | 张小白的小窝</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">张小白的小窝</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8"><span class="nav-number">1.</span> <span class="nav-text">编程入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cs106l"><span class="nav-number">1.1.</span> <span class="nav-text">CS106L</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E8%B5%84%E6%BA%90"><span class="nav-number">1.1.1.</span> <span class="nav-text">课程资源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%B5%E5%AD%90%E5%9F%BA%E7%A1%80"><span class="nav-number">2.</span> <span class="nav-text">电子基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ucb-ee16ab"><span class="nav-number">2.1.</span> <span class="nav-text">UCB EE16A&amp;B</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E8%B5%84%E6%BA%90-1"><span class="nav-number">2.1.1.</span> <span class="nav-text">课程资源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ucb-ee120"><span class="nav-number">2.2.</span> <span class="nav-text">UCB EE120</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E8%B5%84%E6%BA%90-2"><span class="nav-number">2.2.1.</span> <span class="nav-text">课程资源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">数据结构和算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cs61b"><span class="nav-number">3.1.</span> <span class="nav-text">CS61B</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E8%B5%84%E6%BA%90-3"><span class="nav-number">3.1.1.</span> <span class="nav-text">课程资源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#coursera"><span class="nav-number">3.2.</span> <span class="nav-text">Coursera</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E8%B5%84%E6%BA%90-4"><span class="nav-number">3.2.1.</span> <span class="nav-text">课程资源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">软件工程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mit-6.031"><span class="nav-number">4.1.</span> <span class="nav-text">MIT 6.031</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E8%B5%84%E6%BA%90-5"><span class="nav-number">4.1.1.</span> <span class="nav-text">课程资源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-number">5.</span> <span class="nav-text">体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#coursera-nand2tetris"><span class="nav-number">5.1.</span> <span class="nav-text">Coursera: Nand2Tetris</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E8%B5%84%E6%BA%90-6"><span class="nav-number">5.1.1.</span> <span class="nav-text">课程资源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cs61c-great-ideas-in-computer-architecture"><span class="nav-number">5.2.</span> <span class="nav-text">CS61C: Great Ideas
+in Computer Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E8%B5%84%E6%BA%90-7"><span class="nav-number">5.2.1.</span> <span class="nav-text">课程资源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#csapp"><span class="nav-number">5.3.</span> <span class="nav-text">CSAPP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E8%B5%84%E6%BA%90-8"><span class="nav-number">5.3.1.</span> <span class="nav-text">课程资源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-number">6.</span> <span class="nav-text">操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mit-6.s081-operating-system-engineering"><span class="nav-number">6.1.</span> <span class="nav-text">MIT 6.S081: Operating
+System Engineering</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E8%B5%84%E6%BA%90-9"><span class="nav-number">6.1.1.</span> <span class="nav-text">课程资源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cs162-operating-system"><span class="nav-number">6.2.</span> <span class="nav-text">CS162: Operating System</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E8%B5%84%E6%BA%90-10"><span class="nav-number">6.2.1.</span> <span class="nav-text">课程资源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C"><span class="nav-number">7.</span> <span class="nav-text">计算机网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#computer-networking-a-top-down-approach"><span class="nav-number">7.1.</span> <span class="nav-text">Computer Networking: A
+Top-Down Approach</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E8%B5%84%E6%BA%90-11"><span class="nav-number">7.1.1.</span> <span class="nav-text">课程资源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cs144-computer-network"><span class="nav-number">7.2.</span> <span class="nav-text">CS144: Computer Network</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E8%B5%84%E6%BA%90-12"><span class="nav-number">7.2.1.</span> <span class="nav-text">课程资源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86"><span class="nav-number">8.</span> <span class="nav-text">编译原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#stanford-cs143-compilers"><span class="nav-number">8.1.</span> <span class="nav-text">Stanford CS143: Compilers</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E8%B5%84%E6%BA%90-13"><span class="nav-number">8.1.1.</span> <span class="nav-text">课程资源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6"><span class="nav-number">9.</span> <span class="nav-text">计算机图形学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#games101"><span class="nav-number">9.1.</span> <span class="nav-text">GAMES101</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD"><span class="nav-number">10.</span> <span class="nav-text">人工智能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cs188-introduction-to-artificial-intelligence"><span class="nav-number">10.1.</span> <span class="nav-text">CS188:
+Introduction to Artificial Intelligence</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E8%B5%84%E6%BA%90-14"><span class="nav-number">10.1.1.</span> <span class="nav-text">课程资源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%B5%84%E6%96%99"><span class="nav-number">11.</span> <span class="nav-text">其他资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">张小白</p>
+  <div class="site-description" itemprop="description">这里是张小白的家。</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/junkuizhang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;junkuizhang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:junkuizhangchina@gmail.com" title="E-Mail → mailto:junkuizhangchina@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://junkuizhang.github.io/2022/03/27/cs-self-learn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="张小白">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张小白的小窝">
+      <meta itemprop="description" content="这里是张小白的家。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CS自学教程 | 张小白的小窝">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CS自学教程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-27 05:13:55" itemprop="dateCreated datePublished" datetime="2022-03-27T05:13:55+08:00">2022-03-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-04-07 00:41:29" itemprop="dateModified" datetime="2022-04-07T00:41:29+08:00">2022-04-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="编程入门">编程入门</h2>
+<h3 id="cs106l">CS106L</h3>
+<p>Standard C++
+Programming，这门课会深入到很多标准C++的特性和语法，让你编写出高质量的C++代码。例如auto
+binding，uniform initialization，lambda function，move
+semantics，RAII等技巧。</p>
+<span id="more"></span>
+<p>值得一提的是，这门课的作业里你会实现一个HashMap（类似于STL中的unordered
+map), 这个作业几乎把整个课程串联了起来，非常考验代码能力。</p>
+<h4 id="课程资源">课程资源</h4>
+<ul>
+<li>课程网站
+<ul>
+<li><a target="_blank" rel="noopener" href="http://web.stanford.edu/class/cs106l/">CS106L</a></li>
+</ul></li>
+<li>参考教材
+<ul>
+<li><a
+target="_blank" rel="noopener" href="http://web.stanford.edu/class/cs106l/full_course_reader.pdf">Reader</a></li>
+</ul></li>
+<li>课程视频
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCSqr6y-eaQT_qZJVUm_4QxQ/playlists">Youtube</a></li>
+</ul></li>
+</ul>
+<h2 id="电子基础">电子基础</h2>
+<h3 id="ucb-ee16ab">UCB EE16A&amp;B</h3>
+<p>Designing Information Devices and Systems
+I&amp;II，电子基础知识的讲授，用Python进行编程。</p>
+<h4 id="课程资源-1">课程资源</h4>
+<ul>
+<li>课程网站
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://inst.eecs.berkeley.edu/~ee16a/su20/#schedule">EE16A</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.eecs16b.org/#schedule">EE16B</a></li>
+</ul></li>
+<li>课程视频
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1uK4y1M7cJ">Bilibili</a></li>
+</ul></li>
+</ul>
+<h3 id="ucb-ee120">UCB EE120</h3>
+<p>Signal and
+Systems，这门课最精华的部分就是6个超有趣的编程作业了，会让你用Python通过学习到的信号与系统的理论知识，解决各类实际问题。例如lab3会让你实现FFT算法，并和Numpy的官方实现进行性能对比；lab4会通过分析手指头的影像数据推断心率；lab5就更牛了，会让你给哈勃望远镜拍到的照片进行降噪处理，恢复绚烂清晰的星空；lab6会让你构造一个反馈系统，平衡小车上的细杆。</p>
+<h4 id="课程资源-2">课程资源</h4>
+<ul>
+<li>课程网站
+<ul>
+<li><a target="_blank" rel="noopener" href="https://inst.eecs.berkeley.edu/~ee120/fa19/">EE120</a></li>
+</ul></li>
+<li>课程视频
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1k341187vL">Bilibili</a></li>
+</ul></li>
+</ul>
+<h2 id="数据结构和算法">数据结构和算法</h2>
+<h3 id="cs61b">CS61B</h3>
+<p>Data Structures and
+Algorithms，伯克利CS61系列的第二门课程，注重数据结构与算法的设计，同时让学生有机会接触上千行的工程代码，通过Java初步领会软件工程的思想。14个lab会让你自己实现课上所讲的绝大部分数据结构，10个homework会让你运用数据结构和算法解决实际问题，
+另外还有3个Project更是让你有机会接触上千行的工程代码，在实战中磨练自己的Java能力。</p>
+<h4 id="课程资源-3">课程资源</h4>
+<ul>
+<li>课程网站
+<ul>
+<li><a target="_blank" rel="noopener" href="https://sp21.datastructur.es/">CS16B</a></li>
+</ul></li>
+<li>课程视频
+<ul>
+<li><a target="_blank" rel="noopener" href="https://sp21.datastructur.es/">课程主页</a></li>
+</ul></li>
+</ul>
+<h3 id="coursera">Coursera</h3>
+<p>Algorithms I &amp; II，让你完全掌握一个算法的核心在于理解三点：</p>
+<ul>
+<li>为什么这么做？（正确性推导，抑或是整个算法的核心本质）</li>
+<li>如何实现它？（光学不用假把式）</li>
+<li>用它解决实际问题（学以致用才是真本事）</li>
+</ul>
+<p>这门课的构成就非常好地契合了上述三个步骤。观看课程视频并且阅读教授的开源课本有助于你理解算法的本质，让你也可以用非常
+生动浅显的话语向别人讲述为什么这个算法得长这个样子。</p>
+<p>在理解算法之后，你可以阅读教授对于课程中讲授的所有数据结构与算法的代码实现。
+注意，这些实现可不是demo性质的，而是工业级的高效实现，从注释到变量命名都非常严谨，模块化也做得相当好，是质量很高的代码。我从这些代码中收获良多。</p>
+<p>最后，就是这门课最激动人心的部分了，10个高质量的Project，并且全都有实际问题的背景描述，丰富的测试样例，自动的评分系统（代码风格也是评分的一环）。让你在实际生活中
+领略算法的魅力。</p>
+<h4 id="课程资源-4">课程资源</h4>
+<ul>
+<li>课程网站
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/algorithms-part1">Algorithms
+I</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/algorithms-part2">Algorithms
+I</a></li>
+</ul></li>
+<li>参考教材
+<ul>
+<li><a target="_blank" rel="noopener" href="https://algs4.cs.princeton.edu/home/">开源教材</a></li>
+</ul></li>
+</ul>
+<h2 id="软件工程">软件工程</h2>
+<h3 id="mit-6.031">MIT 6.031</h3>
+<p>Software
+Construction，这门课的目标就是让学生学会如何写出高质量的代码，所谓高质量，则是满足下面三个目标（课程设计者原话复制，以防自己翻译曲解本意）：</p>
+<ul>
+<li>Safe from bugs. Correctness (correct behavior right now) and
+defensiveness (correct behavior in the future) are required in any
+software we build.</li>
+<li>Easy to understand. The code has to communicate to future
+programmers who need to understand it and make changes in it (fixing
+bugs or adding new features). That future programmer might be you,
+months or years from now. You’ll be surprised how much you forget if you
+don’t write it down, and how much it helps your own future self to have
+a good design.</li>
+<li>Ready for change. Software always changes. Some designs make it easy
+to make changes; others require throwing away and rewriting a lot of
+code.</li>
+</ul>
+<p>为此，这门课的设计者们精心编写了一本书来阐释诸多软件构建的核心原则与前人总结下来的宝贵经验，内容细节到如何编写注释和函数Specification，如何设计抽象数据结构以及诸多并行编程的内容，并且会让你在精心设计的Java编程项目里体验和练习这些编程模式。</p>
+<p>2016年春季学期这门课开源了其所有编程作业的代码框架，而最新的课程教材可以在其最新的教学网站上找到，具体链接参见下方。</p>
+<h4 id="课程资源-5">课程资源</h4>
+<ul>
+<li>课程网站
+<ul>
+<li><a target="_blank" rel="noopener" href="http://web.mit.edu/6.031/www/sp21/">2021</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-005-software-construction-spring-2016/">2016</a></li>
+</ul></li>
+</ul>
+<h2 id="体系结构">体系结构</h2>
+<h3 id="coursera-nand2tetris">Coursera: Nand2Tetris</h3>
+<p>让一个完全没有计算机基础的人从与非门开始
+造一台计算机，并在上面运行俄罗斯方块小游戏。</p>
+<p>听起来就很酷对不对？实现起来更酷！这门课分为硬件和软件两个部分。在硬件部分，你将进入01的世界，用与非门构造出逻辑电路，并逐步搭建出一个CPU
+来运行一套课程作者定义的简易汇编代码。在软件部分，你将编写一个编译器，将作者开发的一个名为Jack的高级语言编译为可以运行在虚拟机上的字节码，然后进一步翻译
+为汇编代码。你还将开发一个简易的OS，让你的计算机支持输入输出图形界面。至此，你可以用Jack开发一个俄罗斯方块的小游戏，将它
+编译为汇编代码，运行在你用与非门搭建出的CPU上，通过你开发的OS进行交互。学完这门课程，你将对整个计算机的体系结构有一个全局
+且深刻的理解，对于你后续课程的学习有着莫大的帮助。</p>
+<p>你也许会担心课程会不会很难，但这门课面向的人群是完全没有计算机基础的人，课程作者的目标是让高中生都能理解。因此，只要你按部就班跟着
+课程规划走，一个月内学完应该绰绰有余。麻雀虽小但是五脏俱全，这门课很好地提取出了计算机的本质，而不过多地陷于现代计算机为了性能而
+设计出的众多复杂细节。让学习者能在轻松愉快的学习体验中感受计算机的优雅与神奇。</p>
+<h4 id="课程资源-6">课程资源</h4>
+<ul>
+<li>课程网站
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/build-a-computer">Part
+1</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/nand2tetris2">Part
+2</a></li>
+</ul></li>
+<li>参考教材
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://github.com/PKUFlyingPig/NandToTetris/blob/master/%5B%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E8%A6%81%E7%B4%A0%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%9E%84%E5%BB%BA%E7%8E%B0%E4%BB%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%5D.(%E5%B0%BC%E8%90%A8).%E5%91%A8%E7%BB%B4.%E6%89%AB%E6%8F%8F%E7%89%88.pdf">Github</a></li>
+</ul></li>
+</ul>
+<h3 id="cs61c-great-ideas-in-computer-architecture">CS61C: Great Ideas
+in Computer Architecture</h3>
+<p>伯克利CS61系列的最后一门课程，深入计算机的硬件细节，带领学生逐步理解C语言是如何一步步转化为RISC-V汇编并在CPU上执行的。和Nand2Tetris不同，这门课在难度和深度上都会大很多，具体会涉及到流水线、Cache、虚存以及并发相关的内容。</p>
+<p>这门课的Project也非常新颖有趣。Project1会让你用C语言写一个小程序，20年秋季学期是著名的游戏Game
+of Life。Project2会让你用RISC-V汇编编写一个神经网络，用来
+识别MNIST手写数字，非常锻炼你对汇编代码的理解和运用。Project3中你会用Logisim这个数字电路模拟软件搭建出一个二级流水线的CPU，并在上面运行RISC-V汇编代码。Project4
+会让你使用OpenMP，SIMD等方法并行优化矩阵运算，实现一个简易的Numpy。</p>
+<h4 id="课程资源-7">课程资源</h4>
+<ul>
+<li>课程网站
+<ul>
+<li><a target="_blank" rel="noopener" href="https://inst.eecs.berkeley.edu/~cs61c/su20/">CS61C</a></li>
+</ul></li>
+<li>课程视频
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1fC4y147iZ?from=search&amp;seid=1039011700066128636">Bilibili</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLDoI-XvXO0aqgoMQvogzmf7CKiSMSUS3M">Youtube</a></li>
+</ul></li>
+</ul>
+<h3 id="csapp">CSAPP</h3>
+<p>CMU大名鼎鼎的镇系神课，以其内容庞杂，project巨难而闻名遐迩。课程内容覆盖了汇编语言、体系结构、操作系统、编译链接、并行、网络等，作为系统入门课，兼具深度和广度，如果自学确实需要相当的毅力和代码功底。</p>
+<p>这门课配合的教材由CMU计算机系主任Bryant教授执笔，也即所谓的CSAPP。这也是我第一本认认真真一页一页读过去的计算机教材，虽然很难啃，但着实收获良多。</p>
+<p>北大购买了这门课的版权并开设了Introduction to Computer
+System这门课，但其实CSAPP所有的课程资源和实验代码都能在它的官方主页上访问到（具体参见下方链接）。</p>
+<p>这门课由于过于出名，全世界的码农争相学习，导致其Project的答案在网上几乎唾手可得。但如果你真的想锻炼自己的代码能力，希望你不要借鉴任何第三方代码。</p>
+<p>认真学完这一门课，你对计算机系统的理解绝对会上升一个台阶。</p>
+<blockquote>
+<p>相信大家在看完CSAPP这本书以后，可能会对书中的第七章链接有一定的疑问。这里推荐一本书《程序员的自我修养》，书的副标题是链接，装载与库。这本书能够帮助我们完善对程序链接的理解，以及对CSAPP第七章部分知识点的一个详细的阐述。相信你在看完这本书以后可以对程序的链接，ELF文件，动态库有一个更加深入的理解。十分推荐在读完CSAPP，对计算机系统有一定的了解以后作为补充资料来阅读。</p>
+</blockquote>
+<h4 id="课程资源-8">课程资源</h4>
+<ul>
+<li>课程网站
+<ul>
+<li><a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/">CSAPP</a></li>
+</ul></li>
+<li>课程视频
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1iW411d7hd">Bilibili</a></li>
+</ul></li>
+<li>课程作业
+<ul>
+<li><a
+target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/labs.html">代码框架已开源</a></li>
+</ul></li>
+</ul>
+<h2 id="操作系统">操作系统</h2>
+<h3 id="mit-6.s081-operating-system-engineering">MIT 6.S081: Operating
+System Engineering</h3>
+<p>麻省理工学院大名鼎鼎的PDOS实验室开设的面向MIT本科生的操作系统课程。开设这门课的教授之一
+—— Robert
+Morris教授曾是一位顶尖黑客，世界上第一个蠕虫病毒Morris就是出自他之手。</p>
+<p>这门课的前身是MIT著名的课程6.828，MIT的几位教授为了这门课曾专门开发了一个基于X86的教学用操作系统JOS，被众多名校作为自己的操统课程实验。但随着RISC-V的横空出世，这几位教授又基于RISC-V开发了一个新的教学用操作系统xv6，并开设了MIT6.S081这门课。由于RISC-V轻便易学的特点，学生不需要像此前JOS一样纠结于众多X86“特有的”为了兼容而遗留下来的复杂机制，而
+可以专注于操作系统层面的开发。</p>
+<p>这几位教授还专门写了一本<a
+target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2021/xv6/book-riscv-rev2.pdf">教程</a>，详细讲解了xv6的设计思想和实现细节。</p>
+<p>这门课的讲授也很有意思，老师会带着学生依照xv6的源代码去理解操作系统的众多机制和设计细节，而不是停留于理论知识。每周都会有一个lab，让你在xv6上增加一些新的机制和特性，非常注重学生动手能力的培养。整个学期一共有11个lab，让你全方位地深刻理解操作系统的每个部分，非常有成就感。而且所有的lab都有着非常完善的测试框架，有的测试代码甚至上千行，让人不得不佩服MIT的几位教授为了教好这门课所付出的心血。</p>
+<p>这门课的后半程会讲授操作系统领域的多篇经典论文，涉及文件系统、系统安全、网络、虚拟化等等多个主题，让你有机会接触到学界
+最前沿的研究方向。</p>
+<h4 id="课程资源-9">课程资源</h4>
+<ul>
+<li>课程网站
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2021/xv6/book-riscv-rev2.pdf">OS</a></li>
+</ul></li>
+<li>课程视频
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV19k4y1C7kA">Bilibili</a></li>
+</ul></li>
+</ul>
+<h3 id="cs162-operating-system">CS162: Operating System</h3>
+<p>这门课让我记忆犹新的有两个部分：</p>
+<p>首先是教材，这本书用的教材Operating Systems: Principles and Practice
+(2nd Edition)一共四卷，写得
+非常深入浅出，很好地弥补了MIT6.S081在理论知识上些许空白，非常建议大家阅读。相关资源会分享在本书的经典书籍推荐模块。</p>
+<p>其次是这门课的Project —— Pintos。Pintos是由Ben
+Pfaff等人基于X86编写的教学用操作系统，Ben Pfaff甚至专门发了篇
+paper来阐述Pintos的设计思想。和MIT的xv6小而精的lab设计理念不同，
+Pintos更注重系统的Design and
+Implementation。Pintos本身仅一万行左右，只提供了操作系统最基本的功能。而4个Project，就是让你在这个极为精简的操作系统之上，分别为其增加线程调度机制（Project1），系统调用（Project2），虚拟内存（Project3）以及文件系统（Project4）。所有的Project都给学生留有很大的设计空间，总代码量在5000行以上。根据Stanford学生自己的反馈，在3-4人组队的情况下，后两个Project的人均耗时也在40个小时以上。</p>
+<p>虽然其难度很大，但Stanford，Berkeley，JHU等多所美国顶尖名校的操统课程均采用了Pintos。因为如果你真的对操作系统很感兴趣，Pintos会极大地提高你编写和debug底层系统代码的能力。在本科阶段，能自己设计、实现并debug一个大型系统，是一段非常珍贵的经历。</p>
+<h4 id="课程资源-10">课程资源</h4>
+<ul>
+<li>课程网站
+<ul>
+<li><a target="_blank" rel="noopener" href="https://cs162.org/">CS162</a></li>
+</ul></li>
+<li>课程视频
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1yk4y1q7C6">Bilibili</a></li>
+</ul></li>
+<li>课程教材
+<ul>
+<li><a target="_blank" rel="noopener" href="http://ospp.cs.washington.edu/">OSPP</a></li>
+</ul></li>
+</ul>
+<h2 id="计算机网络">计算机网络</h2>
+<h3 id="computer-networking-a-top-down-approach">Computer Networking: A
+Top-Down Approach</h3>
+<p>《自顶向下方法》是计算机网络领域的一本经典教材，两位作者Jim
+Kurose和Keith
+Ross精心制作了教材配套的课程网站，并且公开了自己录制的网课视频，交互式的在线章节测试，以及利用wireshark进行抓包分析的lab。唯一遗憾的是这门课并没有硬核的编程作业，而Stanford的CS144能很好地弥补这一点。</p>
+<h4 id="课程资源-11">课程资源</h4>
+<ul>
+<li>课程网站
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://gaia.cs.umass.edu/kurose_ross/index.php">CNATA</a></li>
+</ul></li>
+<li>课程视频
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://gaia.cs.umass.edu/kurose_ross/lectures.php">Youtube</a></li>
+</ul></li>
+<li>课程作业
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://gaia.cs.umass.edu/kurose_ross/wireshark.php">Assignments</a></li>
+</ul></li>
+</ul>
+<h3 id="cs144-computer-network">CS144: Computer Network</h3>
+<p>这门课的主讲人之一是网络领域的巨擘Nick
+McKeown教授。这位拥有自己创业公司的学界业界双巨佬会在他慕课每一章节的最后采访一位业界的高管或者学界的高人，非常开阔眼界。</p>
+<p>在这门课的Project中，你将用C++循序渐进地搭建出整个TCP/IP协议栈，实现IP路由以及ARP协议，最后利用你自己的协议栈代替Linux
+Kernel的网络协议栈和其他学生的计算机进行通信，非常amazing！</p>
+<h4 id="课程资源-12">课程资源</h4>
+<ul>
+<li>课程网站
+<ul>
+<li><a target="_blank" rel="noopener" href="https://cs144.github.io/">Github</a></li>
+</ul></li>
+<li>课程视频
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=r2WZNaFyrbQ&amp;list=PL6RdenZrxrw9inR-IJv-erlOKRHjymxMN">Youtube</a></li>
+</ul></li>
+<li>课程作业
+<ul>
+<li><a target="_blank" rel="noopener" href="https://cs144.github.io/">Github</a></li>
+</ul></li>
+</ul>
+<h2 id="编译原理">编译原理</h2>
+<h3 id="stanford-cs143-compilers">Stanford CS143: Compilers</h3>
+<p>斯坦福的编译原理课程，设计者开发了一个Class-Object-Oriented-Language，简称COOL语言。这门课的核心就是通过理论知识的学习，为COOL语言实现一个编译器，将COOL高级语言编译为MIPS汇编并在Spim这个MIPS模拟器上成功执行。</p>
+<p>理论部分基本按照龙书的顺序覆盖了词法分析、语法分析、语义分析、运行时环境、寄存器分配、代码优化与生成等内容，实践部分则相应地分为词法分析、语法分析、语义分析、代码生成四个阶段，难度循序渐进，并在优化部分给学生留下了很大的设计空间。</p>
+<h4 id="课程资源-13">课程资源</h4>
+<ul>
+<li>课程网站
+<ul>
+<li><a target="_blank" rel="noopener" href="http://web.stanford.edu/class/cs143/">CS143</a></li>
+</ul></li>
+<li>课程视频
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV17K4y147Bz">Bilibili</a></li>
+</ul></li>
+</ul>
+<h2 id="计算机图形学">计算机图形学</h2>
+<h3 id="games101">GAMES101</h3>
+<p>大名鼎鼎无需多言。</p>
+<h2 id="人工智能">人工智能</h2>
+<h3 id="cs188-introduction-to-artificial-intelligence">CS188:
+Introduction to Artificial Intelligence</h3>
+<p>伯克利的人工智能入门课，课程notes写得非常深入浅出，基本不需要观看课程视频。课程内容的安排基本按照人工智能的经典教材Artificial
+intelligence: A Modern
+Approach的章节顺序，覆盖了搜索剪枝、约束满足问题、马尔可夫决策过程、强化学习、贝叶斯网络、隐马尔可夫模型以及基础的机器学习和神经网络的相关内容。</p>
+<p>2018年秋季学期的版本免费开放了gradescope，大家可以在线完成书面作业并实时得到测评结果。同时课程的6个Project也是质量爆炸，复现了经典的Packman（吃豆人）小游戏，会让你利用学到的AI知识，去实现相关算法，让你的吃豆人在迷宫里自由穿梭，躲避鬼怪，收集豆子。</p>
+<h4 id="课程资源-14">课程资源</h4>
+<ul>
+<li>课程网站
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://inst.eecs.berkeley.edu/~cs188/fa18/index.html">CS188</a></li>
+</ul></li>
+<li>课程视频
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://inst.eecs.berkeley.edu/~cs188/fa18/index.html">Youtube</a></li>
+</ul></li>
+<li>课程教材
+<ul>
+<li>Artificial intelligence: A Modern Approach</li>
+</ul></li>
+<li>课程作业
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://inst.eecs.berkeley.edu/~cs188/fa18/index.html">CS188</a></li>
+</ul></li>
+</ul>
+<h2 id="其他资料">其他资料</h2>
+<p><a target="_blank" rel="noopener" href="https://csdiy.wiki/">CS自学指南</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/coding/" rel="tag"># coding</a>
+              <a href="/tags/studying/" rel="tag"># studying</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/17/archlinux-setup/" rel="prev" title="配置Arch Linux">
+                  <i class="fa fa-chevron-left"></i> 配置Arch Linux
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张小白</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">33k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">30 分钟</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
