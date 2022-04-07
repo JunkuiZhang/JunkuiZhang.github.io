@@ -384,8 +384,8 @@ href="https://archlinux.org/download/">官网下载系统镜像</a>，制作USB�
 <h3 id="安装grub">安装GRUB</h3>
 <p>首先安装对应的组件： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pacman -S grub efibootmgr mtools</span><br></pre></td></tr></table></figure></p>
 <p>然后进行安装： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub_uefi --recheck</span><br></pre></td></tr></table></figure></p>
-<p>编辑配置文件，让grub默认直接进入Linux： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/default/grub</span><br></pre></td></tr></table></figure> 修改如下内容：
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">GRUB_HIDDEN_TIMEOUT=0</span><br><span class="line">GRUB_HIDDEN_TIMEOUT_QUIET=<span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
+<p>编辑配置文件，让grub默认直接进入Linux： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/default/grub</span><br></pre></td></tr></table></figure></p>
+<p>修改如下内容： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">GRUB_TIMEOUT=0</span><br><span class="line">GRUB_TIMEOUT_STYLE=hidden</span><br><span class="line">GRUB_HIDDEN_TIMEOUT=0</span><br><span class="line">GRUB_HIDDEN_TIMEOUT_QUIET=<span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
 <p>生成配置文件：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
 <blockquote>
