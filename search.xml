@@ -320,8 +320,8 @@ href="https://archlinux.org/download/">官网下载系统镜像</a>，制作USB�
 <h4 id="硬盘分区挂载">硬盘分区挂载</h4>
 <p>使用<code>lsblk</code>来查看硬盘分区及挂载情况。</p>
 <p>挂载根目录分区： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mount /dev/YOUR-ROOT-PARTITION /mnt</span><br></pre></td></tr></table></figure></p>
-<p>新建文件夹用于挂载EFI： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /mnt/boot/efi</span><br></pre></td></tr></table></figure></p>
-<p>挂载EFI分区： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mount /dev/YOUR-EFI-PARTITION /mnt/boot/efi</span><br></pre></td></tr></table></figure></p>
+<p>新建文件夹用于挂载EFI： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /mnt/boot</span><br></pre></td></tr></table></figure></p>
+<p>挂载EFI分区： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mount /dev/YOUR-EFI-PARTITION /mnt/boot</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>挂载顺序一定要先挂载<code>root</code>，再挂载<code>boot</code>！</p>
 </blockquote>
@@ -383,11 +383,10 @@ href="https://archlinux.org/download/">官网下载系统镜像</a>，制作USB�
 <p>去掉下面这行的注释： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">%wheel ALL=(ALL) ALL</span><br></pre></td></tr></table></figure></p>
 <h3 id="安装grub">安装GRUB</h3>
 <p>首先安装对应的组件： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pacman -S grub efibootmgr mtools</span><br></pre></td></tr></table></figure></p>
-<p>然后进行安装： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>或者直接<code>grub-install /dev/nvme0n1</code><br />
-生成配置文件：</p>
-</blockquote>
+<p>然后进行安装： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub_uefi --recheck</span><br></pre></td></tr></table></figure></p>
+<p>编辑配置文件，让grub默认直接进入Linux： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/default/grub</span><br></pre></td></tr></table></figure> 修改如下内容：
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">GRUB_HIDDEN_TIMEOUT=0</span><br><span class="line">GRUB_HIDDEN_TIMEOUT_QUIET=<span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
+<p>生成配置文件：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>grub不会覆盖opencore</p>
