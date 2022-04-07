@@ -87,6 +87,17 @@ case your EFI partition is the first one, this can be omitted</li>
 <p>生成SSH Key： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure> 全部默认即可。</p>
 <p>然后把Key添加进SSH agent： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(ssh-agent -s)</span>&quot;</span></span><br><span class="line">ssh-add ~/.ssh/id_ed25519</span><br></pre></td></tr></table></figure></p>
 <p>获取SSH公钥： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/.ssh/id_ed25519.pub</span><br></pre></td></tr></table></figure> 然后把内容粘贴进github即可。</p>
+<h3 id="配置paru">配置paru</h3>
+<p><a
+href="https://github.com/Morganamilo/paru">paru</a>是一款方便的包管理工具。
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://aur.archlinux.org/paru-bin.git</span><br><span class="line"><span class="built_in">cd</span> paru</span><br><span class="line">makepkg -si</span><br></pre></td></tr></table></figure></p>
+<p>更改配置文件使其支持代码高亮： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/pacman.conf</span><br></pre></td></tr></table></figure></p>
+<p>去掉Color行的注释。</p>
+<p>更改配置更改排序方式： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/paru.conf</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p><code>paru -Qtdq</code>查看孤儿包。</p>
+</blockquote>
+<p>去掉<code>BottomUp</code>行的注释。</p>
 <h3 id="配置rust">配置Rust</h3>
 <h4 id="配置rustup">配置rustup</h4>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pacman -S rustup</span><br></pre></td></tr></table></figure>
@@ -100,17 +111,6 @@ case your EFI partition is the first one, this can be omitted</li>
 <h4 id="配置cargo镜像源">配置cargo镜像源</h4>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim ~/.cargo/config</span><br></pre></td></tr></table></figure>
 <p>并添加如下内容： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[source.crates-io]</span><br><span class="line">registry = <span class="string">&quot;https://github.com/rust-lang/crates.io-index&quot;</span></span><br><span class="line">replace-with = <span class="string">&#x27;sjtu&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上海交通大学</span></span><br><span class="line">[source.sjtu]</span><br><span class="line">registry = <span class="string">&quot;https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index/&quot;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="配置paru">配置paru</h3>
-<p><a
-href="https://github.com/Morganamilo/paru">paru</a>是一款方便的包管理工具。
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://aur.archlinux.org/paru.git</span><br><span class="line"><span class="built_in">cd</span> paru</span><br><span class="line">makepkg -si</span><br></pre></td></tr></table></figure></p>
-<p>更改配置文件使其支持代码高亮： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/pacman.conf</span><br></pre></td></tr></table></figure></p>
-<p>去掉Color行的注释。</p>
-<p>更改配置更改排序方式： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/paru.conf</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p><code>paru -Qtdq</code>查看孤儿包。</p>
-</blockquote>
-<p>去掉<code>BottomUp</code>行的注释。</p>
 <h3 id="v2raya">v2rayA</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">paru v2raya-bin v2ray</span><br></pre></td></tr></table></figure>
 <p>同时开机启动： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> --now v2raya</span><br></pre></td></tr></table></figure></p>
