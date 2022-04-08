@@ -165,6 +165,9 @@ href="https://github.com/Morganamilo/paru">paru</a>是一款方便的包管理�
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">paru tim qq</span><br><span class="line">paru wechat desktop</span><br><span class="line">paru telegram</span><br></pre></td></tr></table></figure>
 <h3 id="配置vscode">配置vscode</h3>
 <p>使得vscode的全局菜单起作用: <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">paru libdbusmenu-glib</span><br></pre></td></tr></table></figure></p>
+<p>支持vscode的keyring： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">paru gnome keyring</span><br></pre></td></tr></table></figure></p>
+<p>为vscode设置clangd： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">paru clang</span><br></pre></td></tr></table></figure></p>
+<p>然后在设置中设置clangd的地址： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">whereis clangd</span><br></pre></td></tr></table></figure></p>
 <h2 id="配置部分驱动">配置部分驱动</h2>
 <h3 id="vulkan支持">Vulkan支持</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">paru mesa vulkan</span><br><span class="line">sudo sysctl dev.i915.perf_stream_paranoid=0</span><br></pre></td></tr></table></figure>
