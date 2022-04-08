@@ -59,9 +59,16 @@ E = mc^2
 <ol type="1">
 <li>通过OC进入Linux</li>
 </ol>
-<p>开启OC的Openshell，通过执行<code>\EFI\boot\arch\grubx64.efi</code>来进入linux。</p>
+<p>开启OC的Openshell，通过执行<code>\EFI\grub_uefi\grubx64.efi</code>来进入linux。</p>
+<blockquote>
+<p>输入<code>fs0:</code>或者<code>fs1:</code>等进入文件系统，
+通过<code>lsblk</code>查看硬盘，一般而言，<code>fs0:</code>是第一个硬盘位，<code>fs1:</code>是第二个硬盘位</p>
+</blockquote>
+<blockquote>
+<p>由于之前执行<code>grub-install</code>时指定了<code>--bootloader-id=grub_uefi</code>因此入口在<code>grub_uefi</code>文件夹下</p>
+</blockquote>
 <ol start="2" type="1">
-<li>生成配置 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo efibootmgr -c -L <span class="string">&quot;Linux&quot;</span> -l <span class="string">&quot;\EFI\boot\arch\grubx64.efi&quot;</span> -d <span class="string">&quot;/dev/nvme0n1&quot;</span> -p 1</span><br></pre></td></tr></table></figure></li>
+<li>生成配置 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo efibootmgr -c -L <span class="string">&quot;Linux&quot;</span> -l <span class="string">&quot;\EFI\grub_uefi\grubx64.efi&quot;</span> -d <span class="string">&quot;/dev/nvme0n1&quot;</span> -p 1</span><br></pre></td></tr></table></figure></li>
 </ol>
 <ul>
 <li><code>-c</code>: Create</li>
@@ -76,6 +83,9 @@ disk the UEFI firmware should read the file from, it can be
 <li><code>-p 1</code>: point the partition number we found earlier, in
 case your EFI partition is the first one, this can be omitted</li>
 </ul>
+<blockquote>
+<p>由于之前执行<code>grub-install</code>时指定<code>--bootloader-id=grub_uefi</code>，因此路径为<code>grub_uefi</code></p>
+</blockquote>
 <ol start="3" type="1">
 <li>重启</li>
 </ol>
