@@ -373,7 +373,7 @@ href="https://archlinux.org/download/">官网下载系统镜像</a>，制作USB�
 <h3 id="硬盘管理安装">硬盘管理安装</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pacman -S lvm2</span><br></pre></td></tr></table></figure>
 <p>并通过如下命令编辑<code>HOOKS</code>：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/makeinitcpio.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/mkinitcpio.conf</span><br></pre></td></tr></table></figure>
 <p>找到<code>HOOKS=</code>那一行，在<code>block</code>和<code>filesystems</code>之间加入<code>lvm2</code>：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">HOOKS=(... block lvm2 filesystems ...)</span><br></pre></td></tr></table></figure>
 <p>通过如下命令让其生效：</p>
