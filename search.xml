@@ -207,7 +207,7 @@ href="https://github.com/Morganamilo/paru">paru</a>是一款方便的包管理�
 <h3 id="vulkan支持">Vulkan支持</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">paru mesa vulkan</span><br><span class="line">sudo sysctl dev.i915.perf_stream_paranoid=0</span><br></pre></td></tr></table></figure>
 <h3 id="ntfs支持">NTFS支持</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">paru ntfs-3g</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">paru ntfsprogs-ntfs3</span><br></pre></td></tr></table></figure>
 <h3 id="触控板多手势支持">触控板多手势支持</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S touchegg</span><br><span class="line">paru touche</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> touchegg.services</span><br></pre></td></tr></table></figure>
 <h3 id="指纹识别支持">指纹识别支持</h3>
