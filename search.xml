@@ -313,6 +313,24 @@ href="https://archlinux.org/download/">官网下载系统镜像</a>，制作USB�
 <p>注意：USB盘符应为ARCH_202203之类的，否则会无法进入安装介质。</p>
 </blockquote>
 <span id="more"></span>
+<h2 id="windows-dual-boot">Windows Dual Boot</h2>
+<p>If you want to have a larger ESP just in case, you can create one
+using Windows installation media before the partitioning step.</p>
+<p>How to manually create ESP using Windows installation media Before
+the partitioning step:</p>
+<p>(Technically, you could also do this on the partitioning step and
+click Refresh afterwards.)</p>
+<ol type="1">
+<li>Press <code>Shift</code>+<code>F10</code> to open Command Line.</li>
+<li>Type <code>diskpart</code> Enter. Diskpart will take a while to
+launch.</li>
+<li>Type <code>list disk</code> Enter. A list of disks will be printed.
+Note the number next to yours (most likely 0). Select that disk:
+<code>select disk 0</code> Enter.</li>
+<li>Create ESP: <code>create partition efi size=500</code> Enter (500 is
+partition size in MiB).</li>
+<li>Exit Diskpart: <code>exit</code> Enter.</li>
+</ol>
 <h2 id="安装介质中的准备操作">安装介质中的准备操作</h2>
 <h3 id="连接网络">连接网络</h3>
 <h4 id="启动应用">启动应用</h4>
