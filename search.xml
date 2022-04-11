@@ -187,6 +187,9 @@ href="https://github.com/Morganamilo/paru">paru</a>是一款方便的包管理�
 <p>然后安装： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/romkatv/powerlevel10k.git <span class="variable">$&#123;ZSH_CUSTOM:-<span class="variable">$HOME</span>/.oh-my-zsh/custom&#125;</span>/themes/powerlevel10k</span><br></pre></td></tr></table></figure></p>
 <p>编辑配置文件，更改主题： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ZSH_THEME=<span class="string">&quot;powerlevel10k/powerlevel10k&quot;</span></span><br></pre></td></tr></table></figure></p>
 <p>然后重启terminal进行自动配置。</p>
+<blockquote>
+<p>输入<code>p10k configure</code>可以重新进行设置</p>
+</blockquote>
 <h3 id="中文输入支持">中文输入支持</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">paru fcitx5-im</span><br><span class="line">paru fcitx5 chinese addon</span><br></pre></td></tr></table></figure>
 <p>安装所有与im相关的community包，然后在设置中搜索<code>input method</code>添加<code>pinyin</code>。</p>
