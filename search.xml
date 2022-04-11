@@ -51,6 +51,38 @@ E = mc^2
       </tags>
   </entry>
   <entry>
+    <title>大糖帝国（The Great Sugar Empire）</title>
+    <url>/2019/01/15/New-Society/</url>
+    <content><![CDATA[<h1 id="概述">概述</h1>
+<h1 id="模型">模型</h1>
+<h1 id="附录">附录</h1>
+<h2 id="源码">源码</h2>
+<p>代码见<a
+href="https://github.com/JunkuiZhang/NewSociaty/">GitHub</a></p>
+<h2 id="基尼系数的计算">基尼系数的计算</h2>
+<p>由于这里数据量较小，故可使用直接计算法计算</p>
+<p><span class="math display">\[
+\Delta = \frac{1}{n^2}\sum^{n}_{j=1}\sum^{n}_{i=1}|Y_j-Y_i|
+\]</span></p>
+<p>这里<span class="math inline">\(\Delta\)</span>是基尼平均差，<span
+class="math inline">\(|Y\_j-Y\_i|\)</span>是任意一对样本差的绝对值，<span
+class="math inline">\(n\)</span>是样本容量</p>
+<p>则基尼系数可以计算为：</p>
+<p><span class="math display">\[
+G = \frac{\Delta}{2u}
+\]</span></p>
+<p>这里<span class="math inline">\(G\)</span>表示基尼系数，<span
+class="math inline">\(u\)</span>是样本均值。</p>
+]]></content>
+      <categories>
+        <category>模型</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Economy</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>配置Arch Linux</title>
     <url>/2022/03/17/archlinux-setup/</url>
     <content><![CDATA[<h2 id="引导设置">引导设置</h2>
@@ -273,63 +305,19 @@ manager，安装并使用该主题，编辑该主题，取消勾选<code>Disable
       </tags>
   </entry>
   <entry>
-    <title>大糖帝国（The Great Sugar Empire）</title>
-    <url>/2019/01/15/New-Society/</url>
-    <content><![CDATA[<h1 id="概述">概述</h1>
-<h1 id="模型">模型</h1>
-<h1 id="附录">附录</h1>
-<h2 id="源码">源码</h2>
-<p>代码见<a
-href="https://github.com/JunkuiZhang/NewSociaty/">GitHub</a></p>
-<h2 id="基尼系数的计算">基尼系数的计算</h2>
-<p>由于这里数据量较小，故可使用直接计算法计算</p>
-<p><span class="math display">\[
-\Delta = \frac{1}{n^2}\sum^{n}_{j=1}\sum^{n}_{i=1}|Y_j-Y_i|
-\]</span></p>
-<p>这里<span class="math inline">\(\Delta\)</span>是基尼平均差，<span
-class="math inline">\(|Y\_j-Y\_i|\)</span>是任意一对样本差的绝对值，<span
-class="math inline">\(n\)</span>是样本容量</p>
-<p>则基尼系数可以计算为：</p>
-<p><span class="math display">\[
-G = \frac{\Delta}{2u}
-\]</span></p>
-<p>这里<span class="math inline">\(G\)</span>表示基尼系数，<span
-class="math inline">\(u\)</span>是样本均值。</p>
-]]></content>
-      <categories>
-        <category>模型</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>Economy</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>安装Arch Linux</title>
     <url>/2022/03/16/archlinux/</url>
     <content><![CDATA[<p>需要从<a
 href="https://archlinux.org/download/">官网下载系统镜像</a>，制作USB安装介质，使用UEFI启动后再进行下一步行动。</p>
 <blockquote>
-<p>注意：USB盘符应为ARCH_202203之类的，否则会无法进入安装介质。</p>
+<p>注意：USB盘符应为<code>ARCH_202203</code>之类的，否则会无法进入安装介质。</p>
 </blockquote>
 <span id="more"></span>
 <h2 id="windows-dual-boot">Windows Dual Boot</h2>
-<p>If you want to have a larger ESP just in case, you can create one
-using Windows installation media before the partitioning step.</p>
-<p>How to manually create ESP using Windows installation media Before
-the partitioning step:</p>
-<p>(Technically, you could also do this on the partitioning step and
-click Refresh afterwards.)</p>
 <ol type="1">
-<li>Press <code>Shift</code>+<code>F10</code> to open Command Line.</li>
-<li>Type <code>diskpart</code> Enter. Diskpart will take a while to
-launch.</li>
-<li>Type <code>list disk</code> Enter. A list of disks will be printed.
-Note the number next to yours (most likely 0). Select that disk:
-<code>select disk 0</code> Enter.</li>
-<li>Create ESP: <code>create partition efi size=500</code> Enter (500 is
-partition size in MiB).</li>
-<li>Exit Diskpart: <code>exit</code> Enter.</li>
+<li>为Opencore分好区，并把文件放入</li>
+<li>把装有Windows安装介质的U盘插入电脑，并从Opencore启动安装</li>
+<li>正常安装即可</li>
 </ol>
 <h2 id="安装介质中的准备操作">安装介质中的准备操作</h2>
 <h3 id="连接网络">连接网络</h3>
