@@ -203,6 +203,8 @@ href="https://github.com/Morganamilo/paru">paru</a>是一款方便的包管理�
 <p>支持vscode的keyring： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">paru gnome keyring</span><br></pre></td></tr></table></figure></p>
 <p>为vscode设置clangd： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">paru clang</span><br></pre></td></tr></table></figure></p>
 <p>然后在设置中设置clangd的地址： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">whereis clangd</span><br></pre></td></tr></table></figure></p>
+<h3 id="配置chrome">配置Chrome</h3>
+<p>启用视频播放硬件加速： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/.config</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;--disable-features=UseChromeOSDirectVideoDecoder --enable-features=VaapiVideoDecoder --ignore-gpu-blocklist --use-gl=desktop&quot;</span> &gt; ~/.config/chrome-flags.conf</span><br></pre></td></tr></table></figure></p>
 <h2 id="配置部分驱动">配置部分驱动</h2>
 <h3 id="vulkan支持">Vulkan支持</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">paru mesa vulkan</span><br><span class="line">sudo sysctl dev.i915.perf_stream_paranoid=0</span><br></pre></td></tr></table></figure>
@@ -449,12 +451,11 @@ href="https://archlinux.org/download/">官网下载系统镜像</a>，制作USB�
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
 <p>并添加如下两行： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">127.0.0.1   localhost</span><br><span class="line">127.0.1.1   xiaobaiArch</span><br></pre></td></tr></table></figure> &gt; 这里的名称要与主机名相同</p>
 <h3 id="配置部分硬件">配置部分硬件</h3>
-<h4 id="cpu相应的ucode">CPU相应的<code>ucode</code></h4>
-<p>对于Intel： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pacman -S intel-ucode</span><br></pre></td></tr></table></figure></p>
 <h4 id="显卡驱动">显卡驱动</h4>
-<p>对于Intel和AMD： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pacman -S mesa</span><br></pre></td></tr></table></figure></p>
-<p>对于NVIDIA： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pacman -S nvidia</span><br></pre></td></tr></table></figure></p>
-<p>或 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pacman -S nvidia-lts</span><br></pre></td></tr></table></figure></p>
+<h5 id="intel核显">Intel核显</h5>
+<p>对于Intel： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pacman -S mesa xf86-video-intel intel-media-driver</span><br></pre></td></tr></table></figure></p>
+<h5 id="amd显卡">AMD显卡</h5>
+<p>对于AMD： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pacman -S mesa xf86-video-amdgpu vulkan-radeon libva-mesa-driver mesa-vdpau</span><br></pre></td></tr></table></figure></p>
 <h4 id="声卡驱动">声卡驱动</h4>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pacman -S alsa-utils pulseaudio pulseaudio-bluetooth cups</span><br></pre></td></tr></table></figure>
 <h4 id="蓝牙驱动">蓝牙驱动</h4>
