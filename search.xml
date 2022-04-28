@@ -190,6 +190,8 @@ href="https://github.com/Morganamilo/paru">paru</a>是一款方便的包管理�
 <blockquote>
 <p>输入<code>p10k configure</code>可以重新进行设置</p>
 </blockquote>
+<h4 id="wezterm主题">Wezterm主题</h4>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/catppuccin/wezterm.git</span><br><span class="line"><span class="built_in">mkdir</span> -p ~/.config/wezterm/colors</span><br><span class="line"><span class="built_in">cp</span> ./wezterm/Catppuccin.toml ~/.config/wezterm/colors/</span><br></pre></td></tr></table></figure>
 <h3 id="中文输入支持">中文输入支持</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">paru fcitx5-im</span><br><span class="line">paru fcitx5 chinese addon</span><br></pre></td></tr></table></figure>
 <p>安装所有与im相关的community包，然后在设置中搜索<code>input method</code>添加<code>pinyin</code>。</p>
