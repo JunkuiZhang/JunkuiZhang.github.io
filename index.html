@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
-
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
@@ -15,12 +14,12 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-mac-osx.css">
   <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"junkuizhang.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"junkuizhang.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="这里是张小白的家。">
 <meta property="og:type" content="website">
@@ -47,6 +46,9 @@
 
 
 
+
+
+
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -56,8 +58,8 @@
   <div class="headband"></div>
 
   <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="切换导航栏" role="button">
         <span class="toggle-line"></span>
@@ -76,7 +78,7 @@
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
         <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
@@ -118,15 +120,9 @@
     </div>
   </div>
 
-</div>
+</header>
         
   
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
   <aside class="sidebar">
 
     <div class="sidebar-inner sidebar-overview-active">
@@ -146,15 +142,15 @@
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">张小白</p>
   <div class="site-description" itemprop="description">这里是张小白的家。</div>
 </div>
-<div class="site-state-wrap site-overview-item animated">
+<div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -163,42 +159,29 @@
         <span class="site-state-item-name">分类</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
 </div>
-  <div class="links-of-author site-overview-item animated">
+  <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/junkuizhang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;junkuizhang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/junkuizhang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;junkuizhang" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:junkuizhangchina@gmail.com" title="E-Mail → mailto:junkuizhangchina@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:junkuizhangchina@gmail.com" title="E-Mail → mailto:junkuizhangchina@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
-
-
 
         </div>
       </div>
     </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
 
     
-  <div class="back-to-top" role="button" aria-label="返回顶部">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-  <div class="reading-progress-bar"></div>
+  </aside>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    </div>
 
     <div class="main-inner index posts-expand">
 
@@ -210,7 +193,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://junkuizhang.github.io/2022/03/27/cs-self-learn/">
+    <link itemprop="mainEntityOfPage" href="https://junkuizhang.github.io/2023/05/07/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -228,7 +211,105 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/27/cs-self-learn/" class="post-title-link" itemprop="url">CS自学教程</a>
+          <a href="/2023/05/07/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-05-07 22:30:45 / 修改时间：22:31:06" itemprop="dateCreated datePublished" datetime="2023-05-07T22:30:45+08:00">2023-05-07</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>78</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://junkuizhang.github.io/2023/01/03/gpt_awesome/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="张小白">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张小白的小窝">
+      <meta itemprop="description" content="这里是张小白的家。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 张小白的小窝">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/01/03/gpt_awesome/" class="post-title-link" itemprop="url">人工智能教我学习</a>
         </h2>
 
         <div class="post-meta-container">
@@ -239,14 +320,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-03-27 05:13:55" itemprop="dateCreated datePublished" datetime="2022-03-27T05:13:55+08:00">2022-03-27</time>
+      <time title="创建时间：2023-01-03 23:34:49" itemprop="dateCreated datePublished" datetime="2023-01-03T23:34:49+08:00">2023-01-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-04-07 00:41:29" itemprop="dateModified" datetime="2022-04-07T00:41:29+08:00">2022-04-07</time>
+      <time title="修改时间：2023-05-07 22:31:06" itemprop="dateModified" datetime="2023-05-07T22:31:06+08:00">2023-05-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -265,14 +346,114 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>6.3k</span>
+      <span>7</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>ChatGPT真是太厉害了！</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://junkuizhang.github.io/2022/03/26/cs-self-learn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="张小白">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="张小白的小窝">
+      <meta itemprop="description" content="这里是张小白的家。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 张小白的小窝">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/26/cs-self-learn/" class="post-title-link" itemprop="url">CS自学教程</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-27 05:13:55" itemprop="dateCreated datePublished" datetime="2022-03-27T05:13:55+08:00">2022-03-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-07 22:31:06" itemprop="dateModified" datetime="2023-05-07T22:31:06+08:00">2023-05-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>15 分钟</span>
     </span>
 </div>
 
@@ -285,13 +466,10 @@
     <div class="post-body" itemprop="articleBody">
           <h2 id="编程入门">编程入门</h2>
 <h3 id="cs106l">CS106L</h3>
-<p>Standard C++
-Programming，这门课会深入到很多标准C++的特性和语法，让你编写出高质量的C++代码。例如auto
-binding，uniform initialization，lambda function，move
-semantics，RAII等技巧。</p>
+<p>Standard C++ Programming，这门课会深入到很多标准C++的特性和语法，让你编写出高质量的C++代码。例如auto binding，uniform initialization，lambda function，move semantics，RAII等技巧。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/03/27/cs-self-learn/#more" rel="contents">
+              <a class="btn" href="/2022/03/26/cs-self-learn/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -322,7 +500,7 @@ semantics，RAII等技巧。</p>
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://junkuizhang.github.io/2022/03/17/archlinux-setup/">
+    <link itemprop="mainEntityOfPage" href="https://junkuizhang.github.io/2022/03/16/archlinux-setup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -340,7 +518,7 @@ semantics，RAII等技巧。</p>
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/17/archlinux-setup/" class="post-title-link" itemprop="url">配置Arch Linux</a>
+          <a href="/2022/03/16/archlinux-setup/" class="post-title-link" itemprop="url">配置Arch Linux</a>
         </h2>
 
         <div class="post-meta-container">
@@ -358,7 +536,7 @@ semantics，RAII等技巧。</p>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-04-28 22:54:22" itemprop="dateModified" datetime="2022-04-28T22:54:22+08:00">2022-04-28</time>
+      <time title="修改时间：2023-05-07 22:31:06" itemprop="dateModified" datetime="2023-05-07T22:31:06+08:00">2023-05-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -377,14 +555,14 @@ semantics，RAII等技巧。</p>
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>5.2k</span>
+      <span>1.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
+      <span>6 分钟</span>
     </span>
 </div>
 
@@ -399,7 +577,7 @@ semantics，RAII等技巧。</p>
 <p>这部分内容将把Linux暴露给Opencore，以从Opencore直接启动。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/03/17/archlinux-setup/#more" rel="contents">
+              <a class="btn" href="/2022/03/16/archlinux-setup/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -430,7 +608,7 @@ semantics，RAII等技巧。</p>
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://junkuizhang.github.io/2022/03/16/archlinux/">
+    <link itemprop="mainEntityOfPage" href="https://junkuizhang.github.io/2022/03/15/archlinux/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -448,7 +626,7 @@ semantics，RAII等技巧。</p>
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/16/archlinux/" class="post-title-link" itemprop="url">安装Arch Linux</a>
+          <a href="/2022/03/15/archlinux/" class="post-title-link" itemprop="url">安装Arch Linux</a>
         </h2>
 
         <div class="post-meta-container">
@@ -466,7 +644,7 @@ semantics，RAII等技巧。</p>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-04-12 22:33:37" itemprop="dateModified" datetime="2022-04-12T22:33:37+08:00">2022-04-12</time>
+      <time title="修改时间：2023-05-07 22:31:06" itemprop="dateModified" datetime="2023-05-07T22:31:06+08:00">2023-05-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -485,14 +663,14 @@ semantics，RAII等技巧。</p>
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.5k</span>
+      <span>1.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>5 分钟</span>
     </span>
 </div>
 
@@ -503,14 +681,13 @@ semantics，RAII等技巧。</p>
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>需要从<a
-target="_blank" rel="noopener" href="https://archlinux.org/download/">官网下载系统镜像</a>，制作USB安装介质，使用UEFI启动后再进行下一步行动。</p>
+          <p>需要从<a target="_blank" rel="noopener" href="https://archlinux.org/download/">官网下载系统镜像</a>，制作USB安装介质，使用UEFI启动后再进行下一步行动。</p>
 <blockquote>
 <p>注意：USB盘符应为<code>ARCH_202203</code>之类的，否则会无法进入安装介质。</p>
 </blockquote>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/03/16/archlinux/#more" rel="contents">
+              <a class="btn" href="/2022/03/15/archlinux/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -577,7 +754,7 @@ target="_blank" rel="noopener" href="https://archlinux.org/download/">官网下�
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-04-07 00:41:29" itemprop="dateModified" datetime="2022-04-07T00:41:29+08:00">2022-04-07</time>
+      <time title="修改时间：2023-05-07 22:31:06" itemprop="dateModified" datetime="2023-05-07T22:31:06+08:00">2023-05-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -596,7 +773,7 @@ target="_blank" rel="noopener" href="https://archlinux.org/download/">官网下�
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.4k</span>
+      <span>379</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -685,7 +862,7 @@ target="_blank" rel="noopener" href="https://archlinux.org/download/">官网下�
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-04-07 00:41:29" itemprop="dateModified" datetime="2022-04-07T00:41:29+08:00">2022-04-07</time>
+      <time title="修改时间：2023-05-07 22:31:06" itemprop="dateModified" datetime="2023-05-07T22:31:06+08:00">2023-05-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -704,14 +881,14 @@ target="_blank" rel="noopener" href="https://archlinux.org/download/">官网下�
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.7k</span>
+      <span>368</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>1 分钟</span>
     </span>
 </div>
 
@@ -743,13 +920,9 @@ x_1,x_2,x_3&amp;\geq0
 <p>用Python进行线性规划求解时，</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> optimize</span><br><span class="line"></span><br><span class="line">z = np.array([<span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>])</span><br><span class="line">a = np.array([[<span class="number">1</span>, <span class="number">4</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">2</span>, <span class="number">0</span>]]</span><br><span class="line">b = np.array([<span class="number">8</span>, <span class="number">6</span>])</span><br><span class="line">a_eq = np.array([[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]])</span><br><span class="line">b_eq = np.array([<span class="number">7</span>])</span><br><span class="line">x1_bound = x2_bound = x3_bound = (<span class="number">0</span>, <span class="literal">None</span>)</span><br><span class="line">bounds = (x1_bound, x2_bound, x3_bound)</span><br><span class="line"></span><br><span class="line">res = optimize.linprog(z, A_ub=-a, b_ub=-b, A_eq=a_eq, b_eq=b_eq, bounds=bounds)</span><br><span class="line"><span class="built_in">print</span>(res)</span><br></pre></td></tr></table></figure>
 <h2 id="python中的非线性规划求解">Python中的非线性规划求解</h2>
-<p>详见scipy的<a
-target="_blank" rel="noopener" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html">官方文档</a>。</p>
+<p>详见scipy的<a target="_blank" rel="noopener" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html">官方文档</a>。</p>
 <p>考虑如下的非线性规划问题：</p>
-<p>计算<span
-class="math inline">\((2+x_1)/(1+x_2)-3x_1+4x_3\)</span>的最小值，这里对任意<span
-class="math inline">\(x_i\)</span>均有<span
-class="math inline">\(0.1&lt;x_i&lt;0.9\)</span>成立。</p>
+<p>计算<span class="math inline">\((2+x_1)/(1+x_2)-3x_1+4x_3\)</span>的最小值，这里对任意<span class="math inline">\(x_i\)</span>均有<span class="math inline">\(0.1&lt;x_i&lt;0.9\)</span>成立。</p>
 <p>Python代码如下： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> optimize</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义目标函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func1</span>(<span class="params">nums</span>):</span><br><span class="line">    a, b, c, d = nums</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_func0</span>(<span class="params">x</span>):</span><br><span class="line">        y = (a+x[<span class="number">0</span>])/(b+x[<span class="number">1</span>]) - c*x[<span class="number">0</span>] + d*x[<span class="number">2</span>]</span><br><span class="line">	<span class="keyword">return</span> y</span><br><span class="line">    <span class="keyword">return</span> _func0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 有两种方法表示约束</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cons1</span>(<span class="params">nums</span>):</span><br><span class="line">    <span class="comment"># &#x27;eq&#x27;表示等式，&#x27;ineq&#x27;表示大于等于</span></span><br><span class="line">    x1_min, x1_max, x1_min, x2_max, x3_min, x3_max = nums</span><br><span class="line">    _cons = (&#123;<span class="string">&#x27;type&#x27;</span>:<span class="string">&#x27;ineq&#x27;</span>, <span class="string">&#x27;fun&#x27;</span>:<span class="keyword">lambda</span> x: x[<span class="number">0</span>]-x1_min&#125;,</span><br><span class="line">             &#123;<span class="string">&#x27;type&#x27;</span>:<span class="string">&#x27;ineq&#x27;</span>, <span class="string">&#x27;fun&#x27;</span>:<span class="keyword">lambda</span> x: x1_max-x[<span class="number">0</span>]&#125;，</span><br><span class="line">	     &#123;<span class="string">&#x27;type&#x27;</span>:<span class="string">&#x27;ineq&#x27;</span>, <span class="string">&#x27;fun&#x27;</span>:<span class="keyword">lambda</span> x: x[<span class="number">1</span>]-x2_min&#125;,</span><br><span class="line">	     &#123;<span class="string">&#x27;type&#x27;</span>:<span class="string">&#x27;ineq&#x27;</span>, <span class="string">&#x27;fun&#x27;</span>:<span class="keyword">lambda</span> x: x2_max-x[<span class="number">1</span>]&#125;,</span><br><span class="line">	     &#123;<span class="string">&#x27;type&#x27;</span>:<span class="string">&#x27;ineq&#x27;</span>, <span class="string">&#x27;fun&#x27;</span>:<span class="keyword">lambda</span> x: x[<span class="number">2</span>]-x3_min&#125;,</span><br><span class="line">	     &#123;<span class="string">&#x27;type&#x27;</span>:<span class="string">&#x27;ineq&#x27;</span>, <span class="string">&#x27;fun&#x27;</span>:<span class="keyword">lambda</span> x: x3_max-x[<span class="number">2</span>]&#125;)</span><br><span class="line">    <span class="keyword">return</span> _cons</span><br><span class="line"></span><br><span class="line"><span class="comment"># 法2</span></span><br><span class="line">bouds = []</span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    <span class="comment"># &#x27;None&#x27;为不限制</span></span><br><span class="line">    bounds.append((<span class="number">0.1</span>, <span class="number">0.9</span>))</span><br><span class="line"></span><br><span class="line">args = [<span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">x0 = np.array([<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">0.5</span>])</span><br><span class="line">res = optimize.minimize(func1(args), x0=x0, constraints=cons1([<span class="number">.1</span>, <span class="number">.9</span>]*<span class="number">3</span>), bounds=bounds)</span><br><span class="line"><span class="built_in">print</span>(res)</span><br><span class="line"></span><br><span class="line"><span class="comment"># res.x = [0.9, 0.9, 0.1</span></span><br><span class="line"><span class="comment"># res.success = True]</span></span><br></pre></td></tr></table></figure></p>
 
       
@@ -777,7 +950,7 @@ class="math inline">\(0.1&lt;x_i&lt;0.9\)</span>成立。</p>
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://junkuizhang.github.io/2019/05/19/lifs-is-strange/">
+    <link itemprop="mainEntityOfPage" href="https://junkuizhang.github.io/2019/05/18/lifs-is-strange/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -795,7 +968,7 @@ class="math inline">\(0.1&lt;x_i&lt;0.9\)</span>成立。</p>
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/05/19/lifs-is-strange/" class="post-title-link" itemprop="url">Life is Strange</a>
+          <a href="/2019/05/18/lifs-is-strange/" class="post-title-link" itemprop="url">Life is Strange</a>
         </h2>
 
         <div class="post-meta-container">
@@ -813,7 +986,7 @@ class="math inline">\(0.1&lt;x_i&lt;0.9\)</span>成立。</p>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-04-07 00:41:29" itemprop="dateModified" datetime="2022-04-07T00:41:29+08:00">2022-04-07</time>
+      <time title="修改时间：2023-05-07 22:31:06" itemprop="dateModified" datetime="2023-05-07T22:31:06+08:00">2023-05-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -832,7 +1005,7 @@ class="math inline">\(0.1&lt;x_i&lt;0.9\)</span>成立。</p>
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>938</span>
+      <span>266</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -853,7 +1026,7 @@ class="math inline">\(0.1&lt;x_i&lt;0.9\)</span>成立。</p>
           <h2 id="life-is-strange-is-it-not">Life is strange, is it not?</h2>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/05/19/lifs-is-strange/#more" rel="contents">
+              <a class="btn" href="/2019/05/18/lifs-is-strange/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -920,7 +1093,7 @@ class="math inline">\(0.1&lt;x_i&lt;0.9\)</span>成立。</p>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-04-07 00:41:29" itemprop="dateModified" datetime="2022-04-07T00:41:29+08:00">2022-04-07</time>
+      <time title="修改时间：2023-05-07 22:31:06" itemprop="dateModified" datetime="2023-05-07T22:31:06+08:00">2023-05-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -939,14 +1112,14 @@ class="math inline">\(0.1&lt;x_i&lt;0.9\)</span>成立。</p>
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.1k</span>
+      <span>805</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>3 分钟</span>
     </span>
 </div>
 
@@ -1028,7 +1201,7 @@ class="math inline">\(0.1&lt;x_i&lt;0.9\)</span>成立。</p>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-04-07 00:41:29" itemprop="dateModified" datetime="2022-04-07T00:41:29+08:00">2022-04-07</time>
+      <time title="修改时间：2023-05-07 22:31:06" itemprop="dateModified" datetime="2023-05-07T22:31:06+08:00">2023-05-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1047,14 +1220,14 @@ class="math inline">\(0.1&lt;x_i&lt;0.9\)</span>成立。</p>
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.2k</span>
+      <span>462</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -1092,242 +1265,8 @@ class="math inline">\(0.1&lt;x_i&lt;0.9\)</span>成立。</p>
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://junkuizhang.github.io/2019/01/15/New-Society/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="张小白">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张小白的小窝">
-      <meta itemprop="description" content="这里是张小白的家。">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 张小白的小窝">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/01/15/New-Society/" class="post-title-link" itemprop="url">大糖帝国（The Great Sugar Empire）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2019-01-15 21:25:55" itemprop="dateCreated datePublished" datetime="2019-01-15T21:25:55+08:00">2019-01-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-04-07 00:41:29" itemprop="dateModified" datetime="2022-04-07T00:41:29+08:00">2022-04-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">模型</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>222</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="概述">概述</h1>
-<h1 id="模型">模型</h1>
-<h1 id="附录">附录</h1>
-<h2 id="源码">源码</h2>
-<p>代码见<a
-target="_blank" rel="noopener" href="https://github.com/JunkuiZhang/NewSociaty/">GitHub</a></p>
-<h2 id="基尼系数的计算">基尼系数的计算</h2>
-<p>由于这里数据量较小，故可使用直接计算法计算</p>
-<p><span class="math display">\[
-\Delta = \frac{1}{n^2}\sum^{n}_{j=1}\sum^{n}_{i=1}|Y_j-Y_i|
-\]</span></p>
-<p>这里<span class="math inline">\(\Delta\)</span>是基尼平均差，<span
-class="math inline">\(|Y\_j-Y\_i|\)</span>是任意一对样本差的绝对值，<span
-class="math inline">\(n\)</span>是样本容量</p>
-<p>则基尼系数可以计算为：</p>
-<p><span class="math display">\[
-G = \frac{\Delta}{2u}
-\]</span></p>
-<p>这里<span class="math inline">\(G\)</span>表示基尼系数，<span
-class="math inline">\(u\)</span>是样本均值。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://junkuizhang.github.io/2018/01/05/deep-02/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="张小白">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="张小白的小窝">
-      <meta itemprop="description" content="这里是张小白的家。">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 张小白的小窝">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/01/05/deep-02/" class="post-title-link" itemprop="url">深度学习——神经网络超参数的处理（02）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-01-05 17:07:56" itemprop="dateCreated datePublished" datetime="2018-01-05T17:07:56+08:00">2018-01-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-04-07 00:41:29" itemprop="dateModified" datetime="2022-04-07T00:41:29+08:00">2022-04-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>7k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="概述">概述</h1>
-<p>本文建立在<a
-href="https://junkuizhang.github.io/2018/01/04/deep-01/">前一篇文章</a>的基础上进行讨论，这<a
-href="https://junkuizhang.github.io/categories/深度学习/">一系列文章</a>的本意是记录本人的学习历程，避免“后面学，前面忘”的窘境。</p>
-<p>前文讨论到超参数，本文继续讨论如何处理上文的问题。具体而言，主要涉及到：
-- 对欠拟合、过拟合的处理 - 正则化方法（Regularization） - <span
-class="math inline">\(L2\)</span>正则化 - Dropout正则化 -
-标准化方法（Normalization） - 梯度消失（Vanishing Gradient） -
-梯度爆炸（Exploding Gradient） - 梯度检查（Gradient Checking）</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/01/05/deep-02/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -1339,7 +1278,7 @@ class="math inline">\(L2\)</span>正则化 - Dropout正则化 -
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1351,14 +1290,14 @@ class="math inline">\(L2\)</span>正则化 - Dropout正则化 -
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">34k</span>
+    <span title="站点总字数">14k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">31 分钟</span>
+    <span title="站点阅读时长">51 分钟</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
@@ -1368,11 +1307,22 @@ class="math inline">\(L2\)</span>正则化 - Dropout正则化 -
   </footer>
 
   
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
-  
-<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
 
 
@@ -1380,14 +1330,15 @@ class="math inline">\(L2\)</span>正则化 - Dropout正则化 -
 
   <script src="/js/third-party/pace.js"></script>
 
-  
-
-
-
 
   
 
-  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
 <script src="/js/third-party/math/mathjax.js"></script>
 
 
