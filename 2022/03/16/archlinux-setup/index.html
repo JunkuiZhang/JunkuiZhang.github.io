@@ -14,22 +14,22 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-mac-osx.css">
   <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"junkuizhang.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"junkuizhang.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="引导设置这部分内容将把Linux暴露给Opencore，以从Opencore直接启动。">
+    <meta name="description" content="引导设置 这部分内容将把Linux暴露给Opencore，以从Opencore直接启动。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="配置Arch Linux">
 <meta property="og:url" content="https://junkuizhang.github.io/2022/03/16/archlinux-setup/index.html">
 <meta property="og:site_name" content="张小白的小窝">
-<meta property="og:description" content="引导设置这部分内容将把Linux暴露给Opencore，以从Opencore直接启动。">
+<meta property="og:description" content="引导设置 这部分内容将把Linux暴露给Opencore，以从Opencore直接启动。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-16T20:38:52.000Z">
-<meta property="article:modified_time" content="2024-01-28T16:56:57.249Z">
+<meta property="article:modified_time" content="2024-03-13T17:09:26.110Z">
 <meta property="article:author" content="张小白">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="coding">
@@ -142,7 +142,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E5%AF%BC%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">引导设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%83%A8%E5%88%86%E8%BD%AF%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">配置部分软件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEgit"><span class="nav-number">2.1.</span> <span class="nav-text">配置git</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AESSH"><span class="nav-number">2.1.1.</span> <span class="nav-text">配置SSH</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEparu"><span class="nav-number">2.2.</span> <span class="nav-text">配置paru</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AERust"><span class="nav-number">2.3.</span> <span class="nav-text">配置Rust</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AErustup"><span class="nav-number">2.3.1.</span> <span class="nav-text">配置rustup</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDRust"><span class="nav-number">2.3.2.</span> <span class="nav-text">下载Rust</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEcargo%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">2.3.3.</span> <span class="nav-text">配置cargo镜像源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v2rayA"><span class="nav-number">2.4.</span> <span class="nav-text">v2rayA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AENeofetch"><span class="nav-number">2.5.</span> <span class="nav-text">配置Neofetch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AETerminal"><span class="nav-number">2.6.</span> <span class="nav-text">配置Terminal</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="nav-number">2.6.1.</span> <span class="nav-text">安装插件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E8%A1%A5%E9%BD%90"><span class="nav-number">2.6.1.1.</span> <span class="nav-text">自动补齐</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE"><span class="nav-number">2.6.1.2.</span> <span class="nav-text">代码高亮</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Powerlevel-10K"><span class="nav-number">2.6.1.3.</span> <span class="nav-text">Powerlevel 10K</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Wezterm%E4%B8%BB%E9%A2%98"><span class="nav-number">2.6.2.</span> <span class="nav-text">Wezterm主题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%94%AF%E6%8C%81"><span class="nav-number">2.7.</span> <span class="nav-text">中文输入支持</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">2.7.1.</span> <span class="nav-text">设置环境变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%8A%E5%A4%A9%E8%BD%AF%E4%BB%B6"><span class="nav-number">2.8.</span> <span class="nav-text">聊天软件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEvscode"><span class="nav-number">2.9.</span> <span class="nav-text">配置vscode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEChrome"><span class="nav-number">2.10.</span> <span class="nav-text">配置Chrome</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%83%A8%E5%88%86%E9%A9%B1%E5%8A%A8"><span class="nav-number">3.</span> <span class="nav-text">配置部分驱动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vulkan%E6%94%AF%E6%8C%81"><span class="nav-number">3.1.</span> <span class="nav-text">Vulkan支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NTFS%E6%94%AF%E6%8C%81"><span class="nav-number">3.2.</span> <span class="nav-text">NTFS支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A6%E6%8E%A7%E6%9D%BF%E5%A4%9A%E6%89%8B%E5%8A%BF%E6%94%AF%E6%8C%81"><span class="nav-number">3.3.</span> <span class="nav-text">触控板多手势支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E7%BA%B9%E8%AF%86%E5%88%AB%E6%94%AF%E6%8C%81"><span class="nav-number">3.4.</span> <span class="nav-text">指纹识别支持</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">系统主题配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEdock"><span class="nav-number">4.1.</span> <span class="nav-text">配置dock</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.1.1.</span> <span class="nav-text">高级模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%8A%E8%BE%B9%E6%A0%8F"><span class="nav-number">4.2.</span> <span class="nav-text">配置上边栏</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEWidgets"><span class="nav-number">4.2.1.</span> <span class="nav-text">配置Widgets</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEKRunner"><span class="nav-number">4.3.</span> <span class="nav-text">配置KRunner</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE"><span class="nav-number">4.4.</span> <span class="nav-text">系统设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Global-theme"><span class="nav-number">4.4.1.</span> <span class="nav-text">Global theme</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Application-style"><span class="nav-number">4.4.1.1.</span> <span class="nav-text">Application style</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Window-decoration"><span class="nav-number">4.4.1.2.</span> <span class="nav-text">Window decoration</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Icons"><span class="nav-number">4.4.1.3.</span> <span class="nav-text">Icons</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEKvantum"><span class="nav-number">4.5.</span> <span class="nav-text">配置Kvantum</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E5%AF%BC%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">引导设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%83%A8%E5%88%86%E8%BD%AF%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">配置部分软件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEgit"><span class="nav-number">2.1.</span> <span class="nav-text">配置git</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEssh"><span class="nav-number">2.1.1.</span> <span class="nav-text">配置SSH</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEparu"><span class="nav-number">2.2.</span> <span class="nav-text">配置paru</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AErust"><span class="nav-number">2.3.</span> <span class="nav-text">配置Rust</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AErustup"><span class="nav-number">2.3.1.</span> <span class="nav-text">配置rustup</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDrust"><span class="nav-number">2.3.2.</span> <span class="nav-text">下载Rust</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEcargo%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">2.3.3.</span> <span class="nav-text">配置cargo镜像源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v2raya"><span class="nav-number">2.4.</span> <span class="nav-text">v2rayA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEneofetch"><span class="nav-number">2.5.</span> <span class="nav-text">配置Neofetch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEterminal"><span class="nav-number">2.6.</span> <span class="nav-text">配置Terminal</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="nav-number">2.6.1.</span> <span class="nav-text">安装插件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E8%A1%A5%E9%BD%90"><span class="nav-number">2.6.1.1.</span> <span class="nav-text">自动补齐</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE"><span class="nav-number">2.6.1.2.</span> <span class="nav-text">代码高亮</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#powerlevel-10k"><span class="nav-number">2.6.1.3.</span> <span class="nav-text">Powerlevel 10K</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wezterm%E4%B8%BB%E9%A2%98"><span class="nav-number">2.6.2.</span> <span class="nav-text">Wezterm主题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%94%AF%E6%8C%81"><span class="nav-number">2.7.</span> <span class="nav-text">中文输入支持</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">2.7.1.</span> <span class="nav-text">设置环境变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%8A%E5%A4%A9%E8%BD%AF%E4%BB%B6"><span class="nav-number">2.8.</span> <span class="nav-text">聊天软件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEvscode"><span class="nav-number">2.9.</span> <span class="nav-text">配置vscode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEchrome"><span class="nav-number">2.10.</span> <span class="nav-text">配置Chrome</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%83%A8%E5%88%86%E9%A9%B1%E5%8A%A8"><span class="nav-number">3.</span> <span class="nav-text">配置部分驱动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vulkan%E6%94%AF%E6%8C%81"><span class="nav-number">3.1.</span> <span class="nav-text">Vulkan支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ntfs%E6%94%AF%E6%8C%81"><span class="nav-number">3.2.</span> <span class="nav-text">NTFS支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A6%E6%8E%A7%E6%9D%BF%E5%A4%9A%E6%89%8B%E5%8A%BF%E6%94%AF%E6%8C%81"><span class="nav-number">3.3.</span> <span class="nav-text">触控板多手势支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E7%BA%B9%E8%AF%86%E5%88%AB%E6%94%AF%E6%8C%81"><span class="nav-number">3.4.</span> <span class="nav-text">指纹识别支持</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">系统主题配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEdock"><span class="nav-number">4.1.</span> <span class="nav-text">配置dock</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.1.1.</span> <span class="nav-text">高级模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%8A%E8%BE%B9%E6%A0%8F"><span class="nav-number">4.2.</span> <span class="nav-text">配置上边栏</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEwidgets"><span class="nav-number">4.2.1.</span> <span class="nav-text">配置Widgets</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEkrunner"><span class="nav-number">4.3.</span> <span class="nav-text">配置KRunner</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE"><span class="nav-number">4.4.</span> <span class="nav-text">系统设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#global-theme"><span class="nav-number">4.4.1.</span> <span class="nav-text">Global theme</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#application-style"><span class="nav-number">4.4.1.1.</span> <span class="nav-text">Application style</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#window-decoration"><span class="nav-number">4.4.1.2.</span> <span class="nav-text">Window decoration</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#icons"><span class="nav-number">4.4.1.3.</span> <span class="nav-text">Icons</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEkvantum"><span class="nav-number">4.5.</span> <span class="nav-text">配置Kvantum</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -155,18 +155,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -237,7 +237,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-01-29 00:56:57" itemprop="dateModified" datetime="2024-01-29T00:56:57+08:00">2024-01-29</time>
+      <time title="修改时间：2024-03-14 01:09:26" itemprop="dateModified" datetime="2024-03-14T01:09:26+08:00">2024-03-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -250,6 +250,21 @@
     </span>
 
   
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
 </div>
 
         </div>
@@ -258,10 +273,10 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h2 id="引导设置"><a href="#引导设置" class="headerlink" title="引导设置"></a>引导设置</h2><p>这部分内容将把Linux暴露给Opencore，以从Opencore直接启动。</p>
+    <div class="post-body" itemprop="articleBody"><h2 id="引导设置">引导设置</h2>
+<p>这部分内容将把Linux暴露给Opencore，以从Opencore直接启动。</p>
 <span id="more"></span>
-
-<ol>
+<ol type="1">
 <li>通过OC进入Linux</li>
 </ol>
 <p>开启OC的Openshell，通过执行<code>\EFI\grub_uefi\grubx64.efi</code>来进入linux。</p>
@@ -271,207 +286,167 @@
 <blockquote>
 <p>由于之前执行<code>grub-install</code>时指定了<code>--bootloader-id=grub_uefi</code>因此入口在<code>grub_uefi</code>文件夹下</p>
 </blockquote>
-<ol start="2">
-<li>生成配置<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo efibootmgr -c -L <span class="string">&quot;Linux&quot;</span> -l <span class="string">&quot;\EFI\grub_uefi\grubx64.efi&quot;</span> -d <span class="string">&quot;/dev/nvme0n1&quot;</span> -p 1</span><br></pre></td></tr></table></figure></li>
+<ol start="2" type="1">
+<li>生成配置 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo efibootmgr -c -L <span class="string">&quot;Linux&quot;</span> -l <span class="string">&quot;\EFI\grub_uefi\grubx64.efi&quot;</span> -d <span class="string">&quot;/dev/nvme0n1&quot;</span> -p 1</span><br></pre></td></tr></table></figure></li>
 </ol>
 <ul>
 <li><code>-c</code>: Create</li>
-<li><code>-L &quot;Linux&quot;</code>: Label the boot entry (you can change it to whatever you want)</li>
-<li><code>-l &quot;\EFI\pathto\filex64.efi&quot;</code>: loader file path, must be in a format the UEFI Firmware can use, which means <code>\</code> for pathing instead of <code>/</code> you find in unix</li>
-<li><code>-d &quot;/dev/sda&quot;</code>: disk path so that efibootmgr know which disk the UEFI firmware should read the file from, it can be <code>/dev/nvme0nX</code> (with X as a number) if you’re using NVMe</li>
+<li><code>-L "Linux"</code>: Label the boot entry (you can change it to whatever you want)</li>
+<li><code>-l "\EFI\pathto\filex64.efi"</code>: loader file path, must be in a format the UEFI Firmware can use, which means <code>\</code> for pathing instead of <code>/</code> you find in unix</li>
+<li><code>-d "/dev/sda"</code>: disk path so that efibootmgr know which disk the UEFI firmware should read the file from, it can be <code>/dev/nvme0nX</code> (with X as a number) if you're using NVMe</li>
 <li><code>-p 1</code>: point the partition number we found earlier, in case your EFI partition is the first one, this can be omitted</li>
 </ul>
 <blockquote>
 <p>由于之前执行<code>grub-install</code>时指定<code>--bootloader-id=grub_uefi</code>，因此路径为<code>grub_uefi</code></p>
 </blockquote>
-<ol start="3">
+<ol start="3" type="1">
 <li>重启</li>
 </ol>
 <p>在Opencore界面会发现一个新的叫<code>EFI</code>的入口，即为该linux。</p>
-<h2 id="配置部分软件"><a href="#配置部分软件" class="headerlink" title="配置部分软件"></a>配置部分软件</h2><h3 id="配置git"><a href="#配置git" class="headerlink" title="配置git"></a>配置git</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S git</span><br><span class="line">git config --global user.email <span class="string">&quot;YOUR_EMAIL@SOME.com&quot;</span></span><br><span class="line">git config --global user.name <span class="string">&quot;YOUR NAME&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="配置SSH"><a href="#配置SSH" class="headerlink" title="配置SSH"></a>配置SSH</h4><p>生成SSH Key：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
-<p>全部默认即可。</p>
-<p>然后把Key添加进SSH agent：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(ssh-agent -s)</span>&quot;</span></span><br><span class="line">ssh-add ~/.ssh/id_ed25519</span><br></pre></td></tr></table></figure>
-
-<p>获取SSH公钥：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/.ssh/id_ed25519.pub</span><br></pre></td></tr></table></figure>
-<p>然后把内容粘贴进github即可。</p>
-<h3 id="配置paru"><a href="#配置paru" class="headerlink" title="配置paru"></a>配置paru</h3><p><a target="_blank" rel="noopener" href="https://github.com/Morganamilo/paru">paru</a>是一款方便的包管理工具。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://aur.archlinux.org/paru-bin.git</span><br><span class="line"><span class="built_in">cd</span> paru</span><br><span class="line">makepkg -si</span><br></pre></td></tr></table></figure>
-
-<p>更改配置文件使其支持代码高亮：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/pacman.conf</span><br></pre></td></tr></table></figure>
-
+<h2 id="配置部分软件">配置部分软件</h2>
+<h3 id="配置git">配置git</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S git</span><br><span class="line">git config --global user.email <span class="string">&quot;YOUR_EMAIL@SOME.com&quot;</span></span><br><span class="line">git config --global user.name <span class="string">&quot;YOUR NAME&quot;</span></span><br></pre></td></tr></table></figure>
+<h4 id="配置ssh">配置SSH</h4>
+<p>生成SSH Key： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure> 全部默认即可。</p>
+<p>然后把Key添加进SSH agent： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(ssh-agent -s)</span>&quot;</span></span><br><span class="line">ssh-add ~/.ssh/id_ed25519</span><br></pre></td></tr></table></figure></p>
+<p>获取SSH公钥： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/.ssh/id_ed25519.pub</span><br></pre></td></tr></table></figure> 然后把内容粘贴进github即可。</p>
+<h3 id="配置paru">配置paru</h3>
+<p><a target="_blank" rel="noopener" href="https://github.com/Morganamilo/paru">paru</a>是一款方便的包管理工具。 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://aur.archlinux.org/paru-bin.git</span><br><span class="line"><span class="built_in">cd</span> paru</span><br><span class="line">makepkg -si</span><br></pre></td></tr></table></figure></p>
+<p>更改配置文件使其支持代码高亮： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/pacman.conf</span><br></pre></td></tr></table></figure></p>
 <p>去掉Color行的注释。</p>
-<p>更改配置更改排序方式：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/paru.conf</span><br></pre></td></tr></table></figure>
-
+<p>更改配置更改排序方式： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/paru.conf</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p><code>paru -Qtdq</code>查看孤儿包。</p>
 </blockquote>
 <p>去掉<code>BottomUp</code>行的注释。</p>
-<h3 id="配置Rust"><a href="#配置Rust" class="headerlink" title="配置Rust"></a>配置Rust</h3><h4 id="配置rustup"><a href="#配置rustup" class="headerlink" title="配置rustup"></a>配置rustup</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S rustup</span><br></pre></td></tr></table></figure>
-
-<p>然后通过如下命令配置rustup国内镜像源：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bash_profile</span><br></pre></td></tr></table></figure>
-
-<p>然后添加如下两行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup</span><br><span class="line"><span class="built_in">export</span> RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static</span><br></pre></td></tr></table></figure>
-
-<h4 id="下载Rust"><a href="#下载Rust" class="headerlink" title="下载Rust"></a>下载Rust</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustup default stable</span><br></pre></td></tr></table></figure>
-
+<h3 id="配置rust">配置Rust</h3>
+<h4 id="配置rustup">配置rustup</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S rustup</span><br></pre></td></tr></table></figure>
+<p>然后通过如下命令配置rustup国内镜像源： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bash_profile</span><br></pre></td></tr></table></figure></p>
+<p>然后添加如下两行： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup</span><br><span class="line"><span class="built_in">export</span> RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static</span><br></pre></td></tr></table></figure></p>
+<h4 id="下载rust">下载Rust</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustup default stable</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>使用<code>rustup install stable</code>不会从设置好的国内镜像下载，而是从国外下载，速度很慢</p>
 </blockquote>
-<h4 id="配置cargo镜像源"><a href="#配置cargo镜像源" class="headerlink" title="配置cargo镜像源"></a>配置cargo镜像源</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.cargo/config</span><br></pre></td></tr></table></figure>
-
-<p>并添加如下内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[source.crates-io]</span><br><span class="line">registry = <span class="string">&quot;https://github.com/rust-lang/crates.io-index&quot;</span></span><br><span class="line">replace-with = <span class="string">&#x27;sjtu&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上海交通大学</span></span><br><span class="line">[source.sjtu]</span><br><span class="line">registry = <span class="string">&quot;https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index/&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="v2rayA"><a href="#v2rayA" class="headerlink" title="v2rayA"></a>v2rayA</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru v2raya-bin v2ray</span><br></pre></td></tr></table></figure>
-
-<p>同时开机启动：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> --now v2raya</span><br></pre></td></tr></table></figure>
-
+<h4 id="配置cargo镜像源">配置cargo镜像源</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.cargo/config</span><br></pre></td></tr></table></figure>
+<p>并添加如下内容： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[source.crates-io]</span><br><span class="line">registry = <span class="string">&quot;https://github.com/rust-lang/crates.io-index&quot;</span></span><br><span class="line">replace-with = <span class="string">&#x27;sjtu&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上海交通大学</span></span><br><span class="line">[source.sjtu]</span><br><span class="line">registry = <span class="string">&quot;https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index/&quot;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="v2raya">v2rayA</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru v2raya-bin v2ray</span><br></pre></td></tr></table></figure>
+<p>同时开机启动： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> --now v2raya</span><br></pre></td></tr></table></figure></p>
 <p>然后从浏览器进入<code>http://localhost:2017</code>，创建一个帐号。</p>
 <blockquote>
 <p>忘记密码使用<code>sudo v2raya --reset-password</code>命令重置。</p>
 </blockquote>
-<p>进行如下设置：</p>
-<ul>
-<li>透明代理：大陆白名单</li>
-<li>透明代理方式：redirect</li>
-<li>规则端口分流模式：大陆白名单</li>
-<li>防止DNS污染：仅防止DNS劫持（快速）</li>
-<li>特殊模式：supervisor</li>
-<li>TCPFastOpen：保持系统默认</li>
-</ul>
+<p>进行如下设置： - 透明代理：大陆白名单 - 透明代理方式：redirect - 规则端口分流模式：大陆白名单 - 防止DNS污染：仅防止DNS劫持（快速） - 特殊模式：supervisor - TCPFastOpen：保持系统默认</p>
 <p>其余选项均默认即可。</p>
 <blockquote>
 <p>注意，若选择GFWList，则需要下载对应的规则库，点击右上角的更新来下载。</p>
 </blockquote>
-<h3 id="配置Neofetch"><a href="#配置Neofetch" class="headerlink" title="配置Neofetch"></a>配置Neofetch</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru neofetch</span><br></pre></td></tr></table></figure>
-
-<h3 id="配置Terminal"><a href="#配置Terminal" class="headerlink" title="配置Terminal"></a>配置Terminal</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">paru zsh</span><br><span class="line">zsh</span><br></pre></td></tr></table></figure>
-
-<p>然后输入0。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
+<h3 id="配置neofetch">配置Neofetch</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru neofetch</span><br></pre></td></tr></table></figure>
+<h3 id="配置terminal">配置Terminal</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">paru zsh</span><br><span class="line">zsh</span><br></pre></td></tr></table></figure>
+<p>然后输入0。 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure></p>
 <p>选择把shell切换为zsh，在这里需要重启系统。</p>
-<h4 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h4><h5 id="自动补齐"><a href="#自动补齐" class="headerlink" title="自动补齐"></a>自动补齐</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br></pre></td></tr></table></figure>
-
-<p>然后编辑配置文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.zshrc</span><br></pre></td></tr></table></figure>
-
-<p>添加相应内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins=(other plugins... zsh-autosuggestions)</span><br></pre></td></tr></table></figure>
-
+<h4 id="安装插件">安装插件</h4>
+<h5 id="自动补齐">自动补齐</h5>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br></pre></td></tr></table></figure>
+<p>然后编辑配置文件： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.zshrc</span><br></pre></td></tr></table></figure></p>
+<p>添加相应内容： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins=(other plugins... zsh-autosuggestions)</span><br></pre></td></tr></table></figure></p>
 <p>不同插件之间使用空格分割。</p>
-<h5 id="代码高亮"><a href="#代码高亮" class="headerlink" title="代码高亮"></a>代码高亮</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
-
-<p>继续编辑配置文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins=( [plugins...] zsh-syntax-highlighting)</span><br></pre></td></tr></table></figure>
-
-<h5 id="Powerlevel-10K"><a href="#Powerlevel-10K" class="headerlink" title="Powerlevel 10K"></a>Powerlevel 10K</h5><p>安装对应字体：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru ttf powerlevel10k</span><br></pre></td></tr></table></figure>
-
-<p>然后安装：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/romkatv/powerlevel10k.git <span class="variable">$&#123;ZSH_CUSTOM:-<span class="variable">$HOME</span>/.oh-my-zsh/custom&#125;</span>/themes/powerlevel10k</span><br></pre></td></tr></table></figure>
-
-<p>编辑配置文件，更改主题：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZSH_THEME=<span class="string">&quot;powerlevel10k/powerlevel10k&quot;</span></span><br></pre></td></tr></table></figure>
-
+<h5 id="代码高亮">代码高亮</h5>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
+<p>继续编辑配置文件： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins=( [plugins...] zsh-syntax-highlighting)</span><br></pre></td></tr></table></figure></p>
+<h5 id="powerlevel-10k">Powerlevel 10K</h5>
+<p>安装对应字体： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru ttf powerlevel10k</span><br></pre></td></tr></table></figure></p>
+<p>然后安装： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/romkatv/powerlevel10k.git <span class="variable">$&#123;ZSH_CUSTOM:-<span class="variable">$HOME</span>/.oh-my-zsh/custom&#125;</span>/themes/powerlevel10k</span><br></pre></td></tr></table></figure></p>
+<p>编辑配置文件，更改主题： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZSH_THEME=<span class="string">&quot;powerlevel10k/powerlevel10k&quot;</span></span><br></pre></td></tr></table></figure></p>
 <p>然后重启terminal进行自动配置。</p>
 <blockquote>
 <p>输入<code>p10k configure</code>可以重新进行设置</p>
 </blockquote>
-<h4 id="Wezterm主题"><a href="#Wezterm主题" class="headerlink" title="Wezterm主题"></a>Wezterm主题</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/catppuccin/wezterm.git</span><br><span class="line"><span class="built_in">mkdir</span> -p ~/.config/wezterm/colors</span><br><span class="line"><span class="built_in">cp</span> ./wezterm/Catppuccin.toml ~/.config/wezterm/colors/</span><br></pre></td></tr></table></figure>
-
-<h3 id="中文输入支持"><a href="#中文输入支持" class="headerlink" title="中文输入支持"></a>中文输入支持</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">paru fcitx5-im</span><br><span class="line">paru fcitx5 chinese addon</span><br></pre></td></tr></table></figure>
+<h4 id="wezterm主题">Wezterm主题</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/catppuccin/wezterm.git</span><br><span class="line"><span class="built_in">mkdir</span> -p ~/.config/wezterm/colors</span><br><span class="line"><span class="built_in">cp</span> ./wezterm/Catppuccin.toml ~/.config/wezterm/colors/</span><br></pre></td></tr></table></figure>
+<h3 id="中文输入支持">中文输入支持</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">paru fcitx5-im</span><br><span class="line">paru fcitx5 chinese addon</span><br></pre></td></tr></table></figure>
 <p>安装所有与im相关的community包，然后在设置中搜索<code>input method</code>添加<code>pinyin</code>。</p>
-<h4 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h4><p>欲在程序中正常启用 Fcitx5, 需设置以下环境变量，并重新登录：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/environment</span><br><span class="line">GTK_IM_MODULE=fcitx</span><br><span class="line">QT_IM_MODULE=fcitx</span><br><span class="line">XMODIFIERS=@im=fcitx</span><br><span class="line">INPUT_METHOD=fcitx</span><br><span class="line">SDL_IM_MODULE=fcitx</span><br><span class="line">GLFW_IM_MODULE=ibus</span><br></pre></td></tr></table></figure>
-
-<h3 id="聊天软件"><a href="#聊天软件" class="headerlink" title="聊天软件"></a>聊天软件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">paru tim qq</span><br><span class="line">paru wechat desktop</span><br><span class="line">paru telegram</span><br></pre></td></tr></table></figure>
-
-<h3 id="配置vscode"><a href="#配置vscode" class="headerlink" title="配置vscode"></a>配置vscode</h3><p>使得vscode的全局菜单起作用:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru libdbusmenu-glib</span><br></pre></td></tr></table></figure>
-
-<p>支持vscode的keyring：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru gnome keyring</span><br></pre></td></tr></table></figure>
-
-<p>为vscode设置clangd：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru clang</span><br></pre></td></tr></table></figure>
-
-<p>然后在设置中设置clangd的地址：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whereis clangd</span><br></pre></td></tr></table></figure>
-
-<h3 id="配置Chrome"><a href="#配置Chrome" class="headerlink" title="配置Chrome"></a>配置Chrome</h3><p>启用视频播放硬件加速：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/.config</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;--disable-features=UseChromeOSDirectVideoDecoder --enable-features=VaapiVideoDecoder --ignore-gpu-blocklist --use-gl=desktop&quot;</span> &gt; ~/.config/chrome-flags.conf</span><br></pre></td></tr></table></figure>
-
-<h2 id="配置部分驱动"><a href="#配置部分驱动" class="headerlink" title="配置部分驱动"></a>配置部分驱动</h2><h3 id="Vulkan支持"><a href="#Vulkan支持" class="headerlink" title="Vulkan支持"></a>Vulkan支持</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">paru mesa vulkan</span><br><span class="line">sudo sysctl dev.i915.perf_stream_paranoid=0</span><br></pre></td></tr></table></figure>
-
-<h3 id="NTFS支持"><a href="#NTFS支持" class="headerlink" title="NTFS支持"></a>NTFS支持</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru ntfsprogs-ntfs3</span><br></pre></td></tr></table></figure>
-
-<h3 id="触控板多手势支持"><a href="#触控板多手势支持" class="headerlink" title="触控板多手势支持"></a>触控板多手势支持</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S touchegg</span><br><span class="line">paru touche</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> touchegg.services</span><br></pre></td></tr></table></figure>
-
-<h3 id="指纹识别支持"><a href="#指纹识别支持" class="headerlink" title="指纹识别支持"></a>指纹识别支持</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru fprint</span><br></pre></td></tr></table></figure>
-
-<h2 id="系统主题配置"><a href="#系统主题配置" class="headerlink" title="系统主题配置"></a>系统主题配置</h2><p>首先需要下载一些依赖：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru kvantum</span><br></pre></td></tr></table></figure>
-
-<h3 id="配置dock"><a href="#配置dock" class="headerlink" title="配置dock"></a>配置dock</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru latte dock</span><br></pre></td></tr></table></figure>
+<h4 id="设置环境变量">设置环境变量</h4>
+<p>欲在程序中正常启用 Fcitx5, 需设置以下环境变量，并重新登录： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/environment</span><br><span class="line">GTK_IM_MODULE=fcitx</span><br><span class="line">QT_IM_MODULE=fcitx</span><br><span class="line">XMODIFIERS=@im=fcitx</span><br><span class="line">INPUT_METHOD=fcitx</span><br><span class="line">SDL_IM_MODULE=fcitx</span><br><span class="line">GLFW_IM_MODULE=ibus</span><br></pre></td></tr></table></figure></p>
+<h3 id="聊天软件">聊天软件</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">paru tim qq</span><br><span class="line">paru wechat desktop</span><br><span class="line">paru telegram</span><br></pre></td></tr></table></figure>
+<h3 id="配置vscode">配置vscode</h3>
+<p>使得vscode的全局菜单起作用: <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru libdbusmenu-glib</span><br></pre></td></tr></table></figure></p>
+<p>支持vscode的keyring： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru gnome keyring</span><br></pre></td></tr></table></figure></p>
+<p>为vscode设置clangd： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru clang</span><br></pre></td></tr></table></figure></p>
+<p>然后在设置中设置clangd的地址： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whereis clangd</span><br></pre></td></tr></table></figure></p>
+<h3 id="配置chrome">配置Chrome</h3>
+<p>启用视频播放硬件加速： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/.config</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;--disable-features=UseChromeOSDirectVideoDecoder --enable-features=VaapiVideoDecoder --ignore-gpu-blocklist --use-gl=desktop&quot;</span> &gt; ~/.config/chrome-flags.conf</span><br></pre></td></tr></table></figure></p>
+<h2 id="配置部分驱动">配置部分驱动</h2>
+<h3 id="vulkan支持">Vulkan支持</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">paru mesa vulkan</span><br><span class="line">sudo sysctl dev.i915.perf_stream_paranoid=0</span><br></pre></td></tr></table></figure>
+<h3 id="ntfs支持">NTFS支持</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru ntfsprogs-ntfs3</span><br></pre></td></tr></table></figure>
+<h3 id="触控板多手势支持">触控板多手势支持</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S touchegg</span><br><span class="line">paru touche</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> touchegg.services</span><br></pre></td></tr></table></figure>
+<h3 id="指纹识别支持">指纹识别支持</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru fprint</span><br></pre></td></tr></table></figure>
+<h2 id="系统主题配置">系统主题配置</h2>
+<p>首先需要下载一些依赖： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru kvantum</span><br></pre></td></tr></table></figure></p>
+<h3 id="配置dock">配置dock</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paru latte dock</span><br></pre></td></tr></table></figure>
 <p>然后启动<code>latte dock</code>。</p>
-<h4 id="高级模式"><a href="#高级模式" class="headerlink" title="高级模式"></a>高级模式</h4><p>右键dock点击编辑，然后开启高级模式：  </p>
+<h4 id="高级模式">高级模式</h4>
+<p>右键dock点击编辑，然后开启高级模式：</p>
 <p>Apperance:</p>
 <ul>
-<li>background:<ul>
+<li>background:
+<ul>
 <li>height: 100%</li>
 <li>opacity: 30%</li>
 <li>check: blur</li>
 <li>radius: 15%</li>
-</ul>
-</li>
-<li>margins<ul>
+</ul></li>
+<li>margins
+<ul>
 <li>screen edge: 4px</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p>点击编辑面板左下角的Add panel，点击添加空白panel。</p>
-<h3 id="配置上边栏"><a href="#配置上边栏" class="headerlink" title="配置上边栏"></a>配置上边栏</h3><p>右键上边栏，选择编辑：</p>
+<h3 id="配置上边栏">配置上边栏</h3>
+<p>右键上边栏，选择编辑：</p>
 <p>Apperance:</p>
 <ul>
-<li>items<ul>
+<li>items
+<ul>
 <li>absolute size: 30px</li>
-</ul>
-</li>
-<li>length<ul>
+</ul></li>
+<li>length
+<ul>
 <li>maximum: 99%</li>
-</ul>
-</li>
-<li>margins<ul>
+</ul></li>
+<li>margins
+<ul>
 <li>screen edge: 3px</li>
-</ul>
-</li>
-<li>background<ul>
+</ul></li>
+<li>background
+<ul>
 <li>opacity: 30%</li>
 <li>check: blur</li>
 <li>radius: 50%</li>
 <li>check: prefre opac background when window touching</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p>Behavior:</p>
 <ul>
-<li>actions<ul>
+<li>actions
+<ul>
 <li>check: hide floating gap when maxmaized window</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h4 id="配置Widgets"><a href="#配置Widgets" class="headerlink" title="配置Widgets"></a>配置Widgets</h4><p>首先下载一些控件：</p>
+<h4 id="配置widgets">配置Widgets</h4>
+<p>首先下载一些控件：</p>
 <ul>
 <li>better inline clock</li>
 <li>application name mac style</li>
@@ -485,13 +460,21 @@
 <li>搜索global menu，添加到application title右侧</li>
 </ul>
 <p>编辑application title，编辑no active window label为custom text，并添加文本内容。</p>
-<h3 id="配置KRunner"><a href="#配置KRunner" class="headerlink" title="配置KRunner"></a>配置KRunner</h3><p>点击编辑，使其居中，取消勾选记住上次搜索。</p>
-<h3 id="系统设置"><a href="#系统设置" class="headerlink" title="系统设置"></a>系统设置</h3><p>首先把<code>clicking files or folders</code>改成<code>selects them</code>。<br>打开<code>workspace behavior</code>中<code>desktop effect</code>里的<code>blur</code>、<code>magic lamp</code>、<code>slide back</code>、<code>overview</code>，并为overview设置快捷键，用touche配置相应的手势操作。</p>
-<h4 id="Global-theme"><a href="#Global-theme" class="headerlink" title="Global theme"></a>Global theme</h4><p>下载layan，并启用。</p>
-<h5 id="Application-style"><a href="#Application-style" class="headerlink" title="Application style"></a>Application style</h5><p>下载layan gtk theme，并启用。</p>
-<h5 id="Window-decoration"><a href="#Window-decoration" class="headerlink" title="Window decoration"></a>Window decoration</h5><p>编辑关闭、最大化、最小化按键位置。</p>
-<h5 id="Icons"><a href="#Icons" class="headerlink" title="Icons"></a>Icons</h5><p>下载Mac mod flat icon，并启用Papirus。</p>
-<h3 id="配置Kvantum"><a href="#配置Kvantum" class="headerlink" title="配置Kvantum"></a>配置Kvantum</h3><p>从<a target="_blank" rel="noopener" href="https://store.kde.org/p/1325246/">这里</a>下载相应的文件，然后启动Kvantum manager，安装并使用该主题，编辑该主题，取消勾选<code>Disable translucency when non-integer scaling</code>，否则部分内容不会blur。</p>
+<h3 id="配置krunner">配置KRunner</h3>
+<p>点击编辑，使其居中，取消勾选记住上次搜索。</p>
+<h3 id="系统设置">系统设置</h3>
+<p>首先把<code>clicking files or folders</code>改成<code>selects them</code>。<br />
+打开<code>workspace behavior</code>中<code>desktop effect</code>里的<code>blur</code>、<code>magic lamp</code>、<code>slide back</code>、<code>overview</code>，并为overview设置快捷键，用touche配置相应的手势操作。</p>
+<h4 id="global-theme">Global theme</h4>
+<p>下载layan，并启用。</p>
+<h5 id="application-style">Application style</h5>
+<p>下载layan gtk theme，并启用。</p>
+<h5 id="window-decoration">Window decoration</h5>
+<p>编辑关闭、最大化、最小化按键位置。</p>
+<h5 id="icons">Icons</h5>
+<p>下载Mac mod flat icon，并启用Papirus。</p>
+<h3 id="配置kvantum">配置Kvantum</h3>
+<p>从<a target="_blank" rel="noopener" href="https://store.kde.org/p/1325246/">这里</a>下载相应的文件，然后启动Kvantum manager，安装并使用该主题，编辑该主题，取消勾选<code>Disable translucency when non-integer scaling</code>，否则部分内容不会blur。</p>
 
     </div>
 
@@ -542,6 +525,22 @@
     </span>
     <span class="author" itemprop="copyrightHolder">张小白</span>
   </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">16k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">58 分钟</span>
+  </span>
+</div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
