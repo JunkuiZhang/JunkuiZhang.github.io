@@ -29,7 +29,7 @@
 <meta property="og:description" content="本文章主要记录一些VPS的设置，使得购买的VPS及域名能够支持科学上网，服务器为Ubuntu 20.04。在执行任何操作之前，切换到&#x2F;root目录，并使用apt update &amp;&amp; apt upgrade来更新系统。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-07-16T14:54:43.000Z">
-<meta property="article:modified_time" content="2024-06-03T08:24:27.998Z">
+<meta property="article:modified_time" content="2024-06-03T08:53:33.661Z">
 <meta property="article:author" content="张小白">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="coding">
@@ -142,7 +142,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E5%89%8D%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">事前准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%87%86%E5%A4%87"><span class="nav-number">1.1.</span> <span class="nav-text">服务器准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cloudflare%E5%87%86%E5%A4%87"><span class="nav-number">1.2.</span> <span class="nav-text">Cloudflare准备</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86"><span class="nav-number">2.</span> <span class="nav-text">设置密钥登陆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%AF%86%E9%92%A5"><span class="nav-number">2.1.</span> <span class="nav-text">生成密钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%99%BB%E5%BD%95%E6%96%B9%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">修改登录方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85caddy"><span class="nav-number">3.</span> <span class="nav-text">安装Caddy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BB%E6%89%BE%E5%90%88%E9%80%82%E7%9A%84%E4%BC%AA%E8%A3%85%E7%AB%99"><span class="nav-number">3.1.</span> <span class="nav-text">寻找合适的伪装站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEcaddy"><span class="nav-number">3.2.</span> <span class="nav-text">配置Caddy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xui"><span class="nav-number">4.</span> <span class="nav-text">XUI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85xui"><span class="nav-number">4.1.</span> <span class="nav-text">安装XUI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AExui"><span class="nav-number">4.2.</span> <span class="nav-text">配置XUI</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E5%89%8D%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">事前准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%87%86%E5%A4%87"><span class="nav-number">1.1.</span> <span class="nav-text">服务器准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cloudflare%E5%87%86%E5%A4%87"><span class="nav-number">1.2.</span> <span class="nav-text">Cloudflare准备</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86"><span class="nav-number">2.</span> <span class="nav-text">设置密钥登陆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%AF%86%E9%92%A5"><span class="nav-number">2.1.</span> <span class="nav-text">生成密钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%99%BB%E5%BD%95%E6%96%B9%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">修改登录方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Caddy"><span class="nav-number">3.</span> <span class="nav-text">安装Caddy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BB%E6%89%BE%E5%90%88%E9%80%82%E7%9A%84%E4%BC%AA%E8%A3%85%E7%AB%99"><span class="nav-number">3.1.</span> <span class="nav-text">寻找合适的伪装站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AECaddy"><span class="nav-number">3.2.</span> <span class="nav-text">配置Caddy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XUI"><span class="nav-number">4.</span> <span class="nav-text">XUI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85XUI"><span class="nav-number">4.1.</span> <span class="nav-text">安装XUI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEXUI"><span class="nav-number">4.2.</span> <span class="nav-text">配置XUI</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -237,7 +237,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-03 16:24:27" itemprop="dateModified" datetime="2024-06-03T16:24:27+08:00">2024-06-03</time>
+      <time title="修改时间：2024-06-03 16:53:33" itemprop="dateModified" datetime="2024-06-03T16:53:33+08:00">2024-06-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -250,21 +250,6 @@
     </span>
 
   
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>601</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
 </div>
 
         </div>
@@ -275,45 +260,57 @@
     
     <div class="post-body" itemprop="articleBody"><p>本文章主要记录一些VPS的设置，使得购买的VPS及域名能够支持科学上网，服务器为Ubuntu 20.04。在执行任何操作之前，切换到<code>/root</code>目录，并使用<code>apt update &amp;&amp; apt upgrade</code>来更新系统。</p>
 <span id="more"></span>
-<h2 id="事前准备">事前准备</h2>
-<h3 id="服务器准备">服务器准备</h3>
-<p>部分软件： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install vim git curl wget -y</span><br></pre></td></tr></table></figure></p>
-<p>启用 BBR TCP 拥塞控制算法： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.core.default_qdisc=fq&quot;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.ipv4.tcp_congestion_control=bbr&quot;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></p>
-<p>设置时区： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timedatectl set-timezone Asia/Shanghai</span><br></pre></td></tr></table></figure></p>
-<h3 id="cloudflare准备">Cloudflare准备</h3>
-<p>将Cloudflare中SSL/TLS加密模式设置为<code>完全（严格）</code>。</p>
+
+<h2 id="事前准备"><a href="#事前准备" class="headerlink" title="事前准备"></a>事前准备</h2><h3 id="服务器准备"><a href="#服务器准备" class="headerlink" title="服务器准备"></a>服务器准备</h3><p>部分软件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install vim git curl wget -y</span><br></pre></td></tr></table></figure>
+
+<p>启用 BBR TCP 拥塞控制算法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.core.default_qdisc=fq&quot;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.ipv4.tcp_congestion_control=bbr&quot;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+
+<p>设置时区：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timedatectl set-timezone Asia/Shanghai</span><br></pre></td></tr></table></figure>
+
+<h3 id="Cloudflare准备"><a href="#Cloudflare准备" class="headerlink" title="Cloudflare准备"></a>Cloudflare准备</h3><p>将Cloudflare中SSL&#x2F;TLS加密模式设置为<code>完全（严格）</code>。</p>
 <p>在<a target="_blank" rel="noopener" href="https://dash.cloudflare.com/profile/api-tokens">Cloudflare</a>创建一个新的令牌（参考<a target="_blank" rel="noopener" href="https://github.com/libdns/cloudflare">cf插件主页</a>配置），权限为<code>Zone.Zone.Read; Zone.DNS.Edit</code>，并将令牌保存到本地。</p>
-<p>在<a target="_blank" rel="noopener" href="https://caddyserver.com/download?package=github.com%2Fcaddy-dns%2Fcloudflare">Caddy官方下载地址</a>，选择<code>dns.provider.cloudflare</code>，下载到本地准备。</p>
-<h2 id="设置密钥登陆">设置密钥登陆</h2>
-<h3 id="生成密钥">生成密钥</h3>
-<p>连接到服务器后，使用<code>ssh-keygen</code>来生成密钥，并把私钥保存到本地。</p>
+<p>在<a target="_blank" rel="noopener" href="https://caddyserver.com/download?package=github.com/caddy-dns/cloudflare">Caddy官方下载地址</a>，选择<code>dns.provider.cloudflare</code>，下载到本地准备。</p>
+<h2 id="设置密钥登陆"><a href="#设置密钥登陆" class="headerlink" title="设置密钥登陆"></a>设置密钥登陆</h2><h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h3><p>连接到服务器后，使用<code>ssh-keygen</code>来生成密钥，并把私钥保存到本地。</p>
 <p>使用<code>mv /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys</code>更改公钥名称。使用如下命令来更改权限：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> 700 ~/.ssh</span><br><span class="line"><span class="built_in">chmod</span> 600 ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
-<h3 id="修改登录方式">修改登录方式</h3>
-<p>使用<code>vim /etc/ssh/sshd_config</code>来修改SSH配置文件，将<code>PasswordAuthentication</code>改为<code>no</code>，将<code>PubkeyAuthentication</code>改为<code>yes</code>，并<code>systemctl restart ssh</code>重启SSH服务。</p>
+
+<h3 id="修改登录方式"><a href="#修改登录方式" class="headerlink" title="修改登录方式"></a>修改登录方式</h3><p>使用<code>vim /etc/ssh/sshd_config</code>来修改SSH配置文件，将<code>PasswordAuthentication</code>改为<code>no</code>，将<code>PubkeyAuthentication</code>改为<code>yes</code>，并<code>systemctl restart ssh</code>重启SSH服务。</p>
 <blockquote>
 <p>如有必要，可以更改ssh的端口号，修改<code>Port</code>即可。</p>
 </blockquote>
-<h2 id="安装caddy">安装Caddy</h2>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">apt install -y debian-keyring debian-archive-keyring apt-transport-https</span><br><span class="line">curl -1sLf <span class="string">&#x27;https://dl.cloudsmith.io/public/caddy/stable/gpg.key&#x27;</span> | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg</span><br><span class="line">curl -1sLf <span class="string">&#x27;https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt&#x27;</span> | sudo <span class="built_in">tee</span> /etc/apt/sources.list.d/caddy-stable.list</span><br><span class="line">apt update</span><br><span class="line">apt install caddy</span><br></pre></td></tr></table></figure>
-<p>把之前下载的Caddy传到root下， <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> ./caddy_linux_amd64_custom ./caddy</span><br><span class="line"><span class="built_in">chmod</span> +x ./caddy</span><br><span class="line">./caddy list-modules | grep dns</span><br></pre></td></tr></table></figure> 如果正常，会显示出<code>dns.providers.cloudflare</code>模块。</p>
-<p>在替换官方的Caddy： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> ./caddy /usr/bin/caddy</span><br></pre></td></tr></table></figure></p>
-<h3 id="寻找合适的伪装站">寻找合适的伪装站</h3>
-<p>示例关键字：intext:登录 Cloudreve</p>
-<h3 id="配置caddy">配置Caddy</h3>
-<p>启动Caddy服务： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> --now caddy</span><br></pre></td></tr></table></figure></p>
-<p>通过如下命令查看Caddy的日志： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl -u caddy --no-pager | less +G</span><br></pre></td></tr></table></figure></p>
+<h2 id="安装Caddy"><a href="#安装Caddy" class="headerlink" title="安装Caddy"></a>安装Caddy</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">apt install -y debian-keyring debian-archive-keyring apt-transport-https</span><br><span class="line">curl -1sLf <span class="string">&#x27;https://dl.cloudsmith.io/public/caddy/stable/gpg.key&#x27;</span> | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg</span><br><span class="line">curl -1sLf <span class="string">&#x27;https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt&#x27;</span> | sudo <span class="built_in">tee</span> /etc/apt/sources.list.d/caddy-stable.list</span><br><span class="line">apt update</span><br><span class="line">apt install caddy</span><br></pre></td></tr></table></figure>
+
+<p>把之前下载的Caddy传到root下，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> ./caddy_linux_amd64_custom ./caddy</span><br><span class="line"><span class="built_in">chmod</span> +x ./caddy</span><br><span class="line">./caddy list-modules | grep dns</span><br></pre></td></tr></table></figure>
+<p>如果正常，会显示出<code>dns.providers.cloudflare</code>模块。</p>
+<p>在替换官方的Caddy：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> ./caddy /usr/bin/caddy</span><br></pre></td></tr></table></figure>
+
+<h3 id="寻找合适的伪装站"><a href="#寻找合适的伪装站" class="headerlink" title="寻找合适的伪装站"></a>寻找合适的伪装站</h3><p>示例关键字：intext:登录 Cloudreve</p>
+<h3 id="配置Caddy"><a href="#配置Caddy" class="headerlink" title="配置Caddy"></a>配置Caddy</h3><p>启动Caddy服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> --now caddy</span><br></pre></td></tr></table></figure>
+
+<p>通过如下命令查看Caddy的日志：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl -u caddy --no-pager | less +G</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/caddy/Caddyfile</span><br></pre></td></tr></table></figure>
-<p>改为如下： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">example.com &#123;</span><br><span class="line">    encode gzip</span><br><span class="line"></span><br><span class="line">    tls &#123;</span><br><span class="line">        dns cloudflare 你的API token</span><br><span class="line">        protocols tls1.2 tls1.3</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    reverse_proxy /rayws* localhost:port &#123;</span><br><span class="line">        header_up Host &#123;host&#125;</span><br><span class="line">        header_up X-Real-IP &#123;remote_host&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    reverse_proxy /xuiws* localhost:port</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 伪装网址</span></span><br><span class="line">    reverse_proxy https://demo.cloudreve.org &#123;</span><br><span class="line">        header_up Host &#123;upstream_hostport&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+<p>改为如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">example.com &#123;</span><br><span class="line">    encode gzip</span><br><span class="line"></span><br><span class="line">    tls &#123;</span><br><span class="line">        dns cloudflare 你的API token</span><br><span class="line">        protocols tls1.2 tls1.3</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    reverse_proxy /rayws* localhost:port &#123;</span><br><span class="line">        header_up Host &#123;host&#125;</span><br><span class="line">        header_up X-Real-IP &#123;remote_host&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    reverse_proxy /xuiws* localhost:port</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 伪装网址</span></span><br><span class="line">    reverse_proxy https://demo.cloudreve.org &#123;</span><br><span class="line">        header_up Host &#123;upstream_hostport&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>奇怪的是xui只能在Chrome匿名模式下进入</p>
 </blockquote>
-<p><code>caddy run</code>查看tls是否生效： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tls.obtain      certificate obtained successfully</span><br></pre></td></tr></table></figure></p>
-<h2 id="xui">XUI</h2>
-<h3 id="安装xui">安装XUI</h3>
-<p>参考<a target="_blank" rel="noopener" href="https://github.com/FranzKafkaYu/x-ui">官方仓库</a>： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install.sh)</span><br></pre></td></tr></table></figure></p>
-<h3 id="配置xui">配置XUI</h3>
-<p>进入面板，把监听IP改为<code>127.0.0.1</code>，端口改为上面定义的<code>xuiws</code>端口。添加端口为<code>rayws</code>端口的节点。</p>
+<p><code>caddy run</code>查看tls是否生效：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tls.obtain      certificate obtained successfully</span><br></pre></td></tr></table></figure>
+
+<h2 id="XUI"><a href="#XUI" class="headerlink" title="XUI"></a>XUI</h2><h3 id="安装XUI"><a href="#安装XUI" class="headerlink" title="安装XUI"></a>安装XUI</h3><p>参考<a target="_blank" rel="noopener" href="https://github.com/FranzKafkaYu/x-ui">官方仓库</a>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install.sh)</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置XUI"><a href="#配置XUI" class="headerlink" title="配置XUI"></a>配置XUI</h3><p>进入面板，把监听IP改为<code>127.0.0.1</code>，端口改为上面定义的<code>xuiws</code>端口。添加端口为<code>rayws</code>端口的节点。</p>
 
     </div>
 
@@ -364,22 +361,6 @@
     </span>
     <span class="author" itemprop="copyrightHolder">张小白</span>
   </div>
-<div class="wordcount">
-  <span class="post-meta-item">
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-line"></i>
-    </span>
-      <span>站点总字数：</span>
-    <span title="站点总字数">16k</span>
-  </span>
-  <span class="post-meta-item">
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-      <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">58 分钟</span>
-  </span>
-</div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
