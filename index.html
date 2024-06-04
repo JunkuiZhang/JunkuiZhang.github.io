@@ -225,7 +225,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2024-06-04 17:38:14 / 修改时间：18:12:11" itemprop="dateCreated datePublished" datetime="2024-06-04T17:38:14+08:00">2024-06-04</time>
+      <time title="创建时间：2024-06-04 17:38:14 / 修改时间：18:20:10" itemprop="dateCreated datePublished" datetime="2024-06-04T17:38:14+08:00">2024-06-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -247,32 +247,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <span id="more"></span>
-
-<h1 id="安装Cuda-Toolkit"><a href="#安装Cuda-Toolkit" class="headerlink" title="安装Cuda Toolkit"></a>安装Cuda Toolkit</h1><h2 id="Ubuntu-20-04"><a href="#Ubuntu-20-04" class="headerlink" title="Ubuntu 20.04+"></a>Ubuntu 20.04+</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb</span><br><span class="line">sudo dpkg -i cuda-keyring_1.1-1_all.deb</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get -y install cuda-toolkit-12-5</span><br></pre></td></tr></table></figure>
-
-<h2 id="Ubuntu-18-04"><a href="#Ubuntu-18-04" class="headerlink" title="Ubuntu 18.04"></a>Ubuntu 18.04</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-keyring_1.0-1_all.deb</span><br><span class="line">sudo dpkg -i cuda-keyring_1.0-1_all.deb</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get -y install cuda</span><br></pre></td></tr></table></figure>
-
-<h2 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h2><p>安装CUda Toolkit后要重启系统<code>sudo reboot</code>。</p>
-<h1 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h1><h2 id="配置Docker的repo"><a href="#配置Docker的repo" class="headerlink" title="配置Docker的repo"></a>配置Docker的repo</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install ca-certificates curl</span><br><span class="line">sudo install -m 0755 -d /etc/apt/keyrings</span><br><span class="line">sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc</span><br><span class="line">sudo <span class="built_in">chmod</span> a+r /etc/apt/keyrings/docker.asc</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> \</span><br><span class="line">  <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">  <span class="subst">$(. /etc/os-release &amp;&amp; echo <span class="string">&quot;<span class="variable">$VERSION_CODENAME</span>&quot;</span>)</span> stable&quot;</span> | \</span><br><span class="line">  sudo <span class="built_in">tee</span> /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
-
-<h2 id="安装Docker-1"><a href="#安装Docker-1" class="headerlink" title="安装Docker"></a>安装Docker</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</span><br><span class="line">sudo service docker start</span><br></pre></td></tr></table></figure>
-
-<p>要确认Docker成功安装，进入WSL的Ubuntu（使用命令<code>wsl</code>），并输入命令<code>docker --version</code>查看输出，还可以通过尝试运行<code>sudo docker run hello-world</code>运行简单的内置Docker映像，测试安装是否正常工作。</p>
-<h1 id="给Docker配置CUDA"><a href="#给Docker配置CUDA" class="headerlink" title="给Docker配置CUDA"></a>给Docker配置CUDA</h1><h2 id="安装NVIDIA-Container-Toolkit"><a href="#安装NVIDIA-Container-Toolkit" class="headerlink" title="安装NVIDIA Container Toolkit"></a>安装NVIDIA Container Toolkit</h2><p>首先配置repo：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \</span><br><span class="line">  &amp;&amp; curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \</span><br><span class="line">    sed <span class="string">&#x27;s#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g&#x27;</span> | \</span><br><span class="line">    sudo <span class="built_in">tee</span> /etc/apt/sources.list.d/nvidia-container-toolkit.list</span><br></pre></td></tr></table></figure>
-<p>然后更新repo<code>sudo apt-get update</code>，再运行<code>sudo apt-get install -y nvidia-container-toolkit</code>来安装NVIDIA Container Toolkit。</p>
-<h2 id="配置Docker"><a href="#配置Docker" class="headerlink" title="配置Docker"></a>配置Docker</h2><p>使用<code>nvidia-ctk</code>命令配置容器运行时：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nvidia-ctk runtime configure --runtime=docker</span><br></pre></td></tr></table></figure>
-
-<p>重新启动Docker进程：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
-
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run --gpus all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark</span><br></pre></td></tr></table></figure>
-
-<p>若测试失败，则<code>sudo vim /etc/nvidia-container-runtime/config.toml</code>，然后修改<code>no-cgroups = false</code>，再重启Docker。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart docker</span><br><span class="line">sudo docker run --gpus all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark</span><br></pre></td></tr></table></figure>
-
+          <p>建议使用<code>Ubuntu 20.04</code>以上的版本。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/06/04/ubuntu-docker-cuda/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -334,7 +317,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-04 18:12:11" itemprop="dateModified" datetime="2024-06-04T18:12:11+08:00">2024-06-04</time>
+      <time title="修改时间：2024-06-04 18:20:10" itemprop="dateModified" datetime="2024-06-04T18:20:10+08:00">2024-06-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -426,7 +409,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-04 18:12:11" itemprop="dateModified" datetime="2024-06-04T18:12:11+08:00">2024-06-04</time>
+      <time title="修改时间：2024-06-04 18:20:10" itemprop="dateModified" datetime="2024-06-04T18:20:10+08:00">2024-06-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -518,7 +501,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-04 18:12:11" itemprop="dateModified" datetime="2024-06-04T18:12:11+08:00">2024-06-04</time>
+      <time title="修改时间：2024-06-04 18:20:10" itemprop="dateModified" datetime="2024-06-04T18:20:10+08:00">2024-06-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -610,7 +593,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-04 18:12:11" itemprop="dateModified" datetime="2024-06-04T18:12:11+08:00">2024-06-04</time>
+      <time title="修改时间：2024-06-04 18:20:10" itemprop="dateModified" datetime="2024-06-04T18:20:10+08:00">2024-06-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -702,7 +685,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-04 18:12:11" itemprop="dateModified" datetime="2024-06-04T18:12:11+08:00">2024-06-04</time>
+      <time title="修改时间：2024-06-04 18:20:10" itemprop="dateModified" datetime="2024-06-04T18:20:10+08:00">2024-06-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -794,7 +777,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-04 18:12:11" itemprop="dateModified" datetime="2024-06-04T18:12:11+08:00">2024-06-04</time>
+      <time title="修改时间：2024-06-04 18:20:10" itemprop="dateModified" datetime="2024-06-04T18:20:10+08:00">2024-06-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -879,7 +862,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-04 18:12:11" itemprop="dateModified" datetime="2024-06-04T18:12:11+08:00">2024-06-04</time>
+      <time title="修改时间：2024-06-04 18:20:10" itemprop="dateModified" datetime="2024-06-04T18:20:10+08:00">2024-06-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -971,7 +954,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-04 18:12:11" itemprop="dateModified" datetime="2024-06-04T18:12:11+08:00">2024-06-04</time>
+      <time title="修改时间：2024-06-04 18:20:10" itemprop="dateModified" datetime="2024-06-04T18:20:10+08:00">2024-06-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1063,7 +1046,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-04 18:12:11" itemprop="dateModified" datetime="2024-06-04T18:12:11+08:00">2024-06-04</time>
+      <time title="修改时间：2024-06-04 18:20:10" itemprop="dateModified" datetime="2024-06-04T18:20:10+08:00">2024-06-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
