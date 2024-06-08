@@ -1589,6 +1589,11 @@ x_1,x_2,x_3&amp;\geq0
 <li><a href="https://docs.docker.com/config/daemon/systemd/#httphttps-proxy">给daemon配置proxy</a></li>
 <li><a href="https://docs.docker.com/network/proxy/">给client配置proxy</a></li>
 </ol>
+<h2 id="让docker-build使用本机proxy">让<code>Docker build</code>使用本机proxy</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo docker build --network=host --build-arg http_proxy=http://127.0.0.1:10809 --build-arg https_proxy=http://127.0.0.1:10809 ...</span><br></pre></td></tr></table></figure>
+<h2 id="docker部分命令">Docker部分命令</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo docker builder prune -a</span><br></pre></td></tr></table></figure>
+<p><a href="https://docs.docker.com/reference/cli/docker/builder/prune/">参考链接</a></p>
 ]]></content>
       <categories>
         <category>教程</category>
