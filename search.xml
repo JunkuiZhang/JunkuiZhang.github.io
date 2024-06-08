@@ -1577,6 +1577,12 @@ x_1,x_2,x_3&amp;\geq0
 <p>重新启动Docker进程： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure></p>
 <h2 id="测试">测试</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo docker run --gpus all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark</span><br></pre></td></tr></table></figure>
+<h1 id="配置iptable">配置iptable</h1>
+<p>让WSL中的Ubuntu使用iptable，否则Docker的NAT会有问题。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo update-alternatives --config iptables</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Ref: https://nickjanetakis.com/blog/install-docker-in-wsl-2-without-docker-desktop</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>教程</category>
