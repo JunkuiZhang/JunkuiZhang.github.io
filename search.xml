@@ -1522,8 +1522,8 @@ x_1,x_2,x_3&amp;\geq0
 <h2 id="配置docker的repo">配置Docker的repo</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install ca-certificates curl</span><br><span class="line">sudo install -m 0755 -d /etc/apt/keyrings</span><br><span class="line">sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc</span><br><span class="line">sudo <span class="built_in">chmod</span> a+r /etc/apt/keyrings/docker.asc</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> \</span><br><span class="line">  <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">  <span class="subst">$(. /etc/os-release &amp;&amp; echo <span class="string">&quot;<span class="variable">$VERSION_CODENAME</span>&quot;</span>)</span> stable&quot;</span> | \</span><br><span class="line">  sudo <span class="built_in">tee</span> /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
 <h2 id="安装docker-1">安装Docker</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</span><br><span class="line">sudo service docker start</span><br></pre></td></tr></table></figure>
-<p>要确认Docker成功安装，进入WSL的Ubuntu（使用命令<code>wsl</code>），并输入命令<code>docker --version</code>查看输出，还可以通过尝试运行<code>sudo docker run hello-world</code>运行简单的内置Docker映像，测试安装是否正常工作。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</span><br><span class="line">sudo usermod <span class="variable">$USER</span> -aG docker <span class="comment"># 添加本用户到docker的组中</span></span><br><span class="line">sudo service docker start</span><br></pre></td></tr></table></figure>
+<p>要确认Docker成功安装，输入命令<code>docker --version</code>查看输出，还可以通过尝试运行<code>docker run hello-world</code>运行简单的内置Docker映像，测试安装是否正常工作。</p>
 <h1 id="给docker配置cuda">给Docker配置CUDA</h1>
 <h2 id="安装nvidia-container-toolkit">安装NVIDIA Container Toolkit</h2>
 <p>首先配置repo： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \</span><br><span class="line">  &amp;&amp; curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \</span><br><span class="line">    sed <span class="string">&#x27;s#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g&#x27;</span> | \</span><br><span class="line">    sudo <span class="built_in">tee</span> /etc/apt/sources.list.d/nvidia-container-toolkit.list</span><br></pre></td></tr></table></figure> 然后更新repo<code>sudo apt-get update</code>，再运行<code>sudo apt-get install -y nvidia-container-toolkit</code>来安装NVIDIA Container Toolkit。</p>
@@ -1531,10 +1531,16 @@ x_1,x_2,x_3&amp;\geq0
 <p>使用<code>nvidia-ctk</code>命令配置容器运行时： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo nvidia-ctk runtime configure --runtime=docker</span><br></pre></td></tr></table></figure></p>
 <p>重新启动Docker进程： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure></p>
 <h2 id="测试">测试</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo docker run --<span class="built_in">rm</span> --runtime=nvidia --gpus all ubuntu nvidia-smi</span><br><span class="line">sudo docker run --gpus all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark</span><br></pre></td></tr></table></figure>
-<p>若测试失败，则<code>sudo vim /etc/nvidia-container-runtime/config.toml</code>，然后修改<code>no-cgroups = false</code>，再重启Docker。 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo systemctl restart docker</span><br><span class="line">sudo docker run --gpus all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run --<span class="built_in">rm</span> --runtime=nvidia --gpus all ubuntu nvidia-smi</span><br><span class="line">docker run --gpus all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark</span><br></pre></td></tr></table></figure>
+<p>若测试失败，则<code>sudo vim /etc/nvidia-container-runtime/config.toml</code>，然后修改<code>no-cgroups = false</code>，再重启Docker。 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo systemctl restart docker</span><br><span class="line">docker run --gpus all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark</span><br></pre></td></tr></table></figure></p>
 <h1 id="给docker配置proxy">给Docker配置proxy</h1>
 <p><a href="https://askubuntu.com/questions/1098849/docker-image-build-command-fails-with-client-timeout-exceeded-while-awaiting-h">参考链接</a></p>
+<ol type="1">
+<li><a href="https://docs.docker.com/config/daemon/systemd/#httphttps-proxy">给daemon配置proxy</a></li>
+<li><a href="https://docs.docker.com/network/proxy/">给client配置proxy</a></li>
+</ol>
+<h2 id="让docker-build使用本机proxy">让<code>Docker build</code>使用本机proxy</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker build --network=host --build-arg http_proxy=<span class="variable">$http_proxy</span> --build-arg https_proxy=<span class="variable">$https_proxy</span> ...</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>教程</category>
@@ -1567,8 +1573,8 @@ x_1,x_2,x_3&amp;\geq0
 <h2 id="配置docker的repo">配置Docker的repo</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install ca-certificates curl</span><br><span class="line">sudo install -m 0755 -d /etc/apt/keyrings</span><br><span class="line">sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc</span><br><span class="line">sudo <span class="built_in">chmod</span> a+r /etc/apt/keyrings/docker.asc</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> \</span><br><span class="line">  <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">  <span class="subst">$(. /etc/os-release &amp;&amp; echo <span class="string">&quot;<span class="variable">$VERSION_CODENAME</span>&quot;</span>)</span> stable&quot;</span> | \</span><br><span class="line">  sudo <span class="built_in">tee</span> /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
 <h2 id="安装docker-1">安装Docker</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</span><br><span class="line">sudo service docker start</span><br></pre></td></tr></table></figure>
-<p>要确认Docker成功安装，进入WSL的Ubuntu（使用命令<code>wsl</code>），并输入命令<code>docker --version</code>查看输出，还可以通过尝试运行<code>sudo docker run hello-world</code>运行简单的内置Docker映像，测试安装是否正常工作。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</span><br><span class="line">sudo usermod <span class="variable">$USER</span> -aG docker <span class="comment"># 添加本用户到docker的组中</span></span><br><span class="line">sudo service docker start</span><br></pre></td></tr></table></figure>
+<p>要确认Docker成功安装，进入WSL的Ubuntu（使用命令<code>wsl</code>），并输入命令<code>docker --version</code>查看输出，还可以通过尝试运行<code>docker run hello-world</code>运行简单的内置Docker映像，测试安装是否正常工作。</p>
 <h1 id="给docker配置cuda">给Docker配置CUDA</h1>
 <h2 id="安装nvidia-container-toolkit">安装NVIDIA Container Toolkit</h2>
 <p>首先配置repo： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \</span><br><span class="line">  &amp;&amp; curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \</span><br><span class="line">    sed <span class="string">&#x27;s#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g&#x27;</span> | \</span><br><span class="line">    sudo <span class="built_in">tee</span> /etc/apt/sources.list.d/nvidia-container-toolkit.list</span><br></pre></td></tr></table></figure> 然后更新repo<code>sudo apt-get update</code>，再运行<code>sudo apt-get install -y nvidia-container-toolkit</code>来安装NVIDIA Container Toolkit。</p>
@@ -1576,11 +1582,11 @@ x_1,x_2,x_3&amp;\geq0
 <p>使用<code>nvidia-ctk</code>命令配置容器运行时： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo nvidia-ctk runtime configure --runtime=docker</span><br></pre></td></tr></table></figure></p>
 <p>重新启动Docker进程： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure></p>
 <h2 id="测试">测试</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo docker run --gpus all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run --gpus all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark</span><br></pre></td></tr></table></figure>
 <h1 id="配置docker-1">配置Docker</h1>
 <h2 id="配置iptable">配置iptable</h2>
 <p>让WSL中的Ubuntu使用iptable（option 1），否则Docker的NAT会有问题。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo update-alternatives --config iptables</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">update-alternatives --config iptables</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>Ref: https://nickjanetakis.com/blog/install-docker-in-wsl-2-without-docker-desktop</p>
 </blockquote>
@@ -1590,9 +1596,9 @@ x_1,x_2,x_3&amp;\geq0
 <li><a href="https://docs.docker.com/network/proxy/">给client配置proxy</a></li>
 </ol>
 <h2 id="让docker-build使用本机proxy">让<code>Docker build</code>使用本机proxy</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo docker build --network=host --build-arg http_proxy=http://127.0.0.1:10809 --build-arg https_proxy=http://127.0.0.1:10809 ...</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker build --network=host --build-arg http_proxy=<span class="variable">$http_proxy</span> --build-arg https_proxy=<span class="variable">$https_proxy</span> ...</span><br></pre></td></tr></table></figure>
 <h2 id="docker部分命令">Docker部分命令</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo docker builder prune -a</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker builder prune -a</span><br></pre></td></tr></table></figure>
 <p><a href="https://docs.docker.com/reference/cli/docker/builder/prune/">参考链接</a></p>
 ]]></content>
       <categories>
