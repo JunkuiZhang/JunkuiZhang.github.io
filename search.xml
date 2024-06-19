@@ -111,6 +111,7 @@ G = \frac{\Delta}{2u}
 <h2 id="配置部分软件">配置部分软件</h2>
 <h3 id="配置git">配置git</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S git</span><br><span class="line">git config --global user.email <span class="string">&quot;YOUR_EMAIL@SOME.com&quot;</span></span><br><span class="line">git config --global user.name <span class="string">&quot;YOUR NAME&quot;</span></span><br></pre></td></tr></table></figure>
+<p>给git配置代理： <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global http.proxy http://127.0.0.1:10809</span><br><span class="line">git config --global https.proxy http://127.0.0.1:10809</span><br></pre></td></tr></table></figure></p>
 <h4 id="配置ssh">配置SSH</h4>
 <p>生成SSH Key： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure> 全部默认即可。</p>
 <p>然后把Key添加进SSH agent： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(ssh-agent -s)</span>&quot;</span></span><br><span class="line">ssh-add ~/.ssh/id_ed25519</span><br></pre></td></tr></table></figure></p>
