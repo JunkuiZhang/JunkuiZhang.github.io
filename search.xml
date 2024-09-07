@@ -999,6 +999,25 @@ f&#39;(x) = \lim_{\epsilon\rightarrow0}\frac{f(x+\epsilon)-f(x)}{\epsilon}
       </tags>
   </entry>
   <entry>
+    <title>Docker命令指南</title>
+    <url>/2024/09/07/docker-south/</url>
+    <content><![CDATA[<p>Docker常用命令指南。</p>
+<span id="more"></span>
+<h1 id="docker-compose">Docker Compose</h1>
+<h2 id="general">General</h2>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">nv-test:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nvcr.io/nvidia/k8s/cuda-sample:nbody</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">&quot;-gpu -benchmark&quot;</span></span><br><span class="line">    <span class="attr">stdin_open:</span> <span class="literal">true</span>          <span class="comment"># docker run -i</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span>                 <span class="comment"># docker run -t     以上两项，再 docker attach &lt;container_name&gt;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">type:</span> <span class="string">bind</span></span><br><span class="line">        <span class="attr">source:</span> <span class="string">data</span></span><br><span class="line">        <span class="attr">target:</span> <span class="string">/home/test</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">type:</span> <span class="string">volume</span></span><br><span class="line">        <span class="attr">source:</span> <span class="string">nv-data</span></span><br><span class="line">        <span class="attr">target:</span> <span class="string">/home/test-nv</span></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">      <span class="attr">resources:</span></span><br><span class="line">        <span class="attr">reservations:</span></span><br><span class="line">          <span class="attr">devices:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">driver:</span> <span class="string">nvidia</span></span><br><span class="line">              <span class="attr">count:</span> <span class="string">all</span></span><br><span class="line">              <span class="attr">capabilities:</span> [<span class="string">gpu</span>]</span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">nv-data:</span>                    <span class="comment"># docker volume create nv-data</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h2 id="docker-volume">Docker Volume</h2>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker volume <span class="built_in">ls</span></span><br><span class="line">docker volume create nv-data</span><br><span class="line">docker volume inspect nv-data</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>coding</tag>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>人工智能教我学习</title>
     <url>/2023/01/03/gpt_awesome/</url>
     <content><![CDATA[<p>ChatGPT真是太厉害了！</p>
@@ -1169,6 +1188,50 @@ x_1,x_2,x_3&amp;\geq0
       <tags>
         <tag>Python</tag>
         <tag>Economy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ubuntu离线部署机器学习</title>
+    <url>/2024/09/07/ml-offline-setup/</url>
+    <content><![CDATA[<p>介绍。</p>
+<span id="more"></span>
+<h1 id="离线安装docker">离线安装Docker</h1>
+<h2 id="下载对应版本的docker安装包">下载对应版本的Docker安装包</h2>
+<p>运行<code>lsb_release -a</code>查看当前的Ubuntu版本，如<code>jammy</code>，然后到<a href="https://download.docker.com/linux/ubuntu/dists/">这里</a>点击相应的发行版进入，然后进入<code>pool/stable/amd64</code>，下载全部。</p>
+<h2 id="安装docker">安装Docker</h2>
+<p>运行<code>sudo dpkg -i *.deb</code>，如遇到依赖问题再解决依赖问题，<code>apt install --fix-broken ./docker-ce.deb</code>。</p>
+<h2 id="ref">Ref</h2>
+<blockquote>
+<p><a href="https://stackoverflow.com/questions/59626514/how-to-install-docker-in-ubuntu-offline">StackOverflow</a></p>
+</blockquote>
+<h1 id="离线安装nv-container-toolkit">离线安装NV Container Toolkit</h1>
+<p>在<a href="https://github.com/NVIDIA/nvidia-container-toolkit">GitHub</a>下载相应的包，执行<code>sudo dpkg -i *.deb</code>。</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>coding</tag>
+        <tag>Neural Network</tag>
+        <tag>Docker</tag>
+        <tag>Nvidia</tag>
+        <tag>Ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>为WSL安装多个Ubuntu实例</title>
+    <url>/2024/09/07/multi-wsl/</url>
+    <content><![CDATA[<p>在<a href="https://cloud-images.ubuntu.com/">这里</a>选择<code>wsl</code>，然后下载相应的版本，如<code>jammy</code>。然后<code>wsl --import &lt;Name&gt; &lt;Dir&gt; &lt;File&gt;</code>来安装对应的Ubuntu。使用<code>wsl -d &lt;Name&gt;</code>来启动相应的实例。</p>
+<span id="more"></span>
+<p>Ref: <a href="https://stackoverflow.com/questions/51584765/how-do-you-install-multiple-separate-instances-of-ubuntu-in-wsl">StackOverflow</a></p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>coding</tag>
+        <tag>Ubuntu</tag>
+        <tag>WSL</tag>
       </tags>
   </entry>
   <entry>
@@ -1548,8 +1611,8 @@ x_1,x_2,x_3&amp;\geq0
       </categories>
       <tags>
         <tag>coding</tag>
-        <tag>Ubuntu</tag>
         <tag>Docker</tag>
+        <tag>Ubuntu</tag>
       </tags>
   </entry>
   <entry>
