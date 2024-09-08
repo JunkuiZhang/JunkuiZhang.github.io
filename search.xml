@@ -1639,6 +1639,61 @@ x_1,x_2,x_3&amp;\geq0
       </tags>
   </entry>
   <entry>
+    <title>给无网络链接的Ubuntu安装NV驱动</title>
+    <url>/2024/09/08/ubuntu-offline/</url>
+    <content><![CDATA[<p>需要使用ssh服务，<code>sudo systemctl status ssh</code>来检查ssh服务是否启动，否则 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install openssh-server</span><br><span class="line"><span class="built_in">sudo</span> ufw allow ssh</span><br><span class="line"><span class="comment"># 传输文件</span></span><br><span class="line">scp C:\LOCAL\FILE\PATH\test.file username@remote_ip:/home/SOME_FOLDER</span><br><span class="line"><span class="comment"># 查看ip地址</span></span><br><span class="line">ip addr show</span><br></pre></td></tr></table></figure></p>
+<span id="more"></span>
+<h1 id="确定系统信息">确定系统信息</h1>
+<p>使用<code>ssh username@remote_ip</code>来连接至远程服务器，</p>
+<h2 id="查看ubuntu版本">查看Ubuntu版本</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lsb_release -a</span><br></pre></td></tr></table></figure>
+<h2 id="查看显卡参数">查看显卡参数</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lspci | grep -i vga</span><br></pre></td></tr></table></figure>
+<h2 id="查看cpu参数">查看CPU参数</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lscpu</span><br></pre></td></tr></table></figure>
+<h1 id="安装nvidia驱动">安装Nvidia驱动</h1>
+<p>在<a href="https://www.nvidia.cn/drivers/lookup/">这里</a>搜索到对应的驱动并下载，然后使用<code>scp ~/NVIDIA-Driver.run username@remote_ip:/home/some_dir</code>来传输文件。</p>
+<p>再使用<code>sudo chmod +x NVIDIA-Driver.run</code>进行提权，然后使用<code>root</code>权限运行<code>.run</code>文件。 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># –no-opengl-files 只安装驱动文件，不安装OpenGL文件。这个参数最重要</span></span><br><span class="line"><span class="comment"># –no-x-check 安装驱动时不检查X服务</span></span><br><span class="line"><span class="comment"># –no-nouveau-check 安装驱动时不检查nouveau</span></span><br><span class="line"><span class="built_in">sudo</span> sh xxxxx.run --no-opengl-files –no-x-check –no-nouveau-check</span><br></pre></td></tr></table></figure></p>
+<p>有可能会提示<code>gcc</code>没有安装，下面安装<code>gcc</code>和<code>make</code>。</p>
+<h2 id="使用光盘文件作为镜像源">使用光盘文件作为镜像源</h2>
+<p>下载Ubuntu镜像，并传输到远程机器中。然后<code>sudo mount -o loop /PATH/TO/ISO /cdrom</code>把iso文件挂载。</p>
+<p>修改安装源文件<code>sudo vim /etc/apt/source.list</code>，<code>deb file:/cdrom stable main restricted</code>，stable main restricted 是光盘dists目录下查找位置，不同的镜像文件目录不同要调整。</p>
+<p>然后<code>apt-get update apt-get install gcc make</code></p>
+<h2 id="使用离线安装包作为安装源">使用离线安装包作为安装源</h2>
+<h3 id="在可以上网的电脑上下载">在可以上网的电脑上下载</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 清空缓存目录</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> -rf /var/cache/apt/archives/*</span><br><span class="line"><span class="comment">## 下载相关程序包和依赖包，但是仅下载不安装。下载目录为/var/cache/apt/archives/</span></span><br><span class="line"><span class="built_in">sudo</span> apt-get -d install &lt;包名&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="在目标机器上">在目标机器上</h3>
+<p>把位于<code>/var/cache/apt/archives/</code>中下载的文件传输到目标机器上，然后使用<code>sudo dpkg -i *.deb</code>安装。</p>
+<h1 id="debug">Debug</h1>
+<h2 id="运行nvdia-smi提示无设备">运行<code>nvdia-smi</code>提示无设备</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vi /etc/default/grub</span><br><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=<span class="string">&quot;quiet splash nomodeset&quot;</span></span><br></pre></td></tr></table></figure>
+<p>保存后更新grub<code>sudo update-grub</code></p>
+<h2 id="安装docker等">安装Docker等</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># .tar文件</span></span><br><span class="line">tar -xvf File.tar</span><br><span class="line"><span class="comment"># .tar.gz文件</span></span><br><span class="line">tar -xzvf File.tar.gz</span><br></pre></td></tr></table></figure>
+<h1 id="docker打包及部署">Docker打包及部署</h1>
+<h2 id="镜像">镜像</h2>
+<h3 id="打包镜像">打包镜像</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker save -o ./FILE/PATH.tar &lt;name&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="倒入镜像">倒入镜像</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker load -i ./FILE/PATH.tar</span><br></pre></td></tr></table></figure>
+<h2 id="容器">容器</h2>
+<h3 id="打包容器">打包容器</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker <span class="built_in">export</span> -o ./FILE/PATH.tar &lt;name&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="倒入容器">倒入容器</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker import ./FILE/PATH.tar &lt;name&gt;:latest</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>coding</tag>
+        <tag>Nvidia</tag>
+        <tag>Ubuntu</tag>
+        <tag>Driver</tag>
+        <tag>Offline</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>给WSL2配置运行CUDA的Docker</title>
     <url>/2024/06/03/wsl-docker/</url>
     <content><![CDATA[<p>注意，本文使用<code>WSL2</code>+<code>Docker</code>，而不是安装<code>Docker Desktop for Windows</code>，因为后者占用的资源非常多，而且还有很多bug，比如，<a href="https://github.com/docker/for-win/issues/13870">GPU无法运行</a>。</p>
