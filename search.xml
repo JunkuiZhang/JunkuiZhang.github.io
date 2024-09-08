@@ -1742,6 +1742,11 @@ x_1,x_2,x_3&amp;\geq0
 <h2 id="docker部分命令">Docker部分命令</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker builder prune -a</span><br></pre></td></tr></table></figure>
 <p><a href="https://docs.docker.com/reference/cli/docker/builder/prune/">参考链接</a></p>
+<h1 id="给docker瘦身">给Docker瘦身</h1>
+<h2 id="停止wsl">停止WSL</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wsl --shutdown</span><br></pre></td></tr></table></figure>
+<h2 id="使用diskpart来瘦身">使用Diskpart来瘦身</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">diskpart</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> vdisk file=<span class="string">&quot;C:\PATH\TO\ext4.vhd&quot;</span></span><br><span class="line">attach vdisk <span class="built_in">readonly</span></span><br><span class="line">compact vdisk</span><br><span class="line">detach vdisk</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>教程</category>
