@@ -1010,6 +1010,8 @@ f&#39;(x) = \lim_{\epsilon\rightarrow0}\frac{f(x+\epsilon)-f(x)}{\epsilon}
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker volume <span class="built_in">ls</span></span><br><span class="line">docker volume create nv-data</span><br><span class="line">docker volume inspect nv-data</span><br></pre></td></tr></table></figure>
 <h1 id="docker-proxy">Docker Proxy</h1>
 <p>为docker指定镜像： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/docker/daemon.json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;registry-mirrors&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;https://docker.mirrors.ustc.edu.cn&quot;</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br><span class="line"><span class="built_in">sudo</span> systemctl restart docker</span><br></pre></td></tr></table></figure></p>
+<h1 id="git-lfs">Git LFS</h1>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">GIT_LFS_SKIP_SMUDGE=1 git <span class="built_in">clone</span> https://...</span><br><span class="line">git lfs pull</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>教程</category>
