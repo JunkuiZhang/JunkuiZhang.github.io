@@ -1698,6 +1698,33 @@ x_1,x_2,x_3&amp;\geq0
       </tags>
   </entry>
   <entry>
+    <title>给无外网的Ubuntu服务器安装VSCode Server及插件</title>
+    <url>/2024/10/06/ubuntu-vscode/</url>
+    <content><![CDATA[<p>如何给无外网的Ubuntu服务器安装VSCode Server及插件。</p>
+<span id="more"></span>
+<h1 id="安装code-server">安装Code Server</h1>
+<p>使用remote ssh连接服务器，VSCode会自动下载Code Server，此时下载不通。记录下下载地址，手动下载，文件应为：<code>https://update.code.visualstudio.com/commit:&lt;COMMIT_ID&gt;/server-linux-x64/stable</code>.</p>
+<p>下载完成后，在远程服务器上： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> ~/.vscode-server/bin/* -rf  <span class="comment">#把$HOME/.vscode-server/bin下的内容删干净，防止出错</span></span><br><span class="line"><span class="built_in">cd</span> ~/.vscode-server/bin</span><br><span class="line">tar -zxf vscode-server-linux-x64.tar.gz</span><br><span class="line"><span class="built_in">mv</span> vscode-server-linux-x64 <span class="variable">$&#123;commit_id&#125;</span> <span class="comment"># 注意把:$&#123;commit_id&#125;替换成对应的Commit ID</span></span><br></pre></td></tr></table></figure></p>
+<p>此时，应该就可以打开服务器了。</p>
+<h1 id="安装插件">安装插件</h1>
+<p>以<code>pyhon</code>为例和<code>Docker</code>为例。</p>
+<h2 id="下载插件">下载插件</h2>
+<p>在本地机器上，在VSCode中找到插件，点击右侧的<code>marketplace</code>，在打开的网页中，右侧点击<code>Download Extension</code>，选择对应的平台后下载。</p>
+<h2 id="上传插件">上传插件</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">scp C:\LOCAL\FILE\PATH\test.file username@remote_ip:/home/SOME_FOLDER</span><br></pre></td></tr></table></figure>
+<h2 id="安装插件-1">安装插件</h2>
+<p>在侧边栏打开插件后，点击右上方的三个点，然后选择<code>从VSIX</code>中安装</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>coding</tag>
+        <tag>Ubuntu</tag>
+        <tag>VSCode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>给WSL2配置运行CUDA的Docker</title>
     <url>/2024/06/03/wsl-docker/</url>
     <content><![CDATA[<p>注意，本文使用<code>WSL2</code>+<code>Docker</code>，而不是安装<code>Docker Desktop for Windows</code>，因为后者占用的资源非常多，而且还有很多bug，比如，<a href="https://github.com/docker/for-win/issues/13870">GPU无法运行</a>。</p>
