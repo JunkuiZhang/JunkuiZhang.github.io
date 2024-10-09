@@ -474,130 +474,6 @@ G = \frac{\Delta}{2u}
       </tags>
   </entry>
   <entry>
-    <title>深度学习——神经网络基本内容（01）</title>
-    <url>/2018/01/04/deep-01/</url>
-    <content><![CDATA[<h1 id="概述">概述</h1>
-<p>深度学习几乎就等于神经网络算法，该算法主要由两个模块构成：前向传播（Forward Propagation）、后向传播（Backward Propagation）。</p>
-<p>前向传播来计算预测值<span class="math inline">\(\hat{y}\)</span>，而后向传播则根据预测值与实际值的差别计算成本方程（Cost Function），并根据该值改进神经网络各节点的权重值。经过多次迭代，逐渐收敛。</p>
-<span id="more"></span>
-<h1 id="forward-propagation">Forward Propagation</h1>
-<p>前向传播又有两个模块：线性模块、激发模块。</p>
-<h2 id="线性模块">线性模块</h2>
-<p>线性模块是本层神经节点根据输入<span class="math inline">\(X = \{X^{(1)}, X^{(2)}, ... , X^{(m)}\}\)</span>来计算输出： <span class="math display">\[
-Z = WX + b
-\]</span> 这里<span class="math inline">\(W\)</span>是本层神经节点的权重。有<span class="math inline">\(m\)</span>个样本的情况下，假设每个样本有<span class="math inline">\(n_x\)</span>个参数，即样本<span class="math inline">\(X\)</span>的维度为<span class="math inline">\((n_x, m)\)</span>。假设本层共有<span class="math inline">\(n^{[l]}\)</span>个神经节点，则<span class="math inline">\(W\)</span>的维度为<span class="math inline">\((n^{[l]}, n_x)\)</span>。进而，<span class="math inline">\(b\)</span>的维度为<span class="math inline">\((n^{[l]}, 1)\)</span>。</p>
-<h2 id="激发模块">激发模块</h2>
-<p>由于神经网络的输出值域等问题，由线性模块计算得到的输出不能直接作为整个模型的输出，而需要经过激发模块的处理。假设激发函数（Activation Function）为<span class="math inline">\(g(\bullet)\)</span>，则最终本层神经节点的输出为： <span class="math display">\[
-A = g(Z)
-\]</span></p>
-<p>常用的激发函数有几种：</p>
-<h3 id="sigmoid函数">sigmoid函数</h3>
-<p>该函数的表达式为： <span class="math display">\[
-\sigma (x) = \frac{1}{1 + e^{-x}}
-\]</span> 该函数的图象为： <img src="/2018/01/04/deep-01/01.png" class="" title="Sigmoid函数图像"></p>
-<p>从图像上可以看出，该函数的值域介于0，1之间，当处理分类问题（Classification）时，该函数能较好的进行最后的输出预测。 若<span class="math inline">\(a = \sigma (z)\)</span>，则该函数的导数为：<span class="math inline">\(\sigma&#39;(z) = a(1-a)\)</span></p>
-<h3 id="tanh函数">tanh函数</h3>
-<p>该函数的表达式为： <span class="math display">\[
-\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}
-\]</span> 函数图象为： <img src="/2018/01/04/deep-01/02.png" class="" title="tanh函数图象"></p>
-<p>该函数图像与Sigmoid函数类似，唯一不同的是Sigmoid函数图像介于0，1之间，而tanh函数图像则介于-1，1之间。从实践来看，tanh函数作为激发函数表现总是要比sigmoid函数好。</p>
-<p>若<span class="math inline">\(a = tanh(x)\)</span>，则该函数的导数<span class="math inline">\(tanh&#39;(x) = 1-a^2\)</span>。</p>
-<p>但是，两函数都存在同一个问题：当自变量的值过大或过小时，如<span class="math inline">\(x = -1000\)</span>，此时，从图像上可以看出，函数的图像会变得十分扁平，意味着其导数会十分小，进而梯度下降法（Gradient Descent）对权重<span class="math inline">\(W\)</span>的改变会十分的有限。进而，该神经网络的训练可能会十分的漫长。</p>
-<h3 id="relu函数">ReLU函数</h3>
-<p>该函数就为改变上面两个函数的缺点诞生的，其表达式十分简单： <span class="math display">\[
-f(x) =
-\begin{cases}
-x, &amp; x &gt; 0 \\\
-0, &amp; else
-\end{cases}
-\]</span></p>
-<p>其函数图象为： <img src="/2018/01/04/deep-01/03.png" class="" title="ReLU函数图象"></p>
-<p>进而其导数也不存在上面两个函数的缺点，进而实践中，该函数的表现总是比以上两个函数都好。</p>
-<h2 id="前向传播总结">前向传播总结</h2>
-<p>用<span class="math inline">\(A^{[l-1]}\)</span>表示第<span class="math inline">\(l\)</span>层神经网络的输入值，即第<span class="math inline">\(l-1\)</span>层神经网络的激发值，其维度为<span class="math inline">\((n^{[l-1]}, m)\)</span>，其中<span class="math inline">\(n^{[l]}\)</span>表示该层神经网络的节点个数；用<span class="math inline">\(W^{[l]}\)</span>表示第<span class="math inline">\(l\)</span>层神经网络的权重，其维度为<span class="math inline">\((n^{[l]}, n^{[l-1]})\)</span>，则 <span class="math display">\[
-Z^{[l]} = W^{[l]}A^{[l-1]} + b^{[l]}
-\]</span> <span class="math display">\[
-A^{[l]} = g(Z^{[l]})
-\]</span> 其中，<span class="math inline">\(Z^{[l]}\)</span>和<span class="math inline">\(A^{[l]}\)</span>的维度均为<span class="math inline">\((n^{[l]}, m)\)</span></p>
-<h1 id="损失函数loss-function和成本函数cost-function">损失函数（Loss Function）和成本函数（Cost Function）</h1>
-<p>在正向传播和逆向传播之间还要先计算正向传播的损失（与实际值），再利用这个损失来进行逆向传播从而对权重进行修正。</p>
-<p>损失函数是对于整体<span class="math inline">\(X\)</span>中的某一样本<span class="math inline">\(X^{(i)}\)</span>而言的，即有： <span class="math display">\[
-L(X^{(i)}) = (\hat{y}^{(i)} - y)^2
-\]</span> 而成本函数则是对整个整体<span class="math inline">\(X\)</span>而言的，即有： <span class="math display">\[
-J(X) = \frac1{2m}\sum_{i=1}^{m}L(X^{(i)})
-\]</span></p>
-<p>可用如下的代码计算 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>/<span class="number">2</span>/m*np.<span class="built_in">sum</span>(np.square(yhat-y))</span><br></pre></td></tr></table></figure></p>
-<h1 id="backward-propagation">Backward Propagation</h1>
-<p>反向传播的基础是成本函数，下面用逻辑回归（Logistical Regression）做例子说明。</p>
-<h2 id="一个例子逻辑回归">一个例子：逻辑回归</h2>
-<p>逻辑回归下，一个常用的损失函数是： <span class="math display">\[
-L(\hat{y}, y) = -(y\ln \hat{y} + (1-y)\ln(1-\hat{y}))
-\]</span></p>
-<p>当该神经网络一共有<span class="math inline">\(L\)</span>层时，该损失函数对<span class="math inline">\(A^{[L]}\)</span>的导数即为： <span class="math display">\[
-\frac{dL}{dA^{[L]}} = -\frac{y}{A^{[L]}} + \frac{1-y}{1-A^{[L]}}
-\]</span> 已知<span class="math inline">\(dA^{[L]}/dZ^{[L]} = A^{[L]}(1-A^{[L]})\)</span>，则 <span class="math display">\[
-\begin{aligned}
-    \frac{dL}{dZ^{[L]}} &amp;= \frac{dL}{dA^{[L]}}\frac{dA^{[L]}}{dZ^{[L]}} \\\
-    &amp;= A^{[L]} - Y
-\end{aligned}
-\]</span></p>
-<p>又由于<span class="math inline">\(Z^{[L]} = W^{[L]}A^{[L-1]} + b^{[L]}\)</span>，则 <span class="math display">\[
-\frac{dZ^{[L]}}{dW^{[L]}} = A^{[L-1]T}
-\]</span> 那么，根据链式求导法则有： <span class="math display">\[
-\begin{aligned}
-    \frac{dL}{dW^{[L]}} &amp;= \frac{dL}{dZ^{[L]}}\frac{dZ^{[L]}}{dW^{[L]}} \\\
-    &amp;= (A^{[L]} - Y)A^{[L-1]T}
-\end{aligned}
-\]</span> 进而对第<span class="math inline">\(L\)</span>层神经网络有 <span class="math display">\[
-\frac{dJ}{dW^{[L]}} = \frac{1}{m}(A^{[L]}-Y)A^{[L-1]T}
-\]</span> <span class="math display">\[
-\frac{dJ}{db^{[L]}} = \frac{1}{m}\sum(A^{[L]}-Y)
-\]</span> 对任意第<span class="math inline">\(l\)</span>层神经网络有 <span class="math display">\[
-\begin{aligned}
-    \frac{dJ}{dZ^{[l]}} &amp;= \frac{dJ}{dZ^{[l+1]}}\frac{dZ^{[l+1]}}{dZ^{[l]}} \\\
-    &amp;= \frac{dJ}{dZ^{[l+1]}}\frac{dZ^{[l+1]}}{dA^{[l]}}\frac{dA^{[l]}}{dZ^{[l]}} \\\
-    &amp;= W^{[l]T}\frac{dJ}{dZ^{[l+1]}}\times g&#39;(Z^{[l]})
-\end{aligned}
-\]</span> 进而，有 <span class="math display">\[
-\begin{aligned}
-    \frac{dJ}{dW^{[l]}} &amp;= \frac{dJ}{dZ^{[l]}}\frac{dZ^{[l]}}{dW^{[l]}} \\\
-    &amp;= \frac1m\frac{dJ}{dZ^{[l]}}A^{[l-1]T}
-\end{aligned}
-\]</span> <span class="math display">\[
-\begin{aligned}
-    \frac{dJ}{db^{[l]}} &amp;= \frac{dJ}{dZ^{[l]}}\frac{dZ^{[l]}}{db^{[l]}} \\\
-    &amp;= \frac1m\sum\frac{dJ}{dZ^{[l]}}
-\end{aligned}
-\]</span></p>
-<h2 id="反向传播总结">反向传播总结</h2>
-<p>反向传播的关键是计算<span class="math inline">\(\frac{dJ}{dZ^{[l]}}\)</span>，当用<span class="math inline">\(d(\bullet)\)</span>表示<span class="math inline">\(\frac{dJ}{d(\bullet)}\)</span>时，可表示为： <span class="math display">\[
-\begin{aligned}
-    dZ^{[l]} &amp;= W^{[l]T}dZ^{[l+1]}\times g&#39;(Z^{[l]}) \\\
-    dW^{[l]} &amp;= \frac1mdZ^{[l]}A^{[l-1]T} \\\
-    db^{[l]} &amp;= \frac1m\sum dZ^{[l]}
-\end{aligned}
-\]</span></p>
-<h2 id="更新变量">更新变量</h2>
-<p>运用梯度下降法计算时，还要更新变量。一般而言，为了保证算法的收敛，需要设定一个学习速率（Learning Rate）来控制神经网络的更新。学习速率（用<span class="math inline">\(\alpha\)</span>来表示）作为一个超参数（Hyperparameter）需要我们不断进行测试来确定其最佳值。前文需要确定的神经网络层数<span class="math inline">\(L\)</span>也是一个需要不断调整确定最佳值的超参数。 <span class="math display">\[
-\begin{aligned}
-    W^{[l]} &amp;= W^{[l]} - \alpha dW^{[l]} \\\
-    b^{[l]} &amp;= b^{[l]} - \alpha db^{[l]}
-\end{aligned}
-\]</span></p>
-<h1 id="神经网络的训练">神经网络的训练</h1>
-<p>经过上述从正向传播到计算成本函数，到进行反向传播后的一个完整循环成为一个epoch。一般而言，随着完成的epoch次数的增加，成本函数（在训练集上）一直呈下降趋势，并最终收敛于一个稳定值（但此时并非一定达到了全局最优解，有可能是局部最优解）：若与此同时，在测试集上的误差也较低，则神经网络训练较好；若训练集上误差很小，但是测试集上的误差较大，此时神经网络有较大的方差（Variance），或称为过拟合（Overfitting）；若训练集上的误差也很大，此时神经网络有较大的偏差（Bias），或称为欠拟合（underfitting）。</p>
-<p>一般而言，欠拟合的解决方法是： - 调整超参数 - 训练更深的神经网络（即增加神经网络层数）</p>
-<p>而过拟合的解决方法是： - 收集更多的数据来进行训练 - 正则化（Regularization） - 标准化（Normalization）</p>
-]]></content>
-      <categories>
-        <category>深度学习</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>Neural Network</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CS自学教程</title>
     <url>/2022/03/26/cs-self-learn/</url>
     <content><![CDATA[<h2 id="编程入门">编程入门</h2>
@@ -885,6 +761,130 @@ L(\hat{y}, y) = -(y\ln \hat{y} + (1-y)\ln(1-\hat{y}))
       </tags>
   </entry>
   <entry>
+    <title>深度学习——神经网络基本内容（01）</title>
+    <url>/2018/01/04/deep-01/</url>
+    <content><![CDATA[<h1 id="概述">概述</h1>
+<p>深度学习几乎就等于神经网络算法，该算法主要由两个模块构成：前向传播（Forward Propagation）、后向传播（Backward Propagation）。</p>
+<p>前向传播来计算预测值<span class="math inline">\(\hat{y}\)</span>，而后向传播则根据预测值与实际值的差别计算成本方程（Cost Function），并根据该值改进神经网络各节点的权重值。经过多次迭代，逐渐收敛。</p>
+<span id="more"></span>
+<h1 id="forward-propagation">Forward Propagation</h1>
+<p>前向传播又有两个模块：线性模块、激发模块。</p>
+<h2 id="线性模块">线性模块</h2>
+<p>线性模块是本层神经节点根据输入<span class="math inline">\(X = \{X^{(1)}, X^{(2)}, ... , X^{(m)}\}\)</span>来计算输出： <span class="math display">\[
+Z = WX + b
+\]</span> 这里<span class="math inline">\(W\)</span>是本层神经节点的权重。有<span class="math inline">\(m\)</span>个样本的情况下，假设每个样本有<span class="math inline">\(n_x\)</span>个参数，即样本<span class="math inline">\(X\)</span>的维度为<span class="math inline">\((n_x, m)\)</span>。假设本层共有<span class="math inline">\(n^{[l]}\)</span>个神经节点，则<span class="math inline">\(W\)</span>的维度为<span class="math inline">\((n^{[l]}, n_x)\)</span>。进而，<span class="math inline">\(b\)</span>的维度为<span class="math inline">\((n^{[l]}, 1)\)</span>。</p>
+<h2 id="激发模块">激发模块</h2>
+<p>由于神经网络的输出值域等问题，由线性模块计算得到的输出不能直接作为整个模型的输出，而需要经过激发模块的处理。假设激发函数（Activation Function）为<span class="math inline">\(g(\bullet)\)</span>，则最终本层神经节点的输出为： <span class="math display">\[
+A = g(Z)
+\]</span></p>
+<p>常用的激发函数有几种：</p>
+<h3 id="sigmoid函数">sigmoid函数</h3>
+<p>该函数的表达式为： <span class="math display">\[
+\sigma (x) = \frac{1}{1 + e^{-x}}
+\]</span> 该函数的图象为： <img src="/2018/01/04/deep-01/01.png" class="" title="Sigmoid函数图像"></p>
+<p>从图像上可以看出，该函数的值域介于0，1之间，当处理分类问题（Classification）时，该函数能较好的进行最后的输出预测。 若<span class="math inline">\(a = \sigma (z)\)</span>，则该函数的导数为：<span class="math inline">\(\sigma&#39;(z) = a(1-a)\)</span></p>
+<h3 id="tanh函数">tanh函数</h3>
+<p>该函数的表达式为： <span class="math display">\[
+\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}
+\]</span> 函数图象为： <img src="/2018/01/04/deep-01/02.png" class="" title="tanh函数图象"></p>
+<p>该函数图像与Sigmoid函数类似，唯一不同的是Sigmoid函数图像介于0，1之间，而tanh函数图像则介于-1，1之间。从实践来看，tanh函数作为激发函数表现总是要比sigmoid函数好。</p>
+<p>若<span class="math inline">\(a = tanh(x)\)</span>，则该函数的导数<span class="math inline">\(tanh&#39;(x) = 1-a^2\)</span>。</p>
+<p>但是，两函数都存在同一个问题：当自变量的值过大或过小时，如<span class="math inline">\(x = -1000\)</span>，此时，从图像上可以看出，函数的图像会变得十分扁平，意味着其导数会十分小，进而梯度下降法（Gradient Descent）对权重<span class="math inline">\(W\)</span>的改变会十分的有限。进而，该神经网络的训练可能会十分的漫长。</p>
+<h3 id="relu函数">ReLU函数</h3>
+<p>该函数就为改变上面两个函数的缺点诞生的，其表达式十分简单： <span class="math display">\[
+f(x) =
+\begin{cases}
+x, &amp; x &gt; 0 \\\
+0, &amp; else
+\end{cases}
+\]</span></p>
+<p>其函数图象为： <img src="/2018/01/04/deep-01/03.png" class="" title="ReLU函数图象"></p>
+<p>进而其导数也不存在上面两个函数的缺点，进而实践中，该函数的表现总是比以上两个函数都好。</p>
+<h2 id="前向传播总结">前向传播总结</h2>
+<p>用<span class="math inline">\(A^{[l-1]}\)</span>表示第<span class="math inline">\(l\)</span>层神经网络的输入值，即第<span class="math inline">\(l-1\)</span>层神经网络的激发值，其维度为<span class="math inline">\((n^{[l-1]}, m)\)</span>，其中<span class="math inline">\(n^{[l]}\)</span>表示该层神经网络的节点个数；用<span class="math inline">\(W^{[l]}\)</span>表示第<span class="math inline">\(l\)</span>层神经网络的权重，其维度为<span class="math inline">\((n^{[l]}, n^{[l-1]})\)</span>，则 <span class="math display">\[
+Z^{[l]} = W^{[l]}A^{[l-1]} + b^{[l]}
+\]</span> <span class="math display">\[
+A^{[l]} = g(Z^{[l]})
+\]</span> 其中，<span class="math inline">\(Z^{[l]}\)</span>和<span class="math inline">\(A^{[l]}\)</span>的维度均为<span class="math inline">\((n^{[l]}, m)\)</span></p>
+<h1 id="损失函数loss-function和成本函数cost-function">损失函数（Loss Function）和成本函数（Cost Function）</h1>
+<p>在正向传播和逆向传播之间还要先计算正向传播的损失（与实际值），再利用这个损失来进行逆向传播从而对权重进行修正。</p>
+<p>损失函数是对于整体<span class="math inline">\(X\)</span>中的某一样本<span class="math inline">\(X^{(i)}\)</span>而言的，即有： <span class="math display">\[
+L(X^{(i)}) = (\hat{y}^{(i)} - y)^2
+\]</span> 而成本函数则是对整个整体<span class="math inline">\(X\)</span>而言的，即有： <span class="math display">\[
+J(X) = \frac1{2m}\sum_{i=1}^{m}L(X^{(i)})
+\]</span></p>
+<p>可用如下的代码计算 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>/<span class="number">2</span>/m*np.<span class="built_in">sum</span>(np.square(yhat-y))</span><br></pre></td></tr></table></figure></p>
+<h1 id="backward-propagation">Backward Propagation</h1>
+<p>反向传播的基础是成本函数，下面用逻辑回归（Logistical Regression）做例子说明。</p>
+<h2 id="一个例子逻辑回归">一个例子：逻辑回归</h2>
+<p>逻辑回归下，一个常用的损失函数是： <span class="math display">\[
+L(\hat{y}, y) = -(y\ln \hat{y} + (1-y)\ln(1-\hat{y}))
+\]</span></p>
+<p>当该神经网络一共有<span class="math inline">\(L\)</span>层时，该损失函数对<span class="math inline">\(A^{[L]}\)</span>的导数即为： <span class="math display">\[
+\frac{dL}{dA^{[L]}} = -\frac{y}{A^{[L]}} + \frac{1-y}{1-A^{[L]}}
+\]</span> 已知<span class="math inline">\(dA^{[L]}/dZ^{[L]} = A^{[L]}(1-A^{[L]})\)</span>，则 <span class="math display">\[
+\begin{aligned}
+    \frac{dL}{dZ^{[L]}} &amp;= \frac{dL}{dA^{[L]}}\frac{dA^{[L]}}{dZ^{[L]}} \\\
+    &amp;= A^{[L]} - Y
+\end{aligned}
+\]</span></p>
+<p>又由于<span class="math inline">\(Z^{[L]} = W^{[L]}A^{[L-1]} + b^{[L]}\)</span>，则 <span class="math display">\[
+\frac{dZ^{[L]}}{dW^{[L]}} = A^{[L-1]T}
+\]</span> 那么，根据链式求导法则有： <span class="math display">\[
+\begin{aligned}
+    \frac{dL}{dW^{[L]}} &amp;= \frac{dL}{dZ^{[L]}}\frac{dZ^{[L]}}{dW^{[L]}} \\\
+    &amp;= (A^{[L]} - Y)A^{[L-1]T}
+\end{aligned}
+\]</span> 进而对第<span class="math inline">\(L\)</span>层神经网络有 <span class="math display">\[
+\frac{dJ}{dW^{[L]}} = \frac{1}{m}(A^{[L]}-Y)A^{[L-1]T}
+\]</span> <span class="math display">\[
+\frac{dJ}{db^{[L]}} = \frac{1}{m}\sum(A^{[L]}-Y)
+\]</span> 对任意第<span class="math inline">\(l\)</span>层神经网络有 <span class="math display">\[
+\begin{aligned}
+    \frac{dJ}{dZ^{[l]}} &amp;= \frac{dJ}{dZ^{[l+1]}}\frac{dZ^{[l+1]}}{dZ^{[l]}} \\\
+    &amp;= \frac{dJ}{dZ^{[l+1]}}\frac{dZ^{[l+1]}}{dA^{[l]}}\frac{dA^{[l]}}{dZ^{[l]}} \\\
+    &amp;= W^{[l]T}\frac{dJ}{dZ^{[l+1]}}\times g&#39;(Z^{[l]})
+\end{aligned}
+\]</span> 进而，有 <span class="math display">\[
+\begin{aligned}
+    \frac{dJ}{dW^{[l]}} &amp;= \frac{dJ}{dZ^{[l]}}\frac{dZ^{[l]}}{dW^{[l]}} \\\
+    &amp;= \frac1m\frac{dJ}{dZ^{[l]}}A^{[l-1]T}
+\end{aligned}
+\]</span> <span class="math display">\[
+\begin{aligned}
+    \frac{dJ}{db^{[l]}} &amp;= \frac{dJ}{dZ^{[l]}}\frac{dZ^{[l]}}{db^{[l]}} \\\
+    &amp;= \frac1m\sum\frac{dJ}{dZ^{[l]}}
+\end{aligned}
+\]</span></p>
+<h2 id="反向传播总结">反向传播总结</h2>
+<p>反向传播的关键是计算<span class="math inline">\(\frac{dJ}{dZ^{[l]}}\)</span>，当用<span class="math inline">\(d(\bullet)\)</span>表示<span class="math inline">\(\frac{dJ}{d(\bullet)}\)</span>时，可表示为： <span class="math display">\[
+\begin{aligned}
+    dZ^{[l]} &amp;= W^{[l]T}dZ^{[l+1]}\times g&#39;(Z^{[l]}) \\\
+    dW^{[l]} &amp;= \frac1mdZ^{[l]}A^{[l-1]T} \\\
+    db^{[l]} &amp;= \frac1m\sum dZ^{[l]}
+\end{aligned}
+\]</span></p>
+<h2 id="更新变量">更新变量</h2>
+<p>运用梯度下降法计算时，还要更新变量。一般而言，为了保证算法的收敛，需要设定一个学习速率（Learning Rate）来控制神经网络的更新。学习速率（用<span class="math inline">\(\alpha\)</span>来表示）作为一个超参数（Hyperparameter）需要我们不断进行测试来确定其最佳值。前文需要确定的神经网络层数<span class="math inline">\(L\)</span>也是一个需要不断调整确定最佳值的超参数。 <span class="math display">\[
+\begin{aligned}
+    W^{[l]} &amp;= W^{[l]} - \alpha dW^{[l]} \\\
+    b^{[l]} &amp;= b^{[l]} - \alpha db^{[l]}
+\end{aligned}
+\]</span></p>
+<h1 id="神经网络的训练">神经网络的训练</h1>
+<p>经过上述从正向传播到计算成本函数，到进行反向传播后的一个完整循环成为一个epoch。一般而言，随着完成的epoch次数的增加，成本函数（在训练集上）一直呈下降趋势，并最终收敛于一个稳定值（但此时并非一定达到了全局最优解，有可能是局部最优解）：若与此同时，在测试集上的误差也较低，则神经网络训练较好；若训练集上误差很小，但是测试集上的误差较大，此时神经网络有较大的方差（Variance），或称为过拟合（Overfitting）；若训练集上的误差也很大，此时神经网络有较大的偏差（Bias），或称为欠拟合（underfitting）。</p>
+<p>一般而言，欠拟合的解决方法是： - 调整超参数 - 训练更深的神经网络（即增加神经网络层数）</p>
+<p>而过拟合的解决方法是： - 收集更多的数据来进行训练 - 正则化（Regularization） - 标准化（Normalization）</p>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Neural Network</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>深度学习——神经网络超参数的处理（02）</title>
     <url>/2018/01/05/deep-02/</url>
     <content><![CDATA[<h1 id="概述">概述</h1>
@@ -1005,7 +1005,7 @@ f&#39;(x) = \lim_{\epsilon\rightarrow0}\frac{f(x+\epsilon)-f(x)}{\epsilon}
 <span id="more"></span>
 <h1 id="docker-compose">Docker Compose</h1>
 <h2 id="general">General</h2>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">nv-test:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nvcr.io/nvidia/k8s/cuda-sample:nbody</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">&quot;-gpu -benchmark&quot;</span></span><br><span class="line">    <span class="attr">ipc:</span> <span class="string">host</span>                 <span class="comment"># pytorch训练</span></span><br><span class="line">    <span class="attr">stdin_open:</span> <span class="literal">true</span>          <span class="comment"># docker run -i</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span>                 <span class="comment"># docker run -t     以上两项，再 docker attach &lt;container_name&gt;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">type:</span> <span class="string">bind</span></span><br><span class="line">        <span class="attr">source:</span> <span class="string">data</span></span><br><span class="line">        <span class="attr">target:</span> <span class="string">/home/test</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">type:</span> <span class="string">volume</span></span><br><span class="line">        <span class="attr">source:</span> <span class="string">nv-data</span></span><br><span class="line">        <span class="attr">target:</span> <span class="string">/home/test-nv</span></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">      <span class="attr">resources:</span></span><br><span class="line">        <span class="attr">reservations:</span></span><br><span class="line">          <span class="attr">devices:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">driver:</span> <span class="string">nvidia</span></span><br><span class="line">              <span class="attr">count:</span> <span class="string">all</span></span><br><span class="line">              <span class="attr">capabilities:</span> [<span class="string">gpu</span>]</span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">nv-data:</span>                    <span class="comment"># docker volume create nv-data</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">nv-test:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nvcr.io/nvidia/k8s/cuda-sample:nbody</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">&quot;-gpu -benchmark&quot;</span></span><br><span class="line">    <span class="attr">ipc:</span> <span class="string">host</span>                 <span class="comment"># pytorch训练</span></span><br><span class="line">    <span class="attr">stdin_open:</span> <span class="literal">true</span>          <span class="comment"># docker run -i</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span>                 <span class="comment"># docker run -t     以上两项，再 docker attach &lt;container_name&gt;</span></span><br><span class="line">    <span class="attr">network_mode:</span> <span class="string">&quot;host&quot;</span>      <span class="comment"># 使用本机的网络，proxy</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">type:</span> <span class="string">bind</span></span><br><span class="line">        <span class="attr">source:</span> <span class="string">data</span></span><br><span class="line">        <span class="attr">target:</span> <span class="string">/home/test</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">type:</span> <span class="string">volume</span></span><br><span class="line">        <span class="attr">source:</span> <span class="string">nv-data</span></span><br><span class="line">        <span class="attr">target:</span> <span class="string">/home/test-nv</span></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">      <span class="attr">resources:</span></span><br><span class="line">        <span class="attr">reservations:</span></span><br><span class="line">          <span class="attr">devices:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">driver:</span> <span class="string">nvidia</span></span><br><span class="line">              <span class="attr">count:</span> <span class="string">all</span></span><br><span class="line">              <span class="attr">capabilities:</span> [<span class="string">gpu</span>]</span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">nv-data:</span>                    <span class="comment"># docker volume create nv-data</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 <h2 id="docker-volume">Docker Volume</h2>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker volume <span class="built_in">ls</span></span><br><span class="line">docker volume create nv-data</span><br><span class="line">docker volume inspect nv-data</span><br></pre></td></tr></table></figure>
 <h1 id="docker-proxy">Docker Proxy</h1>
