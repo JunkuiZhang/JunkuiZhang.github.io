@@ -1012,6 +1012,8 @@ f&#39;(x) = \lim_{\epsilon\rightarrow0}\frac{f(x+\epsilon)-f(x)}{\epsilon}
 <p>为docker指定镜像： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/docker/daemon.json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;registry-mirrors&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;https://docker.mirrors.ustc.edu.cn&quot;</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br><span class="line"><span class="built_in">sudo</span> systemctl restart docker</span><br></pre></td></tr></table></figure></p>
 <h1 id="git-lfs">Git LFS</h1>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">GIT_LFS_SKIP_SMUDGE=1 git <span class="built_in">clone</span> https://...</span><br><span class="line">git lfs pull</span><br></pre></td></tr></table></figure>
+<h1 id="hugginface代理">HugginFace代理</h1>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> HF_ENDPOINT=https://hf-mirror.com</span><br></pre></td></tr></table></figure>
 <h1 id="docker打包及部署">Docker打包及部署</h1>
 <h2 id="镜像">镜像</h2>
 <h3 id="打包镜像">打包镜像</h3>
