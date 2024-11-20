@@ -1600,8 +1600,10 @@ x_1,x_2,x_3&amp;\geq0
 <p>把最后两行加入到<code>~/.profile</code>中，否则VSCode的Docker插件会无法正常使用。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl --user start docker</span><br><span class="line">systemctl --user <span class="built_in">enable</span> docker</span><br></pre></td></tr></table></figure>
 <p>需要注意的是，此时Docker守护进程的配置文件在<code>~/.config/docker/daemon.json</code></p>
+<h1 id="gpu">GPU</h1>
+<p>在Nvidia的配置文件<code>/etc/nvidia-container-runtime/config.toml</code>的这一行： <figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[nvidia-container-cli]</span></span><br></pre></td></tr></table></figure> 添加下面的内容： <figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="attr">no-cgroups</span> = <span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
 <h1 id="reference">Reference</h1>
-<p><a href="https://docs.docker.com/engine/security/rootless/">Rootless Docker</a></p>
+<p><a href="https://docs.docker.com/engine/security/rootless/">Rootless Docker</a> <a href="https://stackoverflow.com/questions/59373710/gpu-with-rootless-docker">GPU</a></p>
 ]]></content>
       <categories>
         <category>教程</category>
