@@ -1588,6 +1588,30 @@ x_1,x_2,x_3&amp;\geq0
       </tags>
   </entry>
   <entry>
+    <title>Rootless Docker</title>
+    <url>/2024/11/20/rootless-docker/</url>
+    <content><![CDATA[<p>配置Rootless Docker。</p>
+<span id="more"></span>
+<h1 id="安装">安装</h1>
+<p>如果之前已安装docker： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">disable</span> --now docker.service docker.socket</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> /var/run/docker.sock</span><br></pre></td></tr></table></figure></p>
+<p>进行安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get insatll uidmap</span><br><span class="line"><span class="built_in">sudo</span> apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</span><br><span class="line">dockerd-rootless-setuptool.sh install <span class="comment"># 以非root身份运行</span></span><br></pre></td></tr></table></figure>
+<p>输出如下： <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[INFO] Creating /home/testuser/.config/systemd/user/docker.service</span><br><span class="line">...</span><br><span class="line">[INFO] Installed docker.service successfully.</span><br><span class="line">[INFO] To control docker.service, run: `systemctl --user (start|stop|restart) docker.service`</span><br><span class="line">[INFO] To run docker.service on system startup, run: `<span class="built_in">sudo</span> loginctl enable-linger testuser`</span><br><span class="line"></span><br><span class="line">[INFO] Make sure the following environment variables are <span class="built_in">set</span> (or add them to ~/.bashrc):</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PATH=/usr/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> DOCKER_HOST=unix:///run/user/1000/docker.sock</span><br></pre></td></tr></table></figure></p>
+<p>把最后两行加入到<code>~/.profile</code>中，否则VSCode的Docker插件会无法正常使用。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl --user start docker</span><br><span class="line">systemctl --user <span class="built_in">enable</span> docker</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，此时Docker守护进程的配置文件在<code>~/.config/docker/daemon.json</code></p>
+<h1 id="reference">Reference</h1>
+<p><a href="https://docs.docker.com/engine/security/rootless/">Rootless Docker</a></p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>coding</tag>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>破解Termius</title>
     <url>/2024/10/06/termius-crack/</url>
     <content><![CDATA[<p>Termius一定要登录才能使用，而我在公共的机器上显然不想登录。</p>
