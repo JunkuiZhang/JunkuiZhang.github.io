@@ -276,6 +276,9 @@ git lfs pull
 &lt;h3&gt;导入容器&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;docker import ./FILE/PATH.tar &amp;lt;name&amp;gt;:latest
 &lt;/code&gt;&lt;/pre&gt;
+</content:encoded></item><item><title>为WSL安装多个Ubuntu实例</title><link>https://fuwari.vercel.app/posts/multi-wsl/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/multi-wsl/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;在&lt;a href=&quot;https://cloud-images.ubuntu.com/&quot;&gt;这里&lt;/a&gt;选择&lt;code&gt;wsl&lt;/code&gt;，然后下载相应的版本，如&lt;code&gt;jammy&lt;/code&gt;。然后&lt;code&gt;wsl --import &amp;lt;Name&amp;gt; &amp;lt;Dir&amp;gt; &amp;lt;File&amp;gt;&lt;/code&gt;来安装对应的Ubuntu。使用&lt;code&gt;wsl -d &amp;lt;Name&amp;gt;&lt;/code&gt;来启动相应的实例。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;p&gt;Ref: &lt;a href=&quot;https://stackoverflow.com/questions/51584765/how-do-you-install-multiple-separate-instances-of-ubuntu-in-wsl&quot;&gt;StackOverflow&lt;/a&gt;&lt;/p&gt;
 </content:encoded></item><item><title>Ubuntu离线部署机器学习</title><link>https://fuwari.vercel.app/posts/ml-offline-setup/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/ml-offline-setup/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;介绍。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;离线安装Docker&lt;/h1&gt;
@@ -289,9 +292,6 @@ git lfs pull
 &lt;/blockquote&gt;
 &lt;h1&gt;离线安装NV Container Toolkit&lt;/h1&gt;
 &lt;p&gt;在&lt;a href=&quot;https://github.com/NVIDIA/nvidia-container-toolkit&quot;&gt;GitHub&lt;/a&gt;下载相应的包，执行&lt;code&gt;sudo dpkg -i *.deb&lt;/code&gt;。&lt;/p&gt;
-</content:encoded></item><item><title>为WSL安装多个Ubuntu实例</title><link>https://fuwari.vercel.app/posts/multi-wsl/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/multi-wsl/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;在&lt;a href=&quot;https://cloud-images.ubuntu.com/&quot;&gt;这里&lt;/a&gt;选择&lt;code&gt;wsl&lt;/code&gt;，然后下载相应的版本，如&lt;code&gt;jammy&lt;/code&gt;。然后&lt;code&gt;wsl --import &amp;lt;Name&amp;gt; &amp;lt;Dir&amp;gt; &amp;lt;File&amp;gt;&lt;/code&gt;来安装对应的Ubuntu。使用&lt;code&gt;wsl -d &amp;lt;Name&amp;gt;&lt;/code&gt;来启动相应的实例。&lt;/p&gt;
-&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
-&lt;p&gt;Ref: &lt;a href=&quot;https://stackoverflow.com/questions/51584765/how-do-you-install-multiple-separate-instances-of-ubuntu-in-wsl&quot;&gt;StackOverflow&lt;/a&gt;&lt;/p&gt;
 </content:encoded></item><item><title>给Nvidia显卡的电脑安装Ubuntu</title><link>https://fuwari.vercel.app/posts/ubuntu-nvidia/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/ubuntu-nvidia/</guid><pubDate>Fri, 06 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;下载安装介质后，进入安装介质可能会黑屏，要在选择&lt;code&gt;Try or install ubuntu&lt;/code&gt;时按&lt;code&gt;e&lt;/code&gt;进入编辑模式，在&lt;code&gt;--- quite splash&lt;/code&gt;删除&lt;code&gt;---&lt;/code&gt;并添加&lt;code&gt;nomodeset&lt;/code&gt;，然后按&lt;code&gt;F10&lt;/code&gt;进入安装介质。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;配置Ubuntu&lt;/h1&gt;
