@@ -2451,8 +2451,8 @@ $$
 $$&lt;/p&gt;
 &lt;p&gt;该函数的图象为：
 &amp;lt;!-- {% asset_img 01.png Sigmoid函数图像 %} --&amp;gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/saicaca/resource/main/fuwari/home.png&quot; alt=&quot;Example Image&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;./01.png&quot; alt=&quot;Example Image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&amp;lt;!-- &lt;img src=&quot;https://raw.githubusercontent.com/saicaca/resource/main/fuwari/home.png&quot; alt=&quot;Example Image&quot; /&gt; --&amp;gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;./01.png&quot; alt=&quot;Sigmoid函数图像&quot; title=&quot;Sigmoid函数图像&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;从图像上可以看出，该函数的值域介于0，1之间，当处理分类问题（Classification）时，该函数能较好的进行最后的输出预测。
 若$a = \sigma (z)$，则该函数的导数为：$\sigma&apos;(z) = a(1-a)$&lt;/p&gt;
 &lt;h3&gt;tanh函数&lt;/h3&gt;
@@ -2461,7 +2461,8 @@ $$
 \tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}
 $$
 函数图象为：
-{% asset_img 02.png tanh函数图象 %}&lt;/p&gt;
+&amp;lt;!-- {% asset_img 02.png tanh函数图象 %} --&amp;gt;
+&lt;img src=&quot;./02.png&quot; alt=&quot;tanh函数图象&quot; title=&quot;tanh函数图象&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;该函数图像与Sigmoid函数类似，唯一不同的是Sigmoid函数图像介于0，1之间，而tanh函数图像则介于-1，1之间。从实践来看，tanh函数作为激发函数表现总是要比sigmoid函数好。&lt;/p&gt;
 &lt;p&gt;若$a = tanh(x)$，则该函数的导数$tanh&apos;(x) = 1-a^2$。&lt;/p&gt;
 &lt;p&gt;但是，两函数都存在同一个问题：当自变量的值过大或过小时，如$x = -1000$，此时，从图像上可以看出，函数的图像会变得十分扁平，意味着其导数会十分小，进而梯度下降法（Gradient Descent）对权重$W$的改变会十分的有限。进而，该神经网络的训练可能会十分的漫长。&lt;/p&gt;
@@ -2475,7 +2476,8 @@ x, &amp;amp; x &amp;gt; 0 \&lt;br /&gt;
 \end{cases}
 $$&lt;/p&gt;
 &lt;p&gt;其函数图象为：
-{% asset_img 03.png ReLU函数图象 %}&lt;/p&gt;
+&amp;lt;!-- {% asset_img 03.png ReLU函数图象 %} --&amp;gt;
+&lt;img src=&quot;./03.png&quot; alt=&quot;ReLU函数图象&quot; title=&quot;ReLU函数图象&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;进而其导数也不存在上面两个函数的缺点，进而实践中，该函数的表现总是比以上两个函数都好。&lt;/p&gt;
 &lt;h2&gt;前向传播总结&lt;/h2&gt;
 &lt;p&gt;用$A^{[l-1]}$表示第$l$层神经网络的输入值，即第$l-1$层神经网络的激发值，其维度为$(n^{[l-1]}, m)$，其中$n^{[l]}$表示该层神经网络的节点个数；用$W^{[l]}$表示第$l$层神经网络的权重，其维度为$(n^{[l]}, n^{[l-1]})$，则
