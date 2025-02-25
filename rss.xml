@@ -1,256 +1,2642 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>张小白的小窝</title><description>Welcome!</description><link>https://fuwari.vercel.app/</link><language>zh_CN</language><item><title>Markdown Extended Features</title><link>https://fuwari.vercel.app/posts/markdown-extended/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/markdown-extended/</guid><description>Read more about Markdown features in Fuwari</description><pubDate>Wed, 01 May 2024 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;GitHub Repository Cards&lt;/h2&gt;
-&lt;p&gt;You can add dynamic cards that link to GitHub repositories, on page load, the repository information is pulled from the GitHub API.&lt;/p&gt;
-&lt;p&gt;::github{repo=&quot;Fabrizz/MMM-OnSpotify&quot;}&lt;/p&gt;
-&lt;p&gt;Create a GitHub repository card with the code &lt;code&gt;::github{repo=&quot;&amp;lt;owner&amp;gt;/&amp;lt;repo&amp;gt;&quot;}&lt;/code&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;::github{repo=&quot;saicaca/fuwari&quot;}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Admonitions&lt;/h2&gt;
-&lt;p&gt;Following types of admonitions are supported: &lt;code&gt;note&lt;/code&gt; &lt;code&gt;tip&lt;/code&gt; &lt;code&gt;important&lt;/code&gt; &lt;code&gt;warning&lt;/code&gt; &lt;code&gt;caution&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;:::note
-Highlights information that users should take into account, even when skimming.
-:::&lt;/p&gt;
-&lt;p&gt;:::tip
-Optional information to help a user be more successful.
-:::&lt;/p&gt;
-&lt;p&gt;:::important
-Crucial information necessary for users to succeed.
-:::&lt;/p&gt;
-&lt;p&gt;:::warning
-Critical content demanding immediate user attention due to potential risks.
-:::&lt;/p&gt;
-&lt;p&gt;:::caution
-Negative potential consequences of an action.
-:::&lt;/p&gt;
-&lt;h3&gt;Basic Syntax&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;:::note
-Highlights information that users should take into account, even when skimming.
-:::
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>张小白的小窝</title><description>Welcome!</description><link>https://fuwari.vercel.app/</link><language>zh_CN</language><item><title>小窝的新生</title><link>https://fuwari.vercel.app/posts/hello/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/hello/</guid><description>小窝又被换主题了！感谢乐神！</description><pubDate>Tue, 25 Feb 2025 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;代码测试&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;import os
+import numpy
 
-:::tip
-Optional information to help a user be more successful.
-:::
+print(&apos;Hello World!&apos;)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;Custom Titles&lt;/h3&gt;
-&lt;p&gt;The title of the admonition can be customized.&lt;/p&gt;
-&lt;p&gt;:::note[MY CUSTOM TITLE]
-This is a note with a custom title.
-:::&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;:::note[MY CUSTOM TITLE]
-This is a note with a custom title.
-:::
+&lt;h1&gt;数学公式测试&lt;/h1&gt;
+&lt;p&gt;$$
+E = mc^2
+$$&lt;/p&gt;
+&lt;h1&gt;网页测试&lt;/h1&gt;
+&lt;p&gt;这是个&lt;a href=&quot;https://www.baidu.com&quot;&gt;网页&lt;/a&gt;&lt;/p&gt;
+</content:encoded></item><item><title>Rootless Docker</title><link>https://fuwari.vercel.app/posts/rootless-docker/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/rootless-docker/</guid><description>配置Rootless Docker。</description><pubDate>Wed, 20 Nov 2024 20:57:24 GMT</pubDate><content:encoded>&lt;p&gt;配置Rootless Docker。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;安装&lt;/h1&gt;
+&lt;p&gt;如果之前已安装docker：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo systemctl disable --now docker.service docker.socket
+sudo rm /var/run/docker.sock
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;GitHub Syntax&lt;/h3&gt;
+&lt;p&gt;进行安装：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt-get insatll uidmap
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+dockerd-rootless-setuptool.sh install # 以非root身份运行
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;输出如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[INFO] Creating /home/testuser/.config/systemd/user/docker.service
+...
+[INFO] Installed docker.service successfully.
+[INFO] To control docker.service, run: `systemctl --user (start|stop|restart) docker.service`
+[INFO] To run docker.service on system startup, run: `sudo loginctl enable-linger testuser`
+
+[INFO] Make sure the following environment variables are set (or add them to ~/.bashrc):
+
+export PATH=/usr/bin:$PATH
+export DOCKER_HOST=unix:///run/user/1000/docker.sock
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;把最后两行加入到&lt;code&gt;~/.profile&lt;/code&gt;中，否则VSCode的Docker插件会无法正常使用。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;systemctl --user start docker
+systemctl --user enable docker
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;需要注意的是，此时Docker守护进程的配置文件在&lt;code&gt;~/.config/docker/daemon.json&lt;/code&gt;&lt;/p&gt;
+&lt;h1&gt;GPU&lt;/h1&gt;
+&lt;p&gt;在Nvidia的配置文件&lt;code&gt;/etc/nvidia-container-runtime/config.toml&lt;/code&gt;的这一行：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[nvidia-container-cli]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;添加下面的内容：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;no-cgroups = true
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;Reference&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.docker.com/engine/security/rootless/&quot;&gt;Rootless Docker&lt;/a&gt;
+&lt;a href=&quot;https://stackoverflow.com/questions/59373710/gpu-with-rootless-docker&quot;&gt;GPU&lt;/a&gt;&lt;/p&gt;
+</content:encoded></item><item><title>给无外网的Ubuntu服务器安装VSCode Server及插件</title><link>https://fuwari.vercel.app/posts/ubuntu-vscode/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/ubuntu-vscode/</guid><description>如何给无外网的Ubuntu服务器安装VSCode Server及插件。</description><pubDate>Sun, 06 Oct 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;如何给无外网的Ubuntu服务器安装VSCode Server及插件。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;安装Code Server&lt;/h1&gt;
+&lt;p&gt;使用remote ssh连接服务器，VSCode会自动下载Code Server，此时下载不通。记录下下载地址，手动下载，文件应为：&lt;code&gt;https://update.code.visualstudio.com/commit:&amp;lt;COMMIT_ID&amp;gt;/server-linux-x64/stable&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;下载完成后，在远程服务器上：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;rm ~/.vscode-server/bin/* -rf  #把$HOME/.vscode-server/bin下的内容删干净，防止出错
+cd ~/.vscode-server/bin
+tar -zxf vscode-server-linux-x64.tar.gz
+mv vscode-server-linux-x64 ${commit_id} # 注意把:${commit_id}替换成对应的Commit ID
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;此时，应该就可以打开服务器了。&lt;/p&gt;
+&lt;h1&gt;安装插件&lt;/h1&gt;
+&lt;p&gt;以&lt;code&gt;pyhon&lt;/code&gt;为例和&lt;code&gt;Docker&lt;/code&gt;为例。&lt;/p&gt;
+&lt;h2&gt;下载插件&lt;/h2&gt;
+&lt;p&gt;在本地机器上，在VSCode中找到插件，点击右侧的&lt;code&gt;marketplace&lt;/code&gt;，在打开的网页中，右侧点击&lt;code&gt;Download Extension&lt;/code&gt;，选择对应的平台后下载。&lt;/p&gt;
+&lt;h2&gt;上传插件&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;scp C:\LOCAL\FILE\PATH\test.file username@remote_ip:/home/SOME_FOLDER
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;安装插件&lt;/h2&gt;
+&lt;p&gt;在侧边栏打开插件后，点击右上方的三个点，然后选择&lt;code&gt;从VSIX&lt;/code&gt;中安装&lt;/p&gt;
+</content:encoded></item><item><title>破解Termius</title><link>https://fuwari.vercel.app/posts/termius-crack/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/termius-crack/</guid><description>Termius一定要登录才能使用，而我在公共的机器上显然不想登录。</description><pubDate>Sun, 06 Oct 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Termius一定要登录才能使用，而我在公共的机器上显然不想登录。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;安装前置&lt;/h1&gt;
+&lt;p&gt;确保安装了&lt;code&gt;npm&lt;/code&gt;（https://nodejs.org），然后安装&lt;code&gt;asar&lt;/code&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm config set registry http://mirrors.cloud.tencent.com/npm/
+npm install -g asar
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;解包&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;cd C:\Users\[XXXXX]\AppData\Local\Programs\Termius\resources
+npx asar extract app.asar ./app     # 不用重新打包
+mv app.asar app.asar.bk
+mv app-update.yml app-update.ym.bk  # 防止自动更新
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;修改代码&lt;/h1&gt;
+&lt;p&gt;使用&lt;code&gt;VSCode&lt;/code&gt;打开&lt;code&gt;app&lt;/code&gt;文件夹，安装插件后，搜索&lt;code&gt;await this.api.bulkAccount&lt;/code&gt;，最终会定位到&lt;code&gt;app/background-process/assets/main-xxxxxxx.js&lt;/code&gt;文件。&lt;/p&gt;
+&lt;p&gt;使用&lt;code&gt;prettier&lt;/code&gt;对该文件进行format，把&lt;code&gt;const e=await this.api.bulkAccount();&lt;/code&gt;改为&lt;code&gt;var ...&lt;/code&gt;，然后添加：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;var e=await this.api.bulkAccount();
+e.account.pro_mode=true;
+e.account.need_to_update_subscription=false;
+e.account.current_period={
+    &quot;from&quot;: &quot;2022-01-01T00:00:00&quot;,
+    &quot;until&quot;: &quot;2099-01-01T00:00:00&quot;
+};
+e.account.plan_type=&quot;Premium&quot;;
+e.account.user_type=&quot;Premium&quot;;
+e.student=null;
+e.trial=null;
+e.account.authorized_features.show_trial_section=false;
+e.account.authorized_features.show_subscription_section=true;
+e.account.authorized_features.show_github_account_section=false;
+e.account.expired_screen_type=null;
+e.personal_subscription={
+    &quot;now&quot;: new Date().toISOString().slice(0, -5),
+    &quot;status&quot;: &quot;SUCCESS&quot;,
+    &quot;platform&quot;: &quot;stripe&quot;,
+    &quot;current_period&quot;: {
+        &quot;from&quot;: &quot;2022-01-01T00:00:00&quot;,
+        &quot;until&quot;: &quot;2099-01-01T00:00:00&quot;
+    },
+    &quot;revokable&quot;: true,
+    &quot;refunded&quot;: false,
+    &quot;cancelable&quot;: true,
+    &quot;reactivatable&quot;: false,
+    &quot;currency&quot;: &quot;usd&quot;,
+    &quot;created_at&quot;: &quot;2022-01-01T00:00:00&quot;,
+    &quot;updated_at&quot;: new Date().toISOString().slice(0, -5),
+    &quot;valid_until&quot;: &quot;2099-01-01T00:00:00&quot;,
+    &quot;auto_renew&quot;: true,
+    &quot;price&quot;: 12.0,
+    &quot;verbose_plan_name&quot;: &quot;Termius Pro Monthly&quot;,
+    &quot;plan_type&quot;: &quot;SINGLE&quot;,
+    &quot;is_expired&quot;: false
+};
+e.access_objects=[{
+    &quot;period&quot;: {
+        &quot;start&quot;: &quot;2022-01-01T00:00:00&quot;,
+        &quot;end&quot;: &quot;2099-01-01T00:00:00&quot;
+    },
+    &quot;title&quot;: &quot;Pro&quot;
+}]
+return .......
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;使用&lt;/h1&gt;
+&lt;p&gt;启动&lt;code&gt;Termius&lt;/code&gt;然后登录，自动有pro权限，登出后也不需要再次登录。&lt;/p&gt;
+</content:encoded></item><item><title>给无网络链接的Ubuntu安装NV驱动</title><link>https://fuwari.vercel.app/posts/ubuntu-offline/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/ubuntu-offline/</guid><pubDate>Sun, 08 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;需要使用ssh服务，&lt;code&gt;sudo systemctl status ssh&lt;/code&gt;来检查ssh服务是否启动，否则&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt update
+sudo apt install openssh-server
+sudo ufw allow ssh
+# 传输文件
+scp C:\LOCAL\FILE\PATH\test.file username@remote_ip:/home/SOME_FOLDER
+# 查看ip地址
+ip addr show
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;确定系统信息&lt;/h1&gt;
+&lt;p&gt;使用&lt;code&gt;ssh username@remote_ip&lt;/code&gt;来连接至远程服务器，&lt;/p&gt;
+&lt;h2&gt;查看Ubuntu版本&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;lsb_release -a
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;查看显卡参数&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;lspci | grep -i vga
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;查看CPU参数&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;lscpu
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;安装Nvidia驱动&lt;/h1&gt;
+&lt;p&gt;在&lt;a href=&quot;https://www.nvidia.cn/drivers/lookup/&quot;&gt;这里&lt;/a&gt;搜索到对应的驱动并下载，然后使用&lt;code&gt;scp ~/NVIDIA-Driver.run username@remote_ip:/home/some_dir&lt;/code&gt;来传输文件。&lt;/p&gt;
+&lt;p&gt;再使用&lt;code&gt;sudo chmod +x NVIDIA-Driver.run&lt;/code&gt;进行提权，然后使用&lt;code&gt;root&lt;/code&gt;权限运行&lt;code&gt;.run&lt;/code&gt;文件。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# –no-opengl-files 只安装驱动文件，不安装OpenGL文件。这个参数最重要
+# –no-x-check 安装驱动时不检查X服务
+# –no-nouveau-check 安装驱动时不检查nouveau
+sudo sh xxxxx.run --no-opengl-files –no-x-check –no-nouveau-check
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;有可能会提示&lt;code&gt;gcc&lt;/code&gt;没有安装，下面安装&lt;code&gt;gcc&lt;/code&gt;和&lt;code&gt;make&lt;/code&gt;。&lt;/p&gt;
+&lt;h2&gt;使用光盘文件作为镜像源&lt;/h2&gt;
+&lt;p&gt;下载Ubuntu镜像，并传输到远程机器中。然后&lt;code&gt;sudo mount -o loop /PATH/TO/ISO /cdrom&lt;/code&gt;把iso文件挂载。&lt;/p&gt;
+&lt;p&gt;修改安装源文件&lt;code&gt;sudo vim /etc/apt/source.list&lt;/code&gt;，&lt;code&gt;deb file:/cdrom stable main restricted&lt;/code&gt;，stable main restricted 是光盘dists目录下查找位置，不同的镜像文件目录不同要调整。&lt;/p&gt;
+&lt;p&gt;然后&lt;code&gt;apt-get update apt-get install gcc make&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;使用离线安装包作为安装源&lt;/h2&gt;
+&lt;h3&gt;在可以上网的电脑上下载&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;## 清空缓存目录
+sudo rm -rf /var/cache/apt/archives/*
+## 下载相关程序包和依赖包，但是仅下载不安装。下载目录为/var/cache/apt/archives/
+sudo apt-get -d install &amp;lt;包名&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;在目标机器上&lt;/h3&gt;
+&lt;p&gt;把位于&lt;code&gt;/var/cache/apt/archives/&lt;/code&gt;中下载的文件传输到目标机器上，然后使用&lt;code&gt;sudo dpkg -i *.deb&lt;/code&gt;安装。&lt;/p&gt;
+&lt;h1&gt;Debug&lt;/h1&gt;
+&lt;h2&gt;运行&lt;code&gt;nvdia-smi&lt;/code&gt;提示无设备&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;sudo vi /etc/default/grub
+GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet splash nomodeset&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;保存后更新grub&lt;code&gt;sudo update-grub&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;安装Docker等&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;# .tar文件
+tar -xvf File.tar
+# .tar.gz文件
+tar -xzvf File.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;Docker打包及部署&lt;/h1&gt;
+&lt;h2&gt;镜像&lt;/h2&gt;
+&lt;h3&gt;打包镜像&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;docker save -o ./FILE/PATH.tar &amp;lt;name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;导入镜像&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;docker load -i ./FILE/PATH.tar
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;容器&lt;/h2&gt;
+&lt;h3&gt;打包容器&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;docker export -o ./FILE/PATH.tar &amp;lt;name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;导入容器&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;docker import ./FILE/PATH.tar &amp;lt;name&amp;gt;:latest
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded></item><item><title>Docker命令指南</title><link>https://fuwari.vercel.app/posts/docker-south/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/docker-south/</guid><description>Docker常用命令指南。</description><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Docker常用命令指南。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;Docker Compose&lt;/h1&gt;
+&lt;h2&gt;General&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;services:
+  nv-test:
+    image: nvcr.io/nvidia/k8s/cuda-sample:nbody
+    command: &quot;-gpu -benchmark&quot;
+    ipc: host                 # pytorch训练
+    stdin_open: true          # docker run -i
+    tty: true                 # docker run -t     以上两项，再 docker attach &amp;lt;container_name&amp;gt;
+    network_mode: &quot;host&quot;      # 使用本机的网络，proxy
+    volumes:
+      - type: bind
+        source: data
+        target: /home/test
+      - type: volume
+        source: nv-data
+        target: /home/test-nv
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+volumes:
+  nv-data:                    # docker volume create nv-data
+    external: true
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Docker Volume&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;docker volume ls
+docker volume create nv-data
+docker volume inspect nv-data
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;Docker Proxy&lt;/h1&gt;
+&lt;p&gt;为docker指定镜像：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo vim /etc/docker/daemon.json
+
+{
+  &quot;registry-mirrors&quot;: [
+    &quot;https://docker.mirrors.ustc.edu.cn&quot;
+  ]
+}
+
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;Git LFS&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;GIT_LFS_SKIP_SMUDGE=1 git clone https://...
+git lfs pull
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;HugginFace代理&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;export HF_ENDPOINT=https://hf-mirror.com
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;Docker打包及部署&lt;/h1&gt;
+&lt;h2&gt;镜像&lt;/h2&gt;
+&lt;h3&gt;打包镜像&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;docker save -o ./FILE/PATH.tar &amp;lt;name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;导入镜像&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;docker load -i ./FILE/PATH.tar
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;容器&lt;/h2&gt;
+&lt;h3&gt;打包容器&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;docker export -o ./FILE/PATH.tar &amp;lt;name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;导入容器&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;docker import ./FILE/PATH.tar &amp;lt;name&amp;gt;:latest
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded></item><item><title>Ubuntu离线部署机器学习</title><link>https://fuwari.vercel.app/posts/ml-offline-setup/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/ml-offline-setup/</guid><description>如题</description><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;介绍。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;离线安装Docker&lt;/h1&gt;
+&lt;h2&gt;下载对应版本的Docker安装包&lt;/h2&gt;
+&lt;p&gt;运行&lt;code&gt;lsb_release -a&lt;/code&gt;查看当前的Ubuntu版本，如&lt;code&gt;jammy&lt;/code&gt;，然后到&lt;a href=&quot;https://download.docker.com/linux/ubuntu/dists/&quot;&gt;这里&lt;/a&gt;点击相应的发行版进入，然后进入&lt;code&gt;pool/stable/amd64&lt;/code&gt;，下载全部。&lt;/p&gt;
+&lt;h2&gt;安装Docker&lt;/h2&gt;
+&lt;p&gt;运行&lt;code&gt;sudo dpkg -i *.deb&lt;/code&gt;，如遇到依赖问题再解决依赖问题，&lt;code&gt;apt install --fix-broken ./docker-ce.deb&lt;/code&gt;。&lt;/p&gt;
+&lt;h2&gt;Ref&lt;/h2&gt;
 &lt;blockquote&gt;
-&lt;p&gt;[!TIP]
-&lt;a href=&quot;https://github.com/orgs/community/discussions/16925&quot;&gt;The GitHub syntax&lt;/a&gt; is also supported.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/59626514/how-to-install-docker-in-ubuntu-offline&quot;&gt;StackOverflow&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;pre&gt;&lt;code&gt;&amp;gt; [!NOTE]
-&amp;gt; The GitHub syntax is also supported.
+&lt;h1&gt;离线安装NV Container Toolkit&lt;/h1&gt;
+&lt;p&gt;在&lt;a href=&quot;https://github.com/NVIDIA/nvidia-container-toolkit&quot;&gt;GitHub&lt;/a&gt;下载相应的包，执行&lt;code&gt;sudo dpkg -i *.deb&lt;/code&gt;。&lt;/p&gt;
+</content:encoded></item><item><title>为WSL安装多个Ubuntu实例</title><link>https://fuwari.vercel.app/posts/multi-wsl/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/multi-wsl/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;在&lt;a href=&quot;https://cloud-images.ubuntu.com/&quot;&gt;这里&lt;/a&gt;选择&lt;code&gt;wsl&lt;/code&gt;，然后下载相应的版本，如&lt;code&gt;jammy&lt;/code&gt;。然后&lt;code&gt;wsl --import &amp;lt;Name&amp;gt; &amp;lt;Dir&amp;gt; &amp;lt;File&amp;gt;&lt;/code&gt;来安装对应的Ubuntu。使用&lt;code&gt;wsl -d &amp;lt;Name&amp;gt;&lt;/code&gt;来启动相应的实例。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;p&gt;Ref: &lt;a href=&quot;https://stackoverflow.com/questions/51584765/how-do-you-install-multiple-separate-instances-of-ubuntu-in-wsl&quot;&gt;StackOverflow&lt;/a&gt;&lt;/p&gt;
+</content:encoded></item><item><title>给Nvidia显卡的电脑安装Ubuntu</title><link>https://fuwari.vercel.app/posts/ubuntu-nvidia/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/ubuntu-nvidia/</guid><description>下载安装介质后，进入安装介质可能会黑屏，要在选择`Try or install ubuntu`时按`e`进入编辑模式，在`--- quite splash`删除`---`并添加`nomodeset`，然后按`F10`进入安装介质。</description><pubDate>Fri, 06 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;下载安装介质后，进入安装介质可能会黑屏，要在选择&lt;code&gt;Try or install ubuntu&lt;/code&gt;时按&lt;code&gt;e&lt;/code&gt;进入编辑模式，在&lt;code&gt;--- quite splash&lt;/code&gt;删除&lt;code&gt;---&lt;/code&gt;并添加&lt;code&gt;nomodeset&lt;/code&gt;，然后按&lt;code&gt;F10&lt;/code&gt;进入安装介质。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;配置Ubuntu&lt;/h1&gt;
+&lt;p&gt;安装完成后，在进入系统前，同样在&lt;code&gt;quite splash&lt;/code&gt;后添加&lt;code&gt;nomodeset&lt;/code&gt;，并按&lt;code&gt;F10&lt;/code&gt;进入系统。&lt;/p&gt;
+&lt;h2&gt;安装Nvidia驱动&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://documentation.ubuntu.com/server/how-to/graphics/install-nvidia-drivers/&quot;&gt;参考文献&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;首先输入&lt;code&gt;sudo ubuntu-drivers list&lt;/code&gt;查看可以安装的驱动及其版本，如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;nvidia-driver-470
+nvidia-driver-470-server
+nvidia-driver-535
+nvidia-driver-535-open
+nvidia-driver-535-server
+nvidia-driver-535-server-open
+nvidia-driver-550
+nvidia-driver-550-open
+nvidia-driver-550-server
+nvidia-driver-550-server-open
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一般安装专用驱动，输入&lt;code&gt;sudo ubuntu-drivers install nvidia:550&lt;/code&gt;，然后重启，不用再输入&lt;code&gt;nomodeset&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;重启后输入&lt;code&gt;nvidia-smi&lt;/code&gt;检查。&lt;/p&gt;
+</content:encoded></item><item><title>给Ubuntu配置运行CUDA的Docker</title><link>https://fuwari.vercel.app/posts/ubuntu-docker-cuda/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/ubuntu-docker-cuda/</guid><description>建议使用`Ubuntu 20.04`以上的版本。</description><pubDate>Tue, 04 Jun 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;建议使用&lt;code&gt;Ubuntu 20.04&lt;/code&gt;以上的版本。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;安装Cuda Toolkit&lt;/h1&gt;
+&lt;h2&gt;Ubuntu 20.04+&lt;/h2&gt;
+&lt;p&gt;注意，随Cuda的升级，下面的命令可能会发生改变，具体命令&lt;a href=&quot;https://developer.nvidia.com/cuda-downloads?target_os=Linux&amp;amp;target_arch=x86_64&amp;amp;Distribution=Ubuntu&amp;amp;target_version=22.04&amp;amp;target_type=deb_network&quot;&gt;查看此链接&lt;/a&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb
+sudo dpkg -i cuda-keyring_1.1-1_all.deb
+sudo apt-get update
+sudo apt-get -y install cuda-toolkit-12-5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Ubuntu 18.04&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-keyring_1.0-1_all.deb
+sudo dpkg -i cuda-keyring_1.0-1_all.deb
+sudo apt-get update
+sudo apt-get -y install cuda
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;重启&lt;/h2&gt;
+&lt;p&gt;安装CUda Toolkit后要重启系统&lt;code&gt;sudo reboot&lt;/code&gt;。&lt;/p&gt;
+&lt;h1&gt;安装Docker&lt;/h1&gt;
+&lt;h2&gt;配置Docker的repo&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
 
-&amp;gt; [!TIP]
-&amp;gt; The GitHub syntax is also supported.
+echo \
+  &quot;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release &amp;amp;&amp;amp; echo &quot;$VERSION_CODENAME&quot;) stable&quot; | \
+  sudo tee /etc/apt/sources.list.d/docker.list &amp;gt; /dev/null
+sudo apt-get update
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>Simple Guides for Fuwari</title><link>https://fuwari.vercel.app/posts/guide/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/guide/</guid><description>How to use this blog template.</description><pubDate>Mon, 01 Apr 2024 00:00:00 GMT</pubDate><content:encoded>&lt;blockquote&gt;
-&lt;p&gt;Cover image source: &lt;a href=&quot;https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/208fc754-890d-4adb-9753-2c963332675d/width=2048/01651-1456859105-(colour_1.5),girl,_Blue,yellow,green,cyan,purple,red,pink,_best,8k,UHD,masterpiece,male%20focus,%201boy,gloves,%20ponytail,%20long%20hair,.jpeg&quot;&gt;Source&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;安装Docker&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo usermod $USER -aG docker # 添加本用户到docker的组中
+sudo service docker start
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;要确认Docker成功安装，输入命令&lt;code&gt;docker --version&lt;/code&gt;查看输出，还可以通过尝试运行&lt;code&gt;docker run hello-world&lt;/code&gt;运行简单的内置Docker映像，测试安装是否正常工作。&lt;/p&gt;
+&lt;h1&gt;给Docker配置CUDA&lt;/h1&gt;
+&lt;h2&gt;安装NVIDIA Container Toolkit&lt;/h2&gt;
+&lt;p&gt;首先配置repo：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+  &amp;amp;&amp;amp; curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
+    sed &apos;s#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g&apos; | \
+    sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后更新repo&lt;code&gt;sudo apt-get update&lt;/code&gt;，再运行&lt;code&gt;sudo apt-get install -y nvidia-container-toolkit&lt;/code&gt;来安装NVIDIA Container Toolkit。&lt;/p&gt;
+&lt;h2&gt;配置Docker&lt;/h2&gt;
+&lt;p&gt;使用&lt;code&gt;nvidia-ctk&lt;/code&gt;命令配置容器运行时：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo nvidia-ctk runtime configure --runtime=docker
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;重新启动Docker进程：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo systemctl restart docker
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;测试&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
+docker run --gpus all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;若测试失败，则&lt;code&gt;sudo vim /etc/nvidia-container-runtime/config.toml&lt;/code&gt;，然后修改&lt;code&gt;no-cgroups = false&lt;/code&gt;，再重启Docker。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo systemctl restart docker
+docker run --gpus all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;给Docker配置proxy&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://askubuntu.com/questions/1098849/docker-image-build-command-fails-with-client-timeout-exceeded-while-awaiting-h&quot;&gt;参考链接&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.docker.com/config/daemon/systemd/#httphttps-proxy&quot;&gt;给daemon配置proxy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.docker.com/network/proxy/&quot;&gt;给client配置proxy&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;让&lt;code&gt;Docker build&lt;/code&gt;使用本机proxy&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;docker build --network=host --build-arg http_proxy=$http_proxy --build-arg https_proxy=$https_proxy ...
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded></item><item><title>给WSL2配置运行CUDA的Docker</title><link>https://fuwari.vercel.app/posts/wsl-docker/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/wsl-docker/</guid><description>注意，本文使用`WSL2`+`Docker`，而不是安装`Docker Desktop for Windows`，因为后者占用的资源非常多，而且还有很多bug，比如，[GPU无法运行](https://github.com/docker/for-win/issues/13870)。</description><pubDate>Mon, 03 Jun 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;注意，本文使用&lt;code&gt;WSL2&lt;/code&gt;+&lt;code&gt;Docker&lt;/code&gt;，而不是安装&lt;code&gt;Docker Desktop for Windows&lt;/code&gt;，因为后者占用的资源非常多，而且还有很多bug，比如，&lt;a href=&quot;https://github.com/docker/for-win/issues/13870&quot;&gt;GPU无法运行&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;安装WSL&lt;/h1&gt;
+&lt;p&gt;运行一下命令将安装WSL并安装Ubuntu发行版，如果需要安装其他Linux发行版（如Arch Linux），请参考&lt;a href=&quot;https://learn.microsoft.com/zh-cn/windows/wsl/install&quot;&gt;此链接&lt;/a&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wsl --install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;常用WSL命令&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;列出WSL子系统: &lt;code&gt;wsl --list&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;关闭WSL：&lt;code&gt;wsl --shutdown&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;WSL配置文件：&lt;code&gt;C:/users/YOUR_NAME/.wslconfig&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Notes&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;让WSL使用本机的代理，编写&lt;code&gt;.wslconfig&lt;/code&gt;如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[wsl2]
+networkingMode=mirrored
+dnsTunneling=true
+autoProxy=true
+&lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;This blog template is built with &lt;a href=&quot;https://astro.build/&quot;&gt;Astro&lt;/a&gt;. For the things that are not mentioned in this guide, you may find the answers in the &lt;a href=&quot;https://docs.astro.build/&quot;&gt;Astro Docs&lt;/a&gt;.&lt;/p&gt;
-&lt;h2&gt;Front-matter of Posts&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;---
-title: My First Blog Post
-published: 2023-09-09
-description: This is the first post of my new Astro blog.
-image: ./cover.jpg
-tags: [Foo, Bar]
-category: Front-end
-draft: false
----
+&lt;h1&gt;安装Docker&lt;/h1&gt;
+&lt;h2&gt;配置Docker的repo&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+echo \
+  &quot;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release &amp;amp;&amp;amp; echo &quot;$VERSION_CODENAME&quot;) stable&quot; | \
+  sudo tee /etc/apt/sources.list.d/docker.list &amp;gt; /dev/null
+sudo apt-get update
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;安装Docker&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo usermod $USER -aG docker # 添加本用户到docker的组中
+sudo service docker start
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;要确认Docker成功安装，进入WSL的Ubuntu（使用命令&lt;code&gt;wsl&lt;/code&gt;），并输入命令&lt;code&gt;docker --version&lt;/code&gt;查看输出，还可以通过尝试运行&lt;code&gt;docker run hello-world&lt;/code&gt;运行简单的内置Docker映像，测试安装是否正常工作。&lt;/p&gt;
+&lt;h1&gt;给Docker配置CUDA&lt;/h1&gt;
+&lt;h2&gt;安装NVIDIA Container Toolkit&lt;/h2&gt;
+&lt;p&gt;首先配置repo：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+  &amp;amp;&amp;amp; curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
+    sed &apos;s#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g&apos; | \
+    sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后更新repo&lt;code&gt;sudo apt-get update&lt;/code&gt;，再运行&lt;code&gt;sudo apt-get install -y nvidia-container-toolkit&lt;/code&gt;来安装NVIDIA Container Toolkit。&lt;/p&gt;
+&lt;h2&gt;配置Docker&lt;/h2&gt;
+&lt;p&gt;使用&lt;code&gt;nvidia-ctk&lt;/code&gt;命令配置容器运行时：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo nvidia-ctk runtime configure --runtime=docker
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;重新启动Docker进程：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo systemctl restart docker
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;测试&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;docker run --gpus all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;配置Docker&lt;/h1&gt;
+&lt;h2&gt;配置iptable&lt;/h2&gt;
+&lt;p&gt;让WSL中的Ubuntu使用iptable（option 1），否则Docker的NAT会有问题。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;update-alternatives --config iptables
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Ref: https://nickjanetakis.com/blog/install-docker-in-wsl-2-without-docker-desktop&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;配置proxy&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.docker.com/config/daemon/systemd/#httphttps-proxy&quot;&gt;给daemon配置proxy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.docker.com/network/proxy/&quot;&gt;给client配置proxy&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;让&lt;code&gt;Docker build&lt;/code&gt;使用本机proxy&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;docker build --network=host --build-arg http_proxy=$http_proxy --build-arg https_proxy=$https_proxy ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Docker部分命令&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;docker builder prune -a
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.docker.com/reference/cli/docker/builder/prune/&quot;&gt;参考链接&lt;/a&gt;&lt;/p&gt;
+&lt;h1&gt;给Docker瘦身&lt;/h1&gt;
+&lt;h2&gt;迁移WSL至其他盘&lt;/h2&gt;
+&lt;p&gt;把Ubuntu的虚拟磁盘复制到其他盘符，然后创建符号链接&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;New-Item -ItemType SymbolicLink -Path &quot;C:\Users\36477\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc\LocalState\ext4.vhdx&quot; -Target &quot;D:\wsl\ubuntu\ext4.vhdx&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.delftstack.com/zh/howto/powershell/create-symbolic-links-in-powershell/&quot;&gt;Reference&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;停止WSL&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;wsl --shutdown
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;使用Diskpart来瘦身&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;diskpart
+
+select vdisk file=&quot;C:\PATH\TO\ext4.vhd&quot;
+attach vdisk readonly
+compact vdisk
+detach vdisk
+exit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/tuxiang79/article/details/121557798&quot;&gt;Reference&lt;/a&gt;。&lt;/p&gt;
+</content:encoded></item><item><title>再见，兔崽子</title><link>https://fuwari.vercel.app/posts/byte-little-rabbit/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/byte-little-rabbit/</guid><description>Bye.</description><pubDate>Wed, 13 Mar 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Bye.&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--MORE--&amp;gt;&lt;/p&gt;
+&lt;p&gt;对不起我没有照顾好你，想家了就回家看看。&lt;/p&gt;
+</content:encoded></item><item><title>黑苹果</title><link>https://fuwari.vercel.app/posts/hackintosh/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/hackintosh/</guid><description>第一步一定是分区，要至少200M的EFI分区，格式为FAT32。如果采用微PE安装Windows，也要给Windows提前分好EFI分区和安装的分区。</description><pubDate>Mon, 29 Jan 2024 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;记得分好区！&lt;/h1&gt;
+&lt;p&gt;第一步一定是分区，要至少200M的EFI分区，格式为FAT32。如果采用微PE安装Windows，也要给Windows提前分好EFI分区和安装的分区。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;macOS配置&lt;/h1&gt;
+&lt;h2&gt;v2ray&lt;/h2&gt;
+&lt;p&gt;把下载好的v2raya和v2ray移动到如下地址：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo mkdir /usr/local/bin/
+sudo mkdir -p /usr/local/share/v2ray/
+mkdir ~/Library/LaunchAgents/
+
+sudo mv v2raya /usr/local/bin/
+sudo mv v2ray /usr/local/bin/
+
+mv geoip.dat ~/Library/Application\ Support/v2ray/geoip.dat
+mv geosite.dat ~/Library/Application\ Support/v2ray/geosite.dat
+
+sudo chmod 755 /usr/local/bin/v2ray
+sudo chmod 755 /usr/local/bin/v2raya
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;新建服务文件并保存到&lt;code&gt;~/Library/LaunchAgents/&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;如：&lt;code&gt;vim ~/Library/LaunchAgents/org.v2raya.v2raya.plist&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;内容如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;
+&amp;lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&amp;gt;
+&amp;lt;plist version=&quot;1.0&quot;&amp;gt;
+&amp;lt;dict&amp;gt;
+      &amp;lt;key&amp;gt;EnvironmentVariables&amp;lt;/key&amp;gt;
+      &amp;lt;dict&amp;gt;
+            &amp;lt;key&amp;gt;V2RAYA_LOG_FILE&amp;lt;/key&amp;gt;
+            &amp;lt;string&amp;gt;/tmp/v2raya.log&amp;lt;/string&amp;gt;
+            &amp;lt;key&amp;gt;V2RAYA_V2RAY_BIN&amp;lt;/key&amp;gt;
+            &amp;lt;string&amp;gt;/usr/local/bin/v2ray&amp;lt;/string&amp;gt;
+      &amp;lt;/dict&amp;gt;
+      &amp;lt;key&amp;gt;KeepAlive&amp;lt;/key&amp;gt;
+      &amp;lt;true/&amp;gt;
+      &amp;lt;key&amp;gt;Label&amp;lt;/key&amp;gt;
+      &amp;lt;string&amp;gt;org.v2raya.v2raya&amp;lt;/string&amp;gt;
+      &amp;lt;key&amp;gt;ProgramArguments&amp;lt;/key&amp;gt;
+      &amp;lt;array&amp;gt;
+            &amp;lt;string&amp;gt;/usr/local/bin/v2raya&amp;lt;/string&amp;gt;
+            &amp;lt;string&amp;gt;--lite&amp;lt;/string&amp;gt;
+      &amp;lt;/array&amp;gt;
+      &amp;lt;key&amp;gt;RunAtLoad&amp;lt;/key&amp;gt;
+      &amp;lt;true/&amp;gt;
+&amp;lt;/dict&amp;gt;
+&amp;lt;/plist&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;运行&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;launchctl load ~/Library/LaunchAgents/org.v2raya.v2raya.plist
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;如果要关掉v2rayA服务，将上述命令从&lt;code&gt;load&lt;/code&gt;替换为&lt;code&gt;unload&lt;/code&gt;即可。可以通过Web前端查看日志。&lt;/p&gt;
+&lt;p&gt;Web前端地址为：&lt;code&gt;localhost:2017&lt;/code&gt;&lt;/p&gt;
+&lt;h1&gt;配置git代理&lt;/h1&gt;
+&lt;p&gt;设置全局代理：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git config --global http.proxy socks5://127.0.0.1:20170
+git config --global https.proxy socks5://127.0.0.1:20170
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;针对某项目，在根目录下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git config --local http.proxy socks5://127.0.0.1:20170
+git config --local https.proxy socks5://127.0.0.1:20170
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;查看代理配置情况：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git config --global --get http.proxy
+git config --global --get https.proxy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;取消代理：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git config --global --unset http.proxy
+git config --global --unset https.proxy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;配置Homebrew&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;/bin/bash -c &quot;$(curl -fsSL https://gitee.com/ineo6/homebrew-install/raw/master/install.sh)&quot;
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded></item><item><title>NaiveProxy的配置</title><link>https://fuwari.vercel.app/posts/naiveproxy/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/naiveproxy/</guid><description>本文章主要记录一些VPS的设置，使得购买的VPS及域名能够支持科学上网，服务器为Ubuntu 20.04。在执行任何操作之前，切换到`/root`目录，并使用`apt update &amp;&amp; apt upgrade`来更新系统。</description><pubDate>Sun, 16 Jul 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;本文章主要记录一些VPS的设置，使得购买的VPS及域名能够支持科学上网，服务器为Ubuntu 20.04。在执行任何操作之前，切换到&lt;code&gt;/root&lt;/code&gt;目录，并使用&lt;code&gt;apt update &amp;amp;&amp;amp; apt upgrade&lt;/code&gt;来更新系统。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h2&gt;事前准备&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;apt install vim git curl wget -y
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;设置时区&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;timedatectl set-timezone Asia/Shanghai
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;将Cloudflare中SSL/TLS加密模式设置为&lt;code&gt;完全（严格）&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;启用 BBR TCP 拥塞控制算法：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;echo &quot;net.core.default_qdisc=fq&quot; &amp;gt;&amp;gt; /etc/sysctl.conf
+echo &quot;net.ipv4.tcp_congestion_control=bbr&quot; &amp;gt;&amp;gt; /etc/sysctl.conf
+sysctl -p
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;设置密钥登陆&lt;/h2&gt;
+&lt;h3&gt;生成密钥&lt;/h3&gt;
+&lt;p&gt;连接到服务器后，使用&lt;code&gt;ssh-keygen&lt;/code&gt;来生成密钥，并把私钥保存到本地。&lt;/p&gt;
+&lt;p&gt;使用&lt;code&gt;mv /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys&lt;/code&gt;更改公钥名称。使用如下命令来更改权限：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;修改登录方式&lt;/h3&gt;
+&lt;p&gt;使用&lt;code&gt;vim /etc/ssh/sshd_config&lt;/code&gt;来修改SSH配置文件，将&lt;code&gt;PasswordAuthentication&lt;/code&gt;改为&lt;code&gt;no&lt;/code&gt;，将&lt;code&gt;PubkeyAuthentication&lt;/code&gt;改为&lt;code&gt;yes&lt;/code&gt;，并&lt;code&gt;systemctl restart ssh&lt;/code&gt;重启SSH服务。&lt;/p&gt;
+&lt;h2&gt;安装NaiveProxy&lt;/h2&gt;
+&lt;p&gt;根据项目&lt;a href=&quot;https://github.com/klzgrad/naiveproxy&quot;&gt;官方地址&lt;/a&gt;的介绍进行如下步骤安装。&lt;/p&gt;
+&lt;h3&gt;编译Naiveproxy&lt;/h3&gt;
+&lt;h4&gt;安装&lt;code&gt;Go&lt;/code&gt;语言环境&lt;/h4&gt;
+&lt;p&gt;ubantu下使用&lt;code&gt;sudo apt install golang-go&lt;/code&gt;指令安装go环境，安装过程没有报错，在使用时无法识别指令。
+是因为未完整安装go环境，使用apt安装的版本可能会比较老。使用如下命令安装：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;apt-get install software-properties-common
+add-apt-repository ppa:longsleep/golang-backports 
+apt-get update 
+apt-get install golang-go -y
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;测试：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;go version
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;安装&lt;code&gt;NaiveProxy&lt;/code&gt;&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
+~/go/bin/xcaddy build --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;下载预编译Naiveproxy&lt;/h3&gt;
+&lt;p&gt;在&lt;a href=&quot;https://github.com/klzgrad/forwardproxy/releases&quot;&gt;下载地址&lt;/a&gt;查找最新版的下载地址并复制：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wget https://github.com/path-to-download/caddy-forwardproxy-naive.tar.xz
+tar -xvf caddy-forwardproxy-naive.tar.xz
+mv /root/caddy-forwardproxy-naive/caddy /root/caddy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;寻找合适的伪装站&lt;/h3&gt;
+&lt;p&gt;示例关键字：intext:登录 Cloudreve&lt;/p&gt;
+&lt;h3&gt;配置&lt;code&gt;NaiveProxy&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;在编译好的&lt;code&gt;caddy&lt;/code&gt;文件所在目录下创建&lt;code&gt;Caddyfile&lt;/code&gt;文件，内容如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+    order forward_proxy before file_server
+    order forward_proxy before reverse_proxy
+}
+
+:443, example.com {
+    tls me@example.com
+    forward_proxy {
+        basic_auth user pass # 设置用户名和密码
+        hide_ip
+        hide_via
+        probe_resistance
+    }
+    # 支持多用户
+    forward_proxy {
+        basic_auth user2 pass2 # 用户名和密码
+        hide_ip
+        hide_via
+        probe_resistance
+    }
+    # 本地网站（与伪装网站二选一）
+    file_server {
+        root /var/www/html
+    }
+    # 伪装网址
+    reverse_proxy  https://demo.cloudreve.org  {
+        header_up  Host  {upstream_hostport}
+        header_up  X-Forwarded-Host  {host}
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;运行&lt;code&gt;NaiveProxy&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;前台运行caddy：&lt;code&gt;./caddy run&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;后台运行caddy：&lt;code&gt;./caddy start&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;停止caddy：&lt;code&gt;./caddy stop&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;重载配置：&lt;code&gt;./caddy reload&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;Caddy配置守护进程（开机自启）&lt;/h2&gt;
+&lt;p&gt;根据&lt;a href=&quot;https://github.com/klzgrad/naiveproxy/wiki/Run-Caddy-as-a-daemon&quot;&gt;官方文档&lt;/a&gt;进行配置。&lt;/p&gt;
+&lt;h3&gt;准备工作&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Caddy的二进制文件（/root/caddy）&lt;/li&gt;
+&lt;li&gt;Caddy的配置文件（/root/Caddyfile）&lt;/li&gt;
+&lt;li&gt;root权限&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;systemctl --version&lt;/code&gt; &amp;gt;= 232&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;移动文件&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;chmod +x /root/caddy
+mv /root/caddy /usr/bin/
+
+mkdir /etc/caddy
+mv /root/Caddyfile /etc/caddy/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;检查是否有效：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/usr/bin/caddy run --config /etc/caddy/Caddyfile
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;创建用户&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;groupadd --system caddy
+useradd --system \
+    --gid caddy \
+    --create-home \
+    --home-dir /var/lib/caddy \
+    --shell /usr/sbin/nologin \
+    --comment &quot;Caddy web server&quot; \
+    caddy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;创建服务文件&lt;/h3&gt;
+&lt;p&gt;在&lt;code&gt;/etc/systemd/system/&lt;/code&gt;目录下创建&lt;code&gt;caddy.service&lt;/code&gt;文件，&lt;code&gt;vim /etc/systemd/system/caddy.service&lt;/code&gt;内容如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[Unit]
+Description=Caddy
+Documentation=https://caddyserver.com/docs/
+After=network.target network-online.target
+Requires=network-online.target
+
+[Service]
+User=caddy
+Group=caddy
+ExecStart=/usr/bin/caddy run --environ --config /etc/caddy/Caddyfile
+ExecReload=/usr/bin/caddy reload --config /etc/caddy/Caddyfile
+TimeoutStopSec=5s
+LimitNOFILE=1048576
+LimitNPROC=512
+PrivateTmp=true
+ProtectSystem=full
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+[Install]
+WantedBy=multi-user.target
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;最后测试&lt;/h3&gt;
+&lt;p&gt;使用&lt;code&gt;systemd&lt;/code&gt;启动Caddy服务：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;systemctl daemon-reload
+systemctl enable caddy
+systemctl start caddy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;检查当前状态：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;systemctl status caddy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;使用更改的配置文件重新加载：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;systemctl reload caddy
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded></item><item><title>Xray的配置</title><link>https://fuwari.vercel.app/posts/xray/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/xray/</guid><description>本文章主要记录一些VPS的设置，使得购买的VPS及域名能够支持科学上网，服务器为Ubuntu 20.04。在执行任何操作之前，切换到`/root`目录，并使用`apt update &amp;&amp; apt upgrade`来更新系统。</description><pubDate>Sun, 16 Jul 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;本文章主要记录一些VPS的设置，使得购买的VPS及域名能够支持科学上网，服务器为Ubuntu 20.04。在执行任何操作之前，切换到&lt;code&gt;/root&lt;/code&gt;目录，并使用&lt;code&gt;apt update &amp;amp;&amp;amp; apt upgrade&lt;/code&gt;来更新系统。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h2&gt;事前准备&lt;/h2&gt;
+&lt;h3&gt;服务器准备&lt;/h3&gt;
+&lt;p&gt;部分软件：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;apt install vim git curl wget -y
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;启用 BBR TCP 拥塞控制算法：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;echo &quot;net.core.default_qdisc=fq&quot; &amp;gt;&amp;gt; /etc/sysctl.conf
+echo &quot;net.ipv4.tcp_congestion_control=bbr&quot; &amp;gt;&amp;gt; /etc/sysctl.conf
+sysctl -p
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;设置时区：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;timedatectl set-timezone Asia/Shanghai
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Cloudflare准备&lt;/h3&gt;
+&lt;p&gt;将Cloudflare中SSL/TLS加密模式设置为&lt;code&gt;完全（严格）&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;在&lt;a href=&quot;https://dash.cloudflare.com/profile/api-tokens&quot;&gt;Cloudflare&lt;/a&gt;创建一个新的令牌（参考&lt;a href=&quot;https://github.com/libdns/cloudflare&quot;&gt;cf插件主页&lt;/a&gt;配置），权限为&lt;code&gt;Zone.Zone.Read; Zone.DNS.Edit&lt;/code&gt;，并将令牌保存到本地。&lt;/p&gt;
+&lt;p&gt;在&lt;a href=&quot;https://caddyserver.com/download?package=github.com%2Fcaddy-dns%2Fcloudflare&quot;&gt;Caddy官方下载地址&lt;/a&gt;，选择&lt;code&gt;dns.provider.cloudflare&lt;/code&gt;，下载到本地准备。&lt;/p&gt;
+&lt;h2&gt;设置密钥登陆&lt;/h2&gt;
+&lt;h3&gt;生成密钥&lt;/h3&gt;
+&lt;p&gt;连接到服务器后，使用&lt;code&gt;ssh-keygen&lt;/code&gt;来生成密钥，并把私钥保存到本地。&lt;/p&gt;
+&lt;p&gt;使用&lt;code&gt;mv /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys&lt;/code&gt;更改公钥名称。使用如下命令来更改权限：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;修改登录方式&lt;/h3&gt;
+&lt;p&gt;使用&lt;code&gt;vim /etc/ssh/sshd_config&lt;/code&gt;来修改SSH配置文件，将&lt;code&gt;PasswordAuthentication&lt;/code&gt;改为&lt;code&gt;no&lt;/code&gt;，将&lt;code&gt;PubkeyAuthentication&lt;/code&gt;改为&lt;code&gt;yes&lt;/code&gt;，并&lt;code&gt;systemctl restart ssh&lt;/code&gt;重启SSH服务。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如有必要，可以更改ssh的端口号，修改&lt;code&gt;Port&lt;/code&gt;即可。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;安装Caddy&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;apt install -y debian-keyring debian-archive-keyring apt-transport-https
+curl -1sLf &apos;https://dl.cloudsmith.io/public/caddy/stable/gpg.key&apos; | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+curl -1sLf &apos;https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt&apos; | sudo tee /etc/apt/sources.list.d/caddy-stable.list
+apt update
+apt install caddy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;把之前下载的Caddy传到root下，&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mv ./caddy_linux_amd64_custom ./caddy
+chmod +x ./caddy
+./caddy list-modules | grep dns
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;如果正常，会显示出&lt;code&gt;dns.providers.cloudflare&lt;/code&gt;模块。&lt;/p&gt;
+&lt;p&gt;在替换官方的Caddy：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mv ./caddy /usr/bin/caddy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;寻找合适的伪装站&lt;/h3&gt;
+&lt;p&gt;示例关键字：intext:登录 Cloudreve&lt;/p&gt;
+&lt;h3&gt;配置Caddy&lt;/h3&gt;
+&lt;p&gt;启动Caddy服务：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;systemctl enable --now caddy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;通过如下命令查看Caddy的日志：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;journalctl -u caddy --no-pager | less +G
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;vim /etc/caddy/Caddyfile
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;改为如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;example.com {
+    encode gzip
+
+    tls {
+        dns cloudflare 你的API token
+        protocols tls1.2 tls1.3
+    }
+
+    reverse_proxy /rayws* localhost:port {
+        header_up Host {host}
+        header_up X-Real-IP {remote_host}
+    }
+
+    reverse_proxy /xuiws* localhost:port
+
+    # 伪装网址
+    reverse_proxy https://demo.cloudreve.org {
+        header_up Host {upstream_hostport}
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;奇怪的是xui只能在Chrome匿名模式下进入&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;caddy run&lt;/code&gt;查看tls是否生效：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;tls.obtain      certificate obtained successfully
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;XUI&lt;/h2&gt;
+&lt;h3&gt;安装XUI&lt;/h3&gt;
+&lt;p&gt;参考&lt;a href=&quot;https://github.com/FranzKafkaYu/x-ui&quot;&gt;官方仓库&lt;/a&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -Ls https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install.sh)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;配置XUI&lt;/h3&gt;
+&lt;p&gt;进入面板，把监听IP改为&lt;code&gt;127.0.0.1&lt;/code&gt;，端口改为上面定义的&lt;code&gt;xuiws&lt;/code&gt;端口。添加端口为&lt;code&gt;rayws&lt;/code&gt;端口的节点。&lt;/p&gt;
+</content:encoded></item><item><title>人工智能教我学习</title><link>https://fuwari.vercel.app/posts/gpt_awesome/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/gpt_awesome/</guid><description>ChatGPT真是太厉害了！</description><pubDate>Tue, 03 Jan 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;ChatGPT真是太厉害了！&lt;/p&gt;
+</content:encoded></item><item><title>CS自学教程</title><link>https://fuwari.vercel.app/posts/cs-self-learn/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/cs-self-learn/</guid><description>编程入门</description><pubDate>Sun, 27 Mar 2022 05:13:55 GMT</pubDate><content:encoded>&lt;h2&gt;编程入门&lt;/h2&gt;
+&lt;h3&gt;CS106L&lt;/h3&gt;
+&lt;p&gt;Standard C++ Programming，这门课会深入到很多标准C++的特性和语法，让你编写出高质量的C++代码。例如auto binding，uniform initialization，lambda function，move semantics，RAII等技巧。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;p&gt;值得一提的是，这门课的作业里你会实现一个HashMap（类似于STL中的unordered map), 这个作业几乎把整个课程串联了起来，非常考验代码能力。&lt;/p&gt;
+&lt;h4&gt;课程资源&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;课程网站
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://web.stanford.edu/class/cs106l/&quot;&gt;CS106L&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;参考教材
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://web.stanford.edu/class/cs106l/full_course_reader.pdf&quot;&gt;Reader&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;课程视频
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/channel/UCSqr6y-eaQT_qZJVUm_4QxQ/playlists&quot;&gt;Youtube&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;电子基础&lt;/h2&gt;
+&lt;h3&gt;UCB EE16A&amp;amp;B&lt;/h3&gt;
+&lt;p&gt;Designing Information Devices and Systems I&amp;amp;II，电子基础知识的讲授，用Python进行编程。&lt;/p&gt;
+&lt;h4&gt;课程资源&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;课程网站
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~ee16a/su20/#schedule&quot;&gt;EE16A&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.eecs16b.org/#schedule&quot;&gt;EE16B&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;课程视频
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1uK4y1M7cJ&quot;&gt;Bilibili&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;UCB EE120&lt;/h3&gt;
+&lt;p&gt;Signal and Systems，这门课最精华的部分就是6个超有趣的编程作业了，会让你用Python通过学习到的信号与系统的理论知识，解决各类实际问题。例如lab3会让你实现FFT算法，并和Numpy的官方实现进行性能对比；lab4会通过分析手指头的影像数据推断心率；lab5就更牛了，会让你给哈勃望远镜拍到的照片进行降噪处理，恢复绚烂清晰的星空；lab6会让你构造一个反馈系统，平衡小车上的细杆。&lt;/p&gt;
+&lt;h4&gt;课程资源&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;课程网站
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~ee120/fa19/&quot;&gt;EE120&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;课程视频
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1k341187vL&quot;&gt;Bilibili&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;数据结构和算法&lt;/h2&gt;
+&lt;h3&gt;CS61B&lt;/h3&gt;
+&lt;p&gt;Data Structures and Algorithms，伯克利CS61系列的第二门课程，注重数据结构与算法的设计，同时让学生有机会接触上千行的工程代码，通过Java初步领会软件工程的思想。14个lab会让你自己实现课上所讲的绝大部分数据结构，10个homework会让你运用数据结构和算法解决实际问题， 另外还有3个Project更是让你有机会接触上千行的工程代码，在实战中磨练自己的Java能力。&lt;/p&gt;
+&lt;h4&gt;课程资源&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;课程网站
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://sp21.datastructur.es/&quot;&gt;CS16B&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;课程视频
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://sp21.datastructur.es/&quot;&gt;课程主页&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Coursera&lt;/h3&gt;
+&lt;p&gt;Algorithms I &amp;amp; II，让你完全掌握一个算法的核心在于理解三点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;为什么这么做？（正确性推导，抑或是整个算法的核心本质）&lt;/li&gt;
+&lt;li&gt;如何实现它？（光学不用假把式）&lt;/li&gt;
+&lt;li&gt;用它解决实际问题（学以致用才是真本事）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这门课的构成就非常好地契合了上述三个步骤。观看课程视频并且阅读教授的开源课本有助于你理解算法的本质，让你也可以用非常 生动浅显的话语向别人讲述为什么这个算法得长这个样子。&lt;/p&gt;
+&lt;p&gt;在理解算法之后，你可以阅读教授对于课程中讲授的所有数据结构与算法的代码实现。 注意，这些实现可不是demo性质的，而是工业级的高效实现，从注释到变量命名都非常严谨，模块化也做得相当好，是质量很高的代码。我从这些代码中收获良多。&lt;/p&gt;
+&lt;p&gt;最后，就是这门课最激动人心的部分了，10个高质量的Project，并且全都有实际问题的背景描述，丰富的测试样例，自动的评分系统（代码风格也是评分的一环）。让你在实际生活中 领略算法的魅力。&lt;/p&gt;
+&lt;h4&gt;课程资源&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;课程网站
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.coursera.org/learn/algorithms-part1&quot;&gt;Algorithms I&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.coursera.org/learn/algorithms-part2&quot;&gt;Algorithms I&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;参考教材
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://algs4.cs.princeton.edu/home/&quot;&gt;开源教材&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;软件工程&lt;/h2&gt;
+&lt;h3&gt;MIT 6.031&lt;/h3&gt;
+&lt;p&gt;Software Construction，这门课的目标就是让学生学会如何写出高质量的代码，所谓高质量，则是满足下面三个目标（课程设计者原话复制，以防自己翻译曲解本意）：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Safe from bugs. Correctness (correct behavior right now) and defensiveness (correct behavior in the future) are required in any software we build.&lt;/li&gt;
+&lt;li&gt;Easy to understand. The code has to communicate to future programmers who need to understand it and make changes in it (fixing bugs or adding new features). That future programmer might be you, months or years from now. You’ll be surprised how much you forget if you don’t write it down, and how much it helps your own future self to have a good design.&lt;/li&gt;
+&lt;li&gt;Ready for change. Software always changes. Some designs make it easy to make changes; others require throwing away and rewriting a lot of code.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;为此，这门课的设计者们精心编写了一本书来阐释诸多软件构建的核心原则与前人总结下来的宝贵经验，内容细节到如何编写注释和函数Specification，如何设计抽象数据结构以及诸多并行编程的内容，并且会让你在精心设计的Java编程项目里体验和练习这些编程模式。&lt;/p&gt;
+&lt;p&gt;2016年春季学期这门课开源了其所有编程作业的代码框架，而最新的课程教材可以在其最新的教学网站上找到，具体链接参见下方。&lt;/p&gt;
+&lt;h4&gt;课程资源&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;课程网站
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://web.mit.edu/6.031/www/sp21/&quot;&gt;2021&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-005-software-construction-spring-2016/&quot;&gt;2016&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;体系结构&lt;/h2&gt;
+&lt;h3&gt;Coursera: Nand2Tetris&lt;/h3&gt;
+&lt;p&gt;让一个完全没有计算机基础的人从与非门开始 造一台计算机，并在上面运行俄罗斯方块小游戏。&lt;/p&gt;
+&lt;p&gt;听起来就很酷对不对？实现起来更酷！这门课分为硬件和软件两个部分。在硬件部分，你将进入01的世界，用与非门构造出逻辑电路，并逐步搭建出一个CPU 来运行一套课程作者定义的简易汇编代码。在软件部分，你将编写一个编译器，将作者开发的一个名为Jack的高级语言编译为可以运行在虚拟机上的字节码，然后进一步翻译 为汇编代码。你还将开发一个简易的OS，让你的计算机支持输入输出图形界面。至此，你可以用Jack开发一个俄罗斯方块的小游戏，将它 编译为汇编代码，运行在你用与非门搭建出的CPU上，通过你开发的OS进行交互。学完这门课程，你将对整个计算机的体系结构有一个全局 且深刻的理解，对于你后续课程的学习有着莫大的帮助。&lt;/p&gt;
+&lt;p&gt;你也许会担心课程会不会很难，但这门课面向的人群是完全没有计算机基础的人，课程作者的目标是让高中生都能理解。因此，只要你按部就班跟着 课程规划走，一个月内学完应该绰绰有余。麻雀虽小但是五脏俱全，这门课很好地提取出了计算机的本质，而不过多地陷于现代计算机为了性能而 设计出的众多复杂细节。让学习者能在轻松愉快的学习体验中感受计算机的优雅与神奇。&lt;/p&gt;
+&lt;h4&gt;课程资源&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;课程网站
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.coursera.org/learn/build-a-computer&quot;&gt;Part 1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.coursera.org/learn/nand2tetris2&quot;&gt;Part 2&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;参考教材
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/PKUFlyingPig/NandToTetris/blob/master/%5B%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E8%A6%81%E7%B4%A0%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%9E%84%E5%BB%BA%E7%8E%B0%E4%BB%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%5D.(%E5%B0%BC%E8%90%A8).%E5%91%A8%E7%BB%B4.%E6%89%AB%E6%8F%8F%E7%89%88.pdf&quot;&gt;Github&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;CS61C: Great Ideas in Computer Architecture&lt;/h3&gt;
+&lt;p&gt;伯克利CS61系列的最后一门课程，深入计算机的硬件细节，带领学生逐步理解C语言是如何一步步转化为RISC-V汇编并在CPU上执行的。和Nand2Tetris不同，这门课在难度和深度上都会大很多，具体会涉及到流水线、Cache、虚存以及并发相关的内容。&lt;/p&gt;
+&lt;p&gt;这门课的Project也非常新颖有趣。Project1会让你用C语言写一个小程序，20年秋季学期是著名的游戏Game of Life。Project2会让你用RISC-V汇编编写一个神经网络，用来 识别MNIST手写数字，非常锻炼你对汇编代码的理解和运用。Project3中你会用Logisim这个数字电路模拟软件搭建出一个二级流水线的CPU，并在上面运行RISC-V汇编代码。Project4 会让你使用OpenMP，SIMD等方法并行优化矩阵运算，实现一个简易的Numpy。&lt;/p&gt;
+&lt;h4&gt;课程资源&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;课程网站
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs61c/su20/&quot;&gt;CS61C&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;课程视频
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1fC4y147iZ?from=search&amp;amp;seid=1039011700066128636&quot;&gt;Bilibili&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/playlist?list=PLDoI-XvXO0aqgoMQvogzmf7CKiSMSUS3M&quot;&gt;Youtube&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;CSAPP&lt;/h3&gt;
+&lt;p&gt;CMU大名鼎鼎的镇系神课，以其内容庞杂，project巨难而闻名遐迩。课程内容覆盖了汇编语言、体系结构、操作系统、编译链接、并行、网络等，作为系统入门课，兼具深度和广度，如果自学确实需要相当的毅力和代码功底。&lt;/p&gt;
+&lt;p&gt;这门课配合的教材由CMU计算机系主任Bryant教授执笔，也即所谓的CSAPP。这也是我第一本认认真真一页一页读过去的计算机教材，虽然很难啃，但着实收获良多。&lt;/p&gt;
+&lt;p&gt;北大购买了这门课的版权并开设了Introduction to Computer System这门课，但其实CSAPP所有的课程资源和实验代码都能在它的官方主页上访问到（具体参见下方链接）。&lt;/p&gt;
+&lt;p&gt;这门课由于过于出名，全世界的码农争相学习，导致其Project的答案在网上几乎唾手可得。但如果你真的想锻炼自己的代码能力，希望你不要借鉴任何第三方代码。&lt;/p&gt;
+&lt;p&gt;认真学完这一门课，你对计算机系统的理解绝对会上升一个台阶。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;相信大家在看完CSAPP这本书以后，可能会对书中的第七章链接有一定的疑问。这里推荐一本书《程序员的自我修养》，书的副标题是链接，装载与库。这本书能够帮助我们完善对程序链接的理解，以及对CSAPP第七章部分知识点的一个详细的阐述。相信你在看完这本书以后可以对程序的链接，ELF文件，动态库有一个更加深入的理解。十分推荐在读完CSAPP，对计算机系统有一定的了解以后作为补充资料来阅读。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;课程资源&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;课程网站
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://csapp.cs.cmu.edu/&quot;&gt;CSAPP&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;课程视频
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1iW411d7hd&quot;&gt;Bilibili&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;课程作业
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://csapp.cs.cmu.edu/3e/labs.html&quot;&gt;代码框架已开源&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;操作系统&lt;/h2&gt;
+&lt;h3&gt;MIT 6.S081: Operating System Engineering&lt;/h3&gt;
+&lt;p&gt;麻省理工学院大名鼎鼎的PDOS实验室开设的面向MIT本科生的操作系统课程。开设这门课的教授之一 —— Robert Morris教授曾是一位顶尖黑客，世界上第一个蠕虫病毒Morris就是出自他之手。&lt;/p&gt;
+&lt;p&gt;这门课的前身是MIT著名的课程6.828，MIT的几位教授为了这门课曾专门开发了一个基于X86的教学用操作系统JOS，被众多名校作为自己的操统课程实验。但随着RISC-V的横空出世，这几位教授又基于RISC-V开发了一个新的教学用操作系统xv6，并开设了MIT6.S081这门课。由于RISC-V轻便易学的特点，学生不需要像此前JOS一样纠结于众多X86“特有的”为了兼容而遗留下来的复杂机制，而 可以专注于操作系统层面的开发。&lt;/p&gt;
+&lt;p&gt;这几位教授还专门写了一本&lt;a href=&quot;https://pdos.csail.mit.edu/6.828/2021/xv6/book-riscv-rev2.pdf&quot;&gt;教程&lt;/a&gt;，详细讲解了xv6的设计思想和实现细节。&lt;/p&gt;
+&lt;p&gt;这门课的讲授也很有意思，老师会带着学生依照xv6的源代码去理解操作系统的众多机制和设计细节，而不是停留于理论知识。每周都会有一个lab，让你在xv6上增加一些新的机制和特性，非常注重学生动手能力的培养。整个学期一共有11个lab，让你全方位地深刻理解操作系统的每个部分，非常有成就感。而且所有的lab都有着非常完善的测试框架，有的测试代码甚至上千行，让人不得不佩服MIT的几位教授为了教好这门课所付出的心血。&lt;/p&gt;
+&lt;p&gt;这门课的后半程会讲授操作系统领域的多篇经典论文，涉及文件系统、系统安全、网络、虚拟化等等多个主题，让你有机会接触到学界 最前沿的研究方向。&lt;/p&gt;
+&lt;h4&gt;课程资源&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;课程网站
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://pdos.csail.mit.edu/6.828/2021/xv6/book-riscv-rev2.pdf&quot;&gt;OS&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;课程视频
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV19k4y1C7kA&quot;&gt;Bilibili&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;CS162: Operating System&lt;/h3&gt;
+&lt;p&gt;这门课让我记忆犹新的有两个部分：&lt;/p&gt;
+&lt;p&gt;首先是教材，这本书用的教材Operating Systems: Principles and Practice (2nd Edition)一共四卷，写得 非常深入浅出，很好地弥补了MIT6.S081在理论知识上些许空白，非常建议大家阅读。相关资源会分享在本书的经典书籍推荐模块。&lt;/p&gt;
+&lt;p&gt;其次是这门课的Project —— Pintos。Pintos是由Ben Pfaff等人基于X86编写的教学用操作系统，Ben Pfaff甚至专门发了篇 paper来阐述Pintos的设计思想。和MIT的xv6小而精的lab设计理念不同， Pintos更注重系统的Design and Implementation。Pintos本身仅一万行左右，只提供了操作系统最基本的功能。而4个Project，就是让你在这个极为精简的操作系统之上，分别为其增加线程调度机制（Project1），系统调用（Project2），虚拟内存（Project3）以及文件系统（Project4）。所有的Project都给学生留有很大的设计空间，总代码量在5000行以上。根据Stanford学生自己的反馈，在3-4人组队的情况下，后两个Project的人均耗时也在40个小时以上。&lt;/p&gt;
+&lt;p&gt;虽然其难度很大，但Stanford，Berkeley，JHU等多所美国顶尖名校的操统课程均采用了Pintos。因为如果你真的对操作系统很感兴趣，Pintos会极大地提高你编写和debug底层系统代码的能力。在本科阶段，能自己设计、实现并debug一个大型系统，是一段非常珍贵的经历。&lt;/p&gt;
+&lt;h4&gt;课程资源&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;课程网站
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://cs162.org/&quot;&gt;CS162&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;课程视频
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1yk4y1q7C6&quot;&gt;Bilibili&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;课程教材
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://ospp.cs.washington.edu/&quot;&gt;OSPP&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;计算机网络&lt;/h2&gt;
+&lt;h3&gt;Computer Networking: A Top-Down Approach&lt;/h3&gt;
+&lt;p&gt;《自顶向下方法》是计算机网络领域的一本经典教材，两位作者Jim Kurose和Keith Ross精心制作了教材配套的课程网站，并且公开了自己录制的网课视频，交互式的在线章节测试，以及利用wireshark进行抓包分析的lab。唯一遗憾的是这门课并没有硬核的编程作业，而Stanford的CS144能很好地弥补这一点。&lt;/p&gt;
+&lt;h4&gt;课程资源&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;课程网站
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://gaia.cs.umass.edu/kurose_ross/index.php&quot;&gt;CNATA&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;课程视频
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://gaia.cs.umass.edu/kurose_ross/lectures.php&quot;&gt;Youtube&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;课程作业
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://gaia.cs.umass.edu/kurose_ross/wireshark.php&quot;&gt;Assignments&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;CS144: Computer Network&lt;/h3&gt;
+&lt;p&gt;这门课的主讲人之一是网络领域的巨擘Nick McKeown教授。这位拥有自己创业公司的学界业界双巨佬会在他慕课每一章节的最后采访一位业界的高管或者学界的高人，非常开阔眼界。&lt;/p&gt;
+&lt;p&gt;在这门课的Project中，你将用C++循序渐进地搭建出整个TCP/IP协议栈，实现IP路由以及ARP协议，最后利用你自己的协议栈代替Linux Kernel的网络协议栈和其他学生的计算机进行通信，非常amazing！&lt;/p&gt;
+&lt;h4&gt;课程资源&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;课程网站
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://cs144.github.io/&quot;&gt;Github&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;课程视频
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=r2WZNaFyrbQ&amp;amp;list=PL6RdenZrxrw9inR-IJv-erlOKRHjymxMN&quot;&gt;Youtube&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;课程作业
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://cs144.github.io/&quot;&gt;Github&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;编译原理&lt;/h2&gt;
+&lt;h3&gt;Stanford CS143: Compilers&lt;/h3&gt;
+&lt;p&gt;斯坦福的编译原理课程，设计者开发了一个Class-Object-Oriented-Language，简称COOL语言。这门课的核心就是通过理论知识的学习，为COOL语言实现一个编译器，将COOL高级语言编译为MIPS汇编并在Spim这个MIPS模拟器上成功执行。&lt;/p&gt;
+&lt;p&gt;理论部分基本按照龙书的顺序覆盖了词法分析、语法分析、语义分析、运行时环境、寄存器分配、代码优化与生成等内容，实践部分则相应地分为词法分析、语法分析、语义分析、代码生成四个阶段，难度循序渐进，并在优化部分给学生留下了很大的设计空间。&lt;/p&gt;
+&lt;h4&gt;课程资源&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;课程网站
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://web.stanford.edu/class/cs143/&quot;&gt;CS143&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;课程视频
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV17K4y147Bz&quot;&gt;Bilibili&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;计算机图形学&lt;/h2&gt;
+&lt;h3&gt;GAMES101&lt;/h3&gt;
+&lt;p&gt;大名鼎鼎无需多言。&lt;/p&gt;
+&lt;h2&gt;人工智能&lt;/h2&gt;
+&lt;h3&gt;CS188: Introduction to Artificial Intelligence&lt;/h3&gt;
+&lt;p&gt;伯克利的人工智能入门课，课程notes写得非常深入浅出，基本不需要观看课程视频。课程内容的安排基本按照人工智能的经典教材Artificial intelligence: A Modern Approach的章节顺序，覆盖了搜索剪枝、约束满足问题、马尔可夫决策过程、强化学习、贝叶斯网络、隐马尔可夫模型以及基础的机器学习和神经网络的相关内容。&lt;/p&gt;
+&lt;p&gt;2018年秋季学期的版本免费开放了gradescope，大家可以在线完成书面作业并实时得到测评结果。同时课程的6个Project也是质量爆炸，复现了经典的Packman（吃豆人）小游戏，会让你利用学到的AI知识，去实现相关算法，让你的吃豆人在迷宫里自由穿梭，躲避鬼怪，收集豆子。&lt;/p&gt;
+&lt;h4&gt;课程资源&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;课程网站
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs188/fa18/index.html&quot;&gt;CS188&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;课程视频
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs188/fa18/index.html&quot;&gt;Youtube&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;课程教材
+&lt;ul&gt;
+&lt;li&gt;Artificial intelligence: A Modern Approach&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;课程作业
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs188/fa18/index.html&quot;&gt;CS188&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;其他资料&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://csdiy.wiki/&quot;&gt;CS自学指南&lt;/a&gt;&lt;/p&gt;
+</content:encoded></item><item><title>配置Arch Linux</title><link>https://fuwari.vercel.app/posts/archlinux-setup/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/archlinux-setup/</guid><description>这部分内容将把Linux暴露给Opencore，以从Opencore直接启动。</description><pubDate>Thu, 17 Mar 2022 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;引导设置&lt;/h2&gt;
+&lt;p&gt;这部分内容将把Linux暴露给Opencore，以从Opencore直接启动。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;通过OC进入Linux&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;开启OC的Openshell，通过执行&lt;code&gt;\EFI\grub_uefi\grubx64.efi&lt;/code&gt;来进入linux。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;输入&lt;code&gt;fs0:&lt;/code&gt;或者&lt;code&gt;fs1:&lt;/code&gt;等进入文件系统， 通过&lt;code&gt;lsblk&lt;/code&gt;查看硬盘，一般而言，&lt;code&gt;fs0:&lt;/code&gt;是第一个硬盘位，&lt;code&gt;fs1:&lt;/code&gt;是第二个硬盘位&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;由于之前执行&lt;code&gt;grub-install&lt;/code&gt;时指定了&lt;code&gt;--bootloader-id=grub_uefi&lt;/code&gt;因此入口在&lt;code&gt;grub_uefi&lt;/code&gt;文件夹下&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;生成配置&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;sudo efibootmgr -c -L &quot;Linux&quot; -l &quot;\EFI\grub_uefi\grubx64.efi&quot; -d &quot;/dev/nvme0n1&quot; -p 1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-c&lt;/code&gt;: Create&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-L &quot;Linux&quot;&lt;/code&gt;: Label the boot entry (you can change it to whatever you want)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-l &quot;\EFI\pathto\filex64.efi&quot;&lt;/code&gt;: loader file path, must be in a format the UEFI Firmware can use, which means &lt;code&gt;\&lt;/code&gt; for pathing instead of &lt;code&gt;/&lt;/code&gt; you find in unix&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-d &quot;/dev/sda&quot;&lt;/code&gt;: disk path so that efibootmgr know which disk the UEFI firmware should read the file from, it can be &lt;code&gt;/dev/nvme0nX&lt;/code&gt; (with X as a number) if you&apos;re using NVMe&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-p 1&lt;/code&gt;: point the partition number we found earlier, in case your EFI partition is the first one, this can be omitted&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;由于之前执行&lt;code&gt;grub-install&lt;/code&gt;时指定&lt;code&gt;--bootloader-id=grub_uefi&lt;/code&gt;，因此路径为&lt;code&gt;grub_uefi&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;重启&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在Opencore界面会发现一个新的叫&lt;code&gt;EFI&lt;/code&gt;的入口，即为该linux。&lt;/p&gt;
+&lt;h2&gt;配置部分软件&lt;/h2&gt;
+&lt;h3&gt;配置git&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S git
+git config --global user.email &quot;YOUR_EMAIL@SOME.com&quot;
+git config --global user.name &quot;YOUR NAME&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;给git配置代理：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git config --global http.proxy http://127.0.0.1:10809
+git config --global https.proxy http://127.0.0.1:10809
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;配置SSH&lt;/h4&gt;
+&lt;p&gt;生成SSH Key：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ssh-keygen -t ed25519 -C &quot;your_email@example.com&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;全部默认即可。&lt;/p&gt;
+&lt;p&gt;然后把Key添加进SSH agent：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;eval &quot;$(ssh-agent -s)&quot;
+ssh-add ~/.ssh/id_ed25519
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;获取SSH公钥：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cat ~/.ssh/id_ed25519.pub
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后把内容粘贴进github即可。&lt;/p&gt;
+&lt;h3&gt;配置paru&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/Morganamilo/paru&quot;&gt;paru&lt;/a&gt;是一款方便的包管理工具。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://aur.archlinux.org/paru-bin.git
+cd paru
+makepkg -si
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;更改配置文件使其支持代码高亮：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo vim /etc/pacman.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;去掉Color行的注释。&lt;/p&gt;
+&lt;p&gt;更改配置更改排序方式：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo vim /etc/paru.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;paru -Qtdq&lt;/code&gt;查看孤儿包。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;去掉&lt;code&gt;BottomUp&lt;/code&gt;行的注释。&lt;/p&gt;
+&lt;h3&gt;配置Rust&lt;/h3&gt;
+&lt;h4&gt;配置rustup&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;pacman -S rustup
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后通过如下命令配置rustup国内镜像源：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vim ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后添加如下两行：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
+export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;下载Rust&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;rustup default stable
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;使用&lt;code&gt;rustup install stable&lt;/code&gt;不会从设置好的国内镜像下载，而是从国外下载，速度很慢&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;配置cargo镜像源&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;vim ~/.cargo/config
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;并添加如下内容：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[source.crates-io]
+registry = &quot;https://github.com/rust-lang/crates.io-index&quot;
+replace-with = &apos;sjtu&apos;
+
+# 上海交通大学
+[source.sjtu]
+registry = &quot;https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index/&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;v2rayA&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;paru v2raya-bin v2ray
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;同时开机启动：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo systemctl enable --now v2raya
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后从浏览器进入&lt;code&gt;http://localhost:2017&lt;/code&gt;，创建一个帐号。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;忘记密码使用&lt;code&gt;sudo v2raya --reset-password&lt;/code&gt;命令重置。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;进行如下设置：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;透明代理：大陆白名单&lt;/li&gt;
+&lt;li&gt;透明代理方式：redirect&lt;/li&gt;
+&lt;li&gt;规则端口分流模式：大陆白名单&lt;/li&gt;
+&lt;li&gt;防止DNS污染：仅防止DNS劫持（快速）&lt;/li&gt;
+&lt;li&gt;特殊模式：supervisor&lt;/li&gt;
+&lt;li&gt;TCPFastOpen：保持系统默认&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其余选项均默认即可。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注意，若选择GFWList，则需要下载对应的规则库，点击右上角的更新来下载。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;配置Neofetch&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;paru neofetch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;配置Terminal&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;paru zsh
+zsh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后输入0。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;选择把shell切换为zsh，在这里需要重启系统。&lt;/p&gt;
+&lt;h4&gt;安装插件&lt;/h4&gt;
+&lt;h5&gt;自动补齐&lt;/h5&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后编辑配置文件：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vim ~/.zshrc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;添加相应内容：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;plugins=(other plugins... zsh-autosuggestions)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;不同插件之间使用空格分割。&lt;/p&gt;
+&lt;h5&gt;代码高亮&lt;/h5&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;继续编辑配置文件：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;plugins=( [plugins...] zsh-syntax-highlighting)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h5&gt;Powerlevel 10K&lt;/h5&gt;
+&lt;p&gt;安装对应字体：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;paru ttf powerlevel10k
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后安装：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;编辑配置文件，更改主题：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ZSH_THEME=&quot;powerlevel10k/powerlevel10k&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后重启terminal进行自动配置。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;输入&lt;code&gt;p10k configure&lt;/code&gt;可以重新进行设置&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;Wezterm主题&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/catppuccin/wezterm.git
+mkdir -p ~/.config/wezterm/colors
+cp ./wezterm/Catppuccin.toml ~/.config/wezterm/colors/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;中文输入支持&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;paru fcitx5-im
+paru fcitx5 chinese addon
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;安装所有与im相关的community包，然后在设置中搜索&lt;code&gt;input method&lt;/code&gt;添加&lt;code&gt;pinyin&lt;/code&gt;。&lt;/p&gt;
+&lt;h4&gt;设置环境变量&lt;/h4&gt;
+&lt;p&gt;欲在程序中正常启用 Fcitx5, 需设置以下环境变量，并重新登录：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo vim /etc/environment
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
+INPUT_METHOD=fcitx
+SDL_IM_MODULE=fcitx
+GLFW_IM_MODULE=ibus
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;聊天软件&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;paru tim qq
+paru wechat desktop
+paru telegram
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;配置vscode&lt;/h3&gt;
+&lt;p&gt;使得vscode的全局菜单起作用:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;paru libdbusmenu-glib
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;支持vscode的keyring：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;paru gnome keyring
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;为vscode设置clangd：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;paru clang
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后在设置中设置clangd的地址：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;whereis clangd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;配置Chrome&lt;/h3&gt;
+&lt;p&gt;启用视频播放硬件加速：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mkdir -p ~/.config
+echo &quot;--disable-features=UseChromeOSDirectVideoDecoder --enable-features=VaapiVideoDecoder --ignore-gpu-blocklist --use-gl=desktop&quot; &amp;gt; ~/.config/chrome-flags.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;配置部分驱动&lt;/h2&gt;
+&lt;h3&gt;Vulkan支持&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;paru mesa vulkan
+sudo sysctl dev.i915.perf_stream_paranoid=0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;NTFS支持&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;paru ntfsprogs-ntfs3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;触控板多手势支持&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S touchegg
+paru touche
+sudo systemctl enable touchegg.services
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;指纹识别支持&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;paru fprint
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;系统主题配置&lt;/h2&gt;
+&lt;p&gt;首先需要下载一些依赖：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;paru kvantum
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;配置dock&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;paru latte dock
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后启动&lt;code&gt;latte dock&lt;/code&gt;。&lt;/p&gt;
+&lt;h4&gt;高级模式&lt;/h4&gt;
+&lt;p&gt;右键dock点击编辑，然后开启高级模式：&lt;/p&gt;
+&lt;p&gt;Apperance:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;background:
+&lt;ul&gt;
+&lt;li&gt;height: 100%&lt;/li&gt;
+&lt;li&gt;opacity: 30%&lt;/li&gt;
+&lt;li&gt;check: blur&lt;/li&gt;
+&lt;li&gt;radius: 15%&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;margins
+&lt;ul&gt;
+&lt;li&gt;screen edge: 4px&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;点击编辑面板左下角的Add panel，点击添加空白panel。&lt;/p&gt;
+&lt;h3&gt;配置上边栏&lt;/h3&gt;
+&lt;p&gt;右键上边栏，选择编辑：&lt;/p&gt;
+&lt;p&gt;Apperance:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;items
+&lt;ul&gt;
+&lt;li&gt;absolute size: 30px&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;length
+&lt;ul&gt;
+&lt;li&gt;maximum: 99%&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;margins
+&lt;ul&gt;
+&lt;li&gt;screen edge: 3px&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;background
+&lt;ul&gt;
+&lt;li&gt;opacity: 30%&lt;/li&gt;
+&lt;li&gt;check: blur&lt;/li&gt;
+&lt;li&gt;radius: 50%&lt;/li&gt;
+&lt;li&gt;check: prefre opac background when window touching&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Behavior:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;actions
+&lt;ul&gt;
+&lt;li&gt;check: hide floating gap when maxmaized window&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;配置Widgets&lt;/h4&gt;
+&lt;p&gt;首先下载一些控件：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;better inline clock&lt;/li&gt;
+&lt;li&gt;application name mac style&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;右键桌面空白区域，点击添加Widgets：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;搜索system tray，添加到上边栏最右侧&lt;/li&gt;
+&lt;li&gt;搜索application menu，添加到最左侧&lt;/li&gt;
+&lt;li&gt;搜索bertter inline clock，添加到中间&lt;/li&gt;
+&lt;li&gt;搜索application title，添加到application menu右侧&lt;/li&gt;
+&lt;li&gt;搜索global menu，添加到application title右侧&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;编辑application title，编辑no active window label为custom text，并添加文本内容。&lt;/p&gt;
+&lt;h3&gt;配置KRunner&lt;/h3&gt;
+&lt;p&gt;点击编辑，使其居中，取消勾选记住上次搜索。&lt;/p&gt;
+&lt;h3&gt;系统设置&lt;/h3&gt;
+&lt;p&gt;首先把&lt;code&gt;clicking files or folders&lt;/code&gt;改成&lt;code&gt;selects them&lt;/code&gt;。&lt;br /&gt;
+打开&lt;code&gt;workspace behavior&lt;/code&gt;中&lt;code&gt;desktop effect&lt;/code&gt;里的&lt;code&gt;blur&lt;/code&gt;、&lt;code&gt;magic lamp&lt;/code&gt;、&lt;code&gt;slide back&lt;/code&gt;、&lt;code&gt;overview&lt;/code&gt;，并为overview设置快捷键，用touche配置相应的手势操作。&lt;/p&gt;
+&lt;h4&gt;Global theme&lt;/h4&gt;
+&lt;p&gt;下载layan，并启用。&lt;/p&gt;
+&lt;h5&gt;Application style&lt;/h5&gt;
+&lt;p&gt;下载layan gtk theme，并启用。&lt;/p&gt;
+&lt;h5&gt;Window decoration&lt;/h5&gt;
+&lt;p&gt;编辑关闭、最大化、最小化按键位置。&lt;/p&gt;
+&lt;h5&gt;Icons&lt;/h5&gt;
+&lt;p&gt;下载Mac mod flat icon，并启用Papirus。&lt;/p&gt;
+&lt;h3&gt;配置Kvantum&lt;/h3&gt;
+&lt;p&gt;从&lt;a href=&quot;https://store.kde.org/p/1325246/&quot;&gt;这里&lt;/a&gt;下载相应的文件，然后启动Kvantum manager，安装并使用该主题，编辑该主题，取消勾选&lt;code&gt;Disable translucency when non-integer scaling&lt;/code&gt;，否则部分内容不会blur。&lt;/p&gt;
+</content:encoded></item><item><title>安装Arch Linux</title><link>https://fuwari.vercel.app/posts/archlinux/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/archlinux/</guid><description>需要从[官网下载系统镜像](https://archlinux.org/download/)，制作USB安装介质，使用UEFI启动后再进行下一步行动。</description><pubDate>Wed, 16 Mar 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;需要从&lt;a href=&quot;https://archlinux.org/download/&quot;&gt;官网下载系统镜像&lt;/a&gt;，制作USB安装介质，使用UEFI启动后再进行下一步行动。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注意：USB盘符应为&lt;code&gt;ARCH_202203&lt;/code&gt;之类的，否则会无法进入安装介质。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h2&gt;Windows Dual Boot&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;为Opencore分好区，并把文件放入&lt;/li&gt;
+&lt;li&gt;把装有Windows安装介质的U盘插入电脑，并从Opencore启动安装&lt;/li&gt;
+&lt;li&gt;正常安装即可&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;安装介质中的准备操作&lt;/h2&gt;
+&lt;h3&gt;连接网络&lt;/h3&gt;
+&lt;h4&gt;启动应用&lt;/h4&gt;
+&lt;p&gt;输入&lt;code&gt;iwctl&lt;/code&gt;来进入网络连接界面，进入后输入&lt;code&gt;help&lt;/code&gt;查看具体操作。查看设备地址（默认为&lt;code&gt;wlan0&lt;/code&gt;），然后输入&lt;code&gt;station wlan0 connect &quot;WIFI-SSID&quot;&lt;/code&gt;或&lt;code&gt;station wlan0 connect-hidden &quot;HIDDEN-WIFI-SSID&quot;&lt;/code&gt;来连接相应的WiFi。&lt;/p&gt;
+&lt;p&gt;输入&lt;code&gt;exit&lt;/code&gt;退出&lt;code&gt;iwctl&lt;/code&gt;。&lt;/p&gt;
+&lt;h4&gt;测试网络&lt;/h4&gt;
+&lt;p&gt;输入&lt;code&gt;ping -c 5 bing.com&lt;/code&gt;来测试网络连接情况。&lt;/p&gt;
+&lt;h4&gt;调试&lt;code&gt;pacman&lt;/code&gt;&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;reflector --country China --age 24 --sort rate --protocol https --save /etc/pacman.d/mirrorlist
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;硬盘操作&lt;/h3&gt;
+&lt;h4&gt;硬盘格式化/分区&lt;/h4&gt;
+&lt;p&gt;建议在其他系统下格式化好，&lt;br /&gt;
+需要如下两个分区：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;EFI分区，FAT32格式&lt;/li&gt;
+&lt;li&gt;根目录分区，F2FS格式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;硬盘分区挂载&lt;/h4&gt;
+&lt;p&gt;使用&lt;code&gt;lsblk&lt;/code&gt;来查看硬盘分区及挂载情况。&lt;/p&gt;
+&lt;p&gt;挂载根目录分区：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mount /dev/YOUR-ROOT-PARTITION /mnt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;新建文件夹用于挂载EFI：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mkdir -p /mnt/boot
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;挂载EFI分区：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mount /dev/YOUR-EFI-PARTITION /mnt/boot
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;挂载顺序一定要先挂载&lt;code&gt;root&lt;/code&gt;，再挂载&lt;code&gt;boot&lt;/code&gt;！&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;开始安装系统&lt;/h3&gt;
+&lt;p&gt;安装基本功能，后续系统安装进入系统操作。&lt;br /&gt;
+输入如下命令来安装基本功能：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pacstrap /mnt base linux linux-firmware
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;可以选择安装&lt;code&gt;linux-lts&lt;/code&gt;，或者同时安装两种核心。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;写入文件表&lt;/h4&gt;
+&lt;p&gt;运行&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;genfstab -U /mnt &amp;gt;&amp;gt; /mnt/etc/fstab
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;系统核心安装&lt;/h2&gt;
+&lt;p&gt;首先输入&lt;code&gt;arch-chroot /mnt&lt;/code&gt;来进入新系统。&lt;/p&gt;
+&lt;h3&gt;安装Linux核心&lt;/h3&gt;
+&lt;p&gt;首先安装部分工具来方便执行命令：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pacman -S bash-completion vim
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;语言配置&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;vim /etc/locale.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后在第一行输入&lt;code&gt;LANG=en_US.UTF-8&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;进入&lt;code&gt;locale.gen&lt;/code&gt;编辑：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vim /etc/locale.gen
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;去掉&lt;code&gt;en_US.UTF-8&lt;/code&gt;和&lt;code&gt;zh_CN.UFT-8&lt;/code&gt;前的注释，然后通过如下命令使其生效：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;locale-gen
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;安装开发工具&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;pacman -S linux-headers base-devel
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;base-devel&lt;/code&gt;包含&lt;code&gt;gcc&lt;/code&gt;等工具。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;网络安装及设置&lt;/h3&gt;
+&lt;h4&gt;网络控制安装&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;pacman -S networkmanager
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;网络配置&lt;/h4&gt;
+&lt;p&gt;设置开机自动启动：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;systemctl enable NetworkManager
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;硬盘管理安装&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;pacman -S lvm2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;并通过如下命令编辑&lt;code&gt;HOOKS&lt;/code&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vim /etc/mkinitcpio.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;找到&lt;code&gt;HOOKS=&lt;/code&gt;那一行，在&lt;code&gt;block&lt;/code&gt;和&lt;code&gt;filesystems&lt;/code&gt;之间加入&lt;code&gt;lvm2&lt;/code&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;HOOKS=(... block lvm2 filesystems ...)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;通过如下命令让其生效：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mkinitcpio -p linux
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如果安装了&lt;code&gt;linux-lts&lt;/code&gt;需要继续执行&lt;code&gt;mkinitcpio -p linux-lts&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;用户设置&lt;/h3&gt;
+&lt;p&gt;首先通过如下命令对&lt;code&gt;root&lt;/code&gt;用户设置密码：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;passwd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;添加一般用户&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;useradd -m -g users -G wheel YOUR_USER_NAME
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;-m&lt;/code&gt;将会生成用户目录&lt;br /&gt;
+&lt;code&gt;-g users&lt;/code&gt;把用户加入该组，&lt;code&gt;-G wheel&lt;/code&gt;使该用户可以使用&lt;code&gt;sudo&lt;/code&gt;来提权&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;然后使用如下命令来为该用户设置密码：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;passwd YOUR_USER_NAME
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h5&gt;为一般用户配置&lt;code&gt;sudo&lt;/code&gt;&lt;/h5&gt;
+&lt;p&gt;首先确定&lt;code&gt;sudo&lt;/code&gt;已经安装：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pacman -S sudo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后编辑设置文件：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;EDITOR=vim visudo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;去掉下面这行的注释：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;%wheel ALL=(ALL) ALL
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;安装GRUB&lt;/h3&gt;
+&lt;p&gt;首先安装对应的组件：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pacman -S intel-ucode grub efibootmgr mtools
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;AMD处理器请安装&lt;code&gt;amd-ucode&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;然后进行安装：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub_uefi --recheck
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;编辑配置文件，让grub默认直接进入Linux：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vim /etc/default/grub
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;修改如下内容：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;RUB_CMDLINE_LINUX_DEFAULT=&quot;&quot;
+GRUB_TIMEOUT=0
+GRUB_TIMEOUT_STYLE=hidden
+GRUB_HIDDEN_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;生成配置文件：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;grub-mkconfig -o /boot/grub/grub.cfg
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;grub不会覆盖opencore&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;拔出U盘前的准备&lt;/h3&gt;
+&lt;p&gt;输入&lt;code&gt;exit&lt;/code&gt;退出到安装介质的系统，然后输入如下命令卸载所有挂载硬盘：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;umount -a
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后输入&lt;code&gt;reboot&lt;/code&gt;就可以拔出U盘，直接进入安装的系统。&lt;/p&gt;
+&lt;h2&gt;配置新系统&lt;/h2&gt;
+&lt;p&gt;进入新系统后，要求输入用户名，输入&lt;code&gt;root&lt;/code&gt;及密码，以便以&lt;code&gt;root&lt;/code&gt;权限进行相应配置。&lt;/p&gt;
+&lt;h3&gt;联网&lt;/h3&gt;
+&lt;p&gt;首先查看设备地址：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ip addr list
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一般第二项是WiFi设备地址，如&lt;code&gt;wlp2s0&lt;/code&gt;，且此时没有联网，无IP地址。&lt;/p&gt;
+&lt;p&gt;然后输入如下命令进入网络管理界面：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;nmtui
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后选择&lt;code&gt;Add&lt;/code&gt;，添加要链接的网络的信息，设备输入上面获得的WiFi地址。&lt;/p&gt;
+&lt;p&gt;添加后退出，然后输入&lt;code&gt;nmcli con up &amp;lt;connection name&amp;gt;&lt;/code&gt;来链接网络。&lt;/p&gt;
+&lt;h3&gt;配置中英字体&lt;/h3&gt;
+&lt;h4&gt;下载字体&lt;/h4&gt;
+&lt;p&gt;部分英文字体：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pacman -S ttf-dejavu ttf-font-awesome otf-font-awesome ttf-lato ttf-liberation ttf-linux-libertine ttf-opensans ttf-roboto ttf-hack
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;部分中文字体：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pacman -S noto-fonts noto-fonts-extra noto-fonts-emoji adobe-source-han-sans-cn-fonts adobe-source-han-sans-hk-fonts wqy-microhei
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;配置内存换页&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;brtfs类型的文件系统无法配置&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这里展示配置512MB的换页内存：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dd if=/dev/zero of=/swapfile bs=1M count=512 status=progress
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;配置权限：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chmod 600 /swapfile
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;通过如下命令让系统得知该换页：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mkswap /swapfile
+echo &apos;/swapfile none swap sw 0 0&apos; | tee -a /etc/fstab
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;启动内存换页：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;swapon -a
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;配置时间及时区&lt;/h3&gt;
+&lt;p&gt;设置时区：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;timedatectl set-timezone Asia/Shanghai
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;设置时间同步：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;systemctl enable systemd-timesyncd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;设置主机名&lt;/h3&gt;
+&lt;p&gt;以&lt;code&gt;xiaobaiArch&lt;/code&gt;为例：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hostnamectl set-hostname xiaobaiArch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;配置&lt;code&gt;hosts&lt;/code&gt;文件&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;vim /etc/hosts
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;并添加如下两行：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;127.0.0.1   localhost
+127.0.1.1   xiaobaiArch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这里的名称要与主机名相同&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;配置部分硬件&lt;/h3&gt;
+&lt;h4&gt;显卡驱动&lt;/h4&gt;
+&lt;h5&gt;Intel核显&lt;/h5&gt;
+&lt;p&gt;对于Intel：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pacman -S mesa xf86-video-intel intel-media-driver
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h5&gt;AMD显卡&lt;/h5&gt;
+&lt;p&gt;对于AMD：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pacman -S mesa xf86-video-amdgpu vulkan-radeon libva-mesa-driver mesa-vdpau
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;声卡驱动&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;pacman -S alsa-utils pulseaudio pulseaudio-bluetooth cups
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;蓝牙驱动&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;pacman -S bluez bluez-utils
+systemctl enable bluetooth
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;配置图形化界面&lt;/h3&gt;
+&lt;h4&gt;安装&lt;code&gt;xorg&lt;/code&gt;服务&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;pacman -S xorg-server
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h5&gt;开启&lt;code&gt;truetype&lt;/code&gt;渲染&lt;/h5&gt;
+&lt;pre&gt;&lt;code&gt;vim /etc/profile.d/freetype2.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后把最后一行去注释。&lt;/p&gt;
+&lt;h4&gt;安装KDE&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;pacman -S plasma-meta plasma-desktop sddm kscreen plasma-pa ffmpegthumbs dolphin konsole ark vlc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;启动登陆图形化界面&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;systemctl enable sddm
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;完成！&lt;/p&gt;
+&lt;/blockquote&gt;
+</content:encoded></item><item><title>Homebrew的安装</title><link>https://fuwari.vercel.app/posts/homebrewinstall/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/homebrewinstall/</guid><pubDate>Wed, 17 Jun 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;安装&lt;/h1&gt;
+&lt;p&gt;由于某些原因，官方提供的安装方法会非常慢，因此从Github直接下载源码包，然后再把下载地址替换为国内镜像。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--MORE--&amp;gt;&lt;/p&gt;
+&lt;h2&gt;替换安装地址&lt;/h2&gt;
+&lt;p&gt;把&lt;code&gt;install.sh&lt;/code&gt;用记事本打开，并把其中的&lt;code&gt;BREW_REPO=&lt;/code&gt;的地址改为：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;BREW_REPO=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这里用的是清华大学的镜像。&lt;/p&gt;
+&lt;h2&gt;替换其他地址&lt;/h2&gt;
+&lt;p&gt;上面仅仅替换了第一步的下载地址，Homebrew还会自动下载brew-core、brew-bottle、brew-cask等内容，而这些内容的下载地址在源文件中本人没有找到，因此要在terminal下载这些内容时，按&lt;code&gt;control+c&lt;/code&gt;来中断程序，并手动指定下载地址。&lt;/p&gt;
+&lt;h3&gt;Homebrew-core&lt;/h3&gt;
+&lt;p&gt;若卡在：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;==&amp;gt; Tapping homebrew/core
+Cloning into &apos;/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core&apos;...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;或这里下载很慢时，按&lt;code&gt;control+c&lt;/code&gt;来中断程序，并输入如下代码：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd &quot;$(brew --repo)/Library/Taps/&quot;
+mkdir homebrew &amp;amp;&amp;amp; cd homebrew
+git clone git://mirrors.ustc.edu.cn/homebrew-core.git
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Homebrew-cask&lt;/h3&gt;
+&lt;p&gt;在安装cask卡住时，方法同上：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd &quot;$(brew --repo)/Library/Taps/&quot;
+cd homebrew
+git clone https://mirrors.ustc.edu.cn/homebrew-cask.git
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;安装成功&lt;/h2&gt;
+&lt;p&gt;之后继续安装，出现&lt;code&gt;==&amp;gt; Installation successful!&lt;/code&gt;表明安装成功。&lt;/p&gt;
+&lt;h1&gt;更改源地址&lt;/h1&gt;
+&lt;p&gt;需要替换brew、brew-core、brew-cask、brew-bottle的地址，以防平时使用时下载速度过慢。&lt;/p&gt;
+&lt;h2&gt;清华大学源&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;git -C &quot;$(brew --repo)&quot; remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git
+
+git -C &quot;$(brew --repo homebrew/core)&quot; remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git
+
+git -C &quot;$(brew --repo homebrew/cask)&quot; remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-cask.git
+
+echo &apos;export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles&apos; &amp;gt;&amp;gt; ~/.bash_profile
+source ~/.bash_profile
+
+brew update
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded></item><item><title>对宏观经济贫富差距的简单分析</title><link>https://fuwari.vercel.app/posts/macro25/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/macro25/</guid><description>无话可说</description><pubDate>Mon, 13 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
+&lt;h1&gt;模型&lt;/h1&gt;
+&lt;h2&gt;Python中的线性规划求解&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本部分内容引自《数学建模算法与应用》&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;求解如下的线性规划问题：&lt;/p&gt;
+&lt;p&gt;$$
+min \quad z = 2x_1+3x_2+x_3
+$$&lt;/p&gt;
+&lt;p&gt;$$
+\begin{aligned}
+s.t. \quad x_1+x_2+x_3&amp;amp;=7 \&lt;br /&gt;
+x_1+4x_2+2x_3&amp;amp;\geq8 \&lt;br /&gt;
+3x_1+2x_2&amp;amp;\geq6 \&lt;br /&gt;
+x_1,x_2,x_3&amp;amp;\geq0
+\end{aligned}
+$$&lt;/p&gt;
+&lt;p&gt;用Python进行线性规划求解时，&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import numpy as np
+from scipy import optimize
+
+z = np.array([2, 3, 1])
+a = np.array([[1, 4, 2], [3, 2, 0]]
+b = np.array([8, 6])
+a_eq = np.array([[1, 1, 1]])
+b_eq = np.array([7])
+x1_bound = x2_bound = x3_bound = (0, None)
+bounds = (x1_bound, x2_bound, x3_bound)
+
+res = optimize.linprog(z, A_ub=-a, b_ub=-b, A_eq=a_eq, b_eq=b_eq, bounds=bounds)
+print(res)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Python中的非线性规划求解&lt;/h2&gt;
+&lt;p&gt;详见scipy的&lt;a href=&quot;https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html&quot;&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;考虑如下的非线性规划问题：&lt;/p&gt;
+&lt;p&gt;计算$(2+x_1)/(1+x_2)-3x_1+4x_3$的最小值，这里对任意$x_i$均有$0.1&amp;lt;x_i&amp;lt;0.9$成立。&lt;/p&gt;
+&lt;p&gt;Python代码如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import numpy as np
+from scipy import optimize
+
+# 定义目标函数
+def func1(nums):
+    a, b, c, d = nums
+    def _func0(x):
+        y = (a+x[0])/(b+x[1]) - c*x[0] + d*x[2]
+	return y
+    return _func0
+
+# 有两种方法表示约束
+def cons1(nums):
+    # &apos;eq&apos;表示等式，&apos;ineq&apos;表示大于等于
+    x1_min, x1_max, x1_min, x2_max, x3_min, x3_max = nums
+    _cons = ({&apos;type&apos;:&apos;ineq&apos;, &apos;fun&apos;:lambda x: x[0]-x1_min},
+             {&apos;type&apos;:&apos;ineq&apos;, &apos;fun&apos;:lambda x: x1_max-x[0]}，
+	     {&apos;type&apos;:&apos;ineq&apos;, &apos;fun&apos;:lambda x: x[1]-x2_min},
+	     {&apos;type&apos;:&apos;ineq&apos;, &apos;fun&apos;:lambda x: x2_max-x[1]},
+	     {&apos;type&apos;:&apos;ineq&apos;, &apos;fun&apos;:lambda x: x[2]-x3_min},
+	     {&apos;type&apos;:&apos;ineq&apos;, &apos;fun&apos;:lambda x: x3_max-x[2]})
+    return _cons
+
+# 法2
+bouds = []
+for k in range(3):
+    # &apos;None&apos;为不限制
+    bounds.append((0.1, 0.9))
+
+args = [2, 1, 3, 4]
+x0 = np.array([0.5, 0.5, 0.5])
+res = optimize.minimize(func1(args), x0=x0, constraints=cons1([.1, .9]*3), bounds=bounds)
+print(res)
+
+# res.x = [0.9, 0.9, 0.1
+# res.success = True]
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded></item><item><title>Life is Strange</title><link>https://fuwari.vercel.app/posts/lifs-is-strange/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/lifs-is-strange/</guid><pubDate>Sun, 19 May 2019 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;Life is strange, is it not?&lt;/h2&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;p&gt;You wake up everyday not knowing what&apos;s in store.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;You go to sleep only to journey yet again.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Our universe is so vast and yet it is so detailed.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Everthing has a story, including you.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;You may not be the first person to exists.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;You definately won&apos;t be the last.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;But you are the only you that exists.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;You&apos;re unique from everyone else in your own special way.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Life is a journey.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;You will hit many bumps along the way.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;But you&apos;ll keep moving on.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;As cheesy as it sounds it&apos;s not the destination that matters, it&apos;s the journey.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;That&apos;s what makes life so wonderful.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;The good and the bad moments we go through.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;The people we meet.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;The places we go.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;And the goals we accomplish.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;It shows how incredible we can be and what we can do if we keep pushing on.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;If we keep on living.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;If you keep being you.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;So life may be strange but it&apos;s also very beautiful and you are a part of it.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;So live your life the way you want to.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Do what you wanna do.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Be who you wanna be.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Just be you and never stop being you.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;So don&apos;t cry.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Keep pushing on.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;And smile for all of the universe to see.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;So I wish you the best on your journey through this strange thing we call life.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Peace&lt;/p&gt;
+</content:encoded></item><item><title>Python中的重载</title><link>https://fuwari.vercel.app/posts/python-1-chongzai/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/python-1-chongzai/</guid><pubDate>Tue, 29 Jan 2019 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
+&lt;p&gt;重载，即overwrite&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;字符串函数重载&lt;/h1&gt;
+&lt;h2&gt;repr与str&lt;/h2&gt;
+&lt;p&gt;repr函数用于print函数调用，str则用于str函数调用&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;def __repr__(self):
+    ...
+    return some string here
+
+def __str__(self):
+    ...
+    return some string here
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;内建函数重载&lt;/h1&gt;
+&lt;h2&gt;部分内建函数&lt;/h2&gt;
+&lt;p&gt;__abs__
+__len__
+__bool__&lt;/p&gt;
+&lt;h2&gt;bool函数重载&lt;/h2&gt;
+&lt;p&gt;用于bool函数取值，或if、while等判断中&lt;/p&gt;
+&lt;p&gt;a. 当类内有__bool__(self)函数时，用此函数的返回值作为bool函数的返回值
+b. 当不存在__bool__(self)函数时，用__len__(self)的返回值是否为0来作为bool函数的返回值
+c. 也不存在__len__(self)函数时，直接返回True&lt;/p&gt;
+&lt;h1&gt;运算符重载&lt;/h1&gt;
+&lt;h2&gt;算术运算符重载&lt;/h2&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th&gt;Attribute&lt;/th&gt;
-&lt;th&gt;Description&lt;/th&gt;
+&lt;th&gt;函数&lt;/th&gt;
+&lt;th&gt;表达式&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;code&gt;title&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;The title of the post.&lt;/td&gt;
+&lt;td&gt;__add__(self, rhs)&lt;/td&gt;
+&lt;td&gt;self + rhs&lt;/td&gt;
+&lt;td&gt;加法&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;code&gt;published&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;The date the post was published.&lt;/td&gt;
+&lt;td&gt;__sub__(self, rhs)&lt;/td&gt;
+&lt;td&gt;self - rhs&lt;/td&gt;
+&lt;td&gt;减法&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;code&gt;description&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;A short description of the post. Displayed on index page.&lt;/td&gt;
+&lt;td&gt;__mul__(self, rhs)&lt;/td&gt;
+&lt;td&gt;self * rhs&lt;/td&gt;
+&lt;td&gt;乘法&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;code&gt;image&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;The cover image path of the post.&amp;lt;br/&amp;gt;1. Start with &lt;code&gt;http://&lt;/code&gt; or &lt;code&gt;https://&lt;/code&gt;: Use web image&amp;lt;br/&amp;gt;2. Start with &lt;code&gt;/&lt;/code&gt;: For image in &lt;code&gt;public&lt;/code&gt; dir&amp;lt;br/&amp;gt;3. With none of the prefixes: Relative to the markdown file&lt;/td&gt;
+&lt;td&gt;__truediv__(self, rhs)&lt;/td&gt;
+&lt;td&gt;self / rhs&lt;/td&gt;
+&lt;td&gt;除法&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;code&gt;tags&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;The tags of the post.&lt;/td&gt;
+&lt;td&gt;__floordiv__(self, rhs)&lt;/td&gt;
+&lt;td&gt;self // rhs&lt;/td&gt;
+&lt;td&gt;地板除法&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;code&gt;category&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;The category of the post.&lt;/td&gt;
+&lt;td&gt;__mod__(self, rhs)&lt;/td&gt;
+&lt;td&gt;self % rhs&lt;/td&gt;
+&lt;td&gt;求余&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;code&gt;draft&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;If this post is still a draft, which won&apos;t be displayed.&lt;/td&gt;
+&lt;td&gt;__pow__(self, rhs)&lt;/td&gt;
+&lt;td&gt;self ** rhs&lt;/td&gt;
+&lt;td&gt;求幂&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h2&gt;Where to Place the Post Files&lt;/h2&gt;
-&lt;p&gt;Your post files should be placed in &lt;code&gt;src/content/posts/&lt;/code&gt; directory. You can also create sub-directories to better organize your posts and assets.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;src/content/posts/
-├── post-1.md
-└── post-2/
-    ├── cover.png
-    └── index.md
-&lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>Markdown Example</title><link>https://fuwari.vercel.app/posts/markdown/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/markdown/</guid><description>A simple example of a Markdown blog post.</description><pubDate>Sun, 01 Oct 2023 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;An h1 header&lt;/h1&gt;
-&lt;p&gt;Paragraphs are separated by a blank line.&lt;/p&gt;
-&lt;p&gt;2nd paragraph. &lt;em&gt;Italic&lt;/em&gt;, &lt;strong&gt;bold&lt;/strong&gt;, and &lt;code&gt;monospace&lt;/code&gt;. Itemized lists
-look like:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;this one&lt;/li&gt;
-&lt;li&gt;that one&lt;/li&gt;
-&lt;li&gt;the other one&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Note that --- not considering the asterisk --- the actual text
-content starts at 4-columns in.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Block quotes are
-written like so.&lt;/p&gt;
-&lt;p&gt;They can span multiple paragraphs,
-if you like.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Use 3 dashes for an em-dash. Use 2 dashes for ranges (ex., &quot;it&apos;s all
-in chapters 12--14&quot;). Three dots ... will be converted to an ellipsis.
-Unicode is supported. ☺&lt;/p&gt;
-&lt;h2&gt;An h2 header&lt;/h2&gt;
-&lt;p&gt;Here&apos;s a numbered list:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;first item&lt;/li&gt;
-&lt;li&gt;second item&lt;/li&gt;
-&lt;li&gt;third item&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Note again how the actual text starts at 4 columns in (4 characters
-from the left side). Here&apos;s a code sample:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# Let me re-iterate ...
-for i in 1 .. 10 { do-something(i) }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;As you probably guessed, indented 4 spaces. By the way, instead of
-indenting the block, you can use delimited blocks, if you like:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;define foobar() {
-    print &quot;Welcome to flavor country!&quot;;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;(which makes copying &amp;amp; pasting easier). You can optionally mark the
-delimited block for Pandoc to syntax highlight it:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;import time
-# Quick, count to ten!
-for i in range(10):
-    # (but not *too* quick)
-    time.sleep(0.5)
-    print i
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;An h3 header&lt;/h3&gt;
-&lt;p&gt;Now a nested list:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;First, get these ingredients:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;carrots&lt;/li&gt;
-&lt;li&gt;celery&lt;/li&gt;
-&lt;li&gt;lentils&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Boil some water.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Dump everything in the pot and follow
-this algorithm:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt; find wooden spoon
- uncover pot
- stir
- cover pot
- balance wooden spoon precariously on pot handle
- wait 10 minutes
- goto first step (or shut off burner when done)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Do not bump wooden spoon or it will fall.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Notice again how text always lines up on 4-space indents (including
-that last line which continues item 3 above).&lt;/p&gt;
-&lt;p&gt;Here&apos;s a link to &lt;a href=&quot;http://foo.bar&quot;&gt;a website&lt;/a&gt;, to a &lt;a href=&quot;local-doc.html&quot;&gt;local
-doc&lt;/a&gt;, and to a &lt;a href=&quot;#an-h2-header&quot;&gt;section heading in the current
-doc&lt;/a&gt;. Here&apos;s a footnote [^1].&lt;/p&gt;
-&lt;p&gt;[^1]: Footnote text goes here.&lt;/p&gt;
-&lt;p&gt;Tables can look like this:&lt;/p&gt;
-&lt;p&gt;size material color&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;9 leather brown
-10 hemp canvas natural
-11 glass transparent&lt;/p&gt;
-&lt;p&gt;Table: Shoes, their sizes, and what they&apos;re made of&lt;/p&gt;
-&lt;p&gt;(The above is the caption for the table.) Pandoc also supports
-multi-line tables:&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;keyword text&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;red Sunsets, apples, and
-other red or reddish
-things.&lt;/p&gt;
-&lt;p&gt;green Leaves, grass, frogs
-and other things it&apos;s
-not easy being.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;A horizontal rule follows.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;Here&apos;s a definition list:&lt;/p&gt;
-&lt;p&gt;apples
-: Good for making applesauce.
-oranges
-: Citrus!
-tomatoes
-: There&apos;s no &quot;e&quot; in tomatoe.&lt;/p&gt;
-&lt;p&gt;Again, text is indented 4 spaces. (Put a blank line between each
-term/definition pair to spread things out more.)&lt;/p&gt;
-&lt;p&gt;Here&apos;s a &quot;line block&quot;:&lt;/p&gt;
-&lt;p&gt;| Line one
-| Line too
-| Line tree&lt;/p&gt;
-&lt;p&gt;and images can be specified like so:&lt;/p&gt;
-&lt;p&gt;Inline math equations go in like so: $\omega = d\phi / dt$. Display
-math should get its own line and be put in in double-dollarsigns:&lt;/p&gt;
-&lt;p&gt;$$I = \int \rho R^{2} dV$$&lt;/p&gt;
-&lt;p&gt;$$
-\begin{equation*}
-\pi
-=3.1415926535
-;8979323846;2643383279;5028841971;6939937510;5820974944
-;5923078164;0628620899;8628034825;3421170679;\ldots
-\end{equation*}
-$$&lt;/p&gt;
-&lt;p&gt;And note that you can backslash-escape any punctuation characters
-which you wish to be displayed literally, ex.: `foo`, *bar*, etc.&lt;/p&gt;
-</content:encoded></item><item><title>Include Video in the Posts</title><link>https://fuwari.vercel.app/posts/video/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/video/</guid><description>This post demonstrates how to include embedded video in a blog post.</description><pubDate>Tue, 01 Aug 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Just copy the embed code from YouTube or other platforms, and paste it in the markdown file.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;---
-title: Include Video in the Post
-published: 2023-10-19
-// ...
----
+&lt;h3&gt;反向算术运算符重载&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;函数&lt;/th&gt;
+&lt;th&gt;表达式&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;__radd__(self, lhs)&lt;/td&gt;
+&lt;td&gt;lhs + self&lt;/td&gt;
+&lt;td&gt;加法&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;__rsub__(self, lhs)&lt;/td&gt;
+&lt;td&gt;lhs - self&lt;/td&gt;
+&lt;td&gt;减法&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;__rmul__(self, lhs)&lt;/td&gt;
+&lt;td&gt;lhs * self&lt;/td&gt;
+&lt;td&gt;乘法&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;...&lt;/td&gt;
+&lt;td&gt;...&lt;/td&gt;
+&lt;td&gt;...&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3&gt;复合赋值算术运算符重载&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;函数&lt;/th&gt;
+&lt;th&gt;表达式&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;__iadd__(self, rhs)&lt;/td&gt;
+&lt;td&gt;self += rhs&lt;/td&gt;
+&lt;td&gt;自加&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;__isub__(self, rhs)&lt;/td&gt;
+&lt;td&gt;self -= rhs&lt;/td&gt;
+&lt;td&gt;自减&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;__imul__(self, rhs)&lt;/td&gt;
+&lt;td&gt;self *= rhs&lt;/td&gt;
+&lt;td&gt;自乘&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;...&lt;/td&gt;
+&lt;td&gt;...&lt;/td&gt;
+&lt;td&gt;...&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;a. 若add与iadd同时存在，则对于+=运算优先iadd
+b. 若iadd不存在，add存在，则+=运算使用add&lt;/p&gt;
+&lt;h2&gt;比较运算符重载&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;函数&lt;/th&gt;
+&lt;th&gt;表达式&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;__lt__(self, num)&lt;/td&gt;
+&lt;td&gt;self &amp;lt; num&lt;/td&gt;
+&lt;td&gt;小于，less than&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;__le__(self, num)&lt;/td&gt;
+&lt;td&gt;self &amp;lt;= num&lt;/td&gt;
+&lt;td&gt;小于等于，less equal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;__gt__(self, num)&lt;/td&gt;
+&lt;td&gt;self &amp;gt; num&lt;/td&gt;
+&lt;td&gt;大于，greater than&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;__ge__(self, num)&lt;/td&gt;
+&lt;td&gt;self &amp;gt;= num&lt;/td&gt;
+&lt;td&gt;大于等于&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;__eq__(self, num)&lt;/td&gt;
+&lt;td&gt;self == num&lt;/td&gt;
+&lt;td&gt;等于&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;__ne__(self, num)&lt;/td&gt;
+&lt;td&gt;self != num&lt;/td&gt;
+&lt;td&gt;不等&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;in运算符重载&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;函数&lt;/th&gt;
+&lt;th&gt;表达式&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;__contains__(self, v)&lt;/td&gt;
+&lt;td&gt;v in self&lt;/td&gt;
+&lt;td&gt;成员运算&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;索引及切片运算符重载&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;函数&lt;/th&gt;
+&lt;th&gt;表达式&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;__getitem__(self, i)&lt;/td&gt;
+&lt;td&gt;self[i]&lt;/td&gt;
+&lt;td&gt;索引取值&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;__setitem__(self, i, val)&lt;/td&gt;
+&lt;td&gt;self[i] = val&lt;/td&gt;
+&lt;td&gt;索引赋值&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</content:encoded></item><item><title>Python中的迭代</title><link>https://fuwari.vercel.app/posts/python-2-iteration/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/python-2-iteration/</guid><pubDate>Tue, 29 Jan 2019 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
+&lt;p&gt;本文记录遇到的部分迭代技巧&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;迭代工具函数&lt;/h1&gt;
+&lt;p&gt;其作用是生成可迭代对象&lt;/p&gt;
+&lt;h2&gt;zip(iter1, iter2, ...)&lt;/h2&gt;
+&lt;p&gt;返回一个zip对象，此对象可以生成一个元组，其中的元素分别由iter1、iter2、...等中的元素组成，且该元组的长度由最小的可迭代对象决定&lt;/p&gt;
+&lt;h2&gt;enumerate(iter, start=0)&lt;/h2&gt;
+&lt;p&gt;生成带索引的枚举对象，默认索引值从0开始，也可指定一个值&lt;/p&gt;
+&lt;h2&gt;代码示例&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;nums = [110, 120, 119, 911]
+names = [&apos;警察&apos;, &apos;医院&apos;, &apos;消防&apos;]
 
-&amp;lt;iframe width=&quot;100%&quot; height=&quot;468&quot; src=&quot;https://www.youtube.com/embed/5gIf0_xpFPI?si=N1WTorLKL0uwLsU_&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allowfullscreen&amp;gt;&amp;lt;/iframe&amp;gt;
+for thing in zip(nums, names):
+    print(thing)
+
+&amp;gt; (110, &apos;警察&apos;)
+&amp;gt; (120, &apos;医院&apos;)
+&amp;gt; (119, &apos;火警&apos;)
+
+for ph, name in zip(nums, names):
+    print(&apos;{0}的电话是：{1}&apos;.format(str(name), str(ph)))
+
+&amp;gt; 警察的电话是：110
+&amp;gt; 医院的电话是：120
+&amp;gt; 火警的电话是：119
+
+for thing in zip(range(2), nums, names):
+    print(thing)
+
+&amp;gt; (0, 110, &apos;警察&apos;)
+&amp;gt; (1, 120, &apos;医院&apos;)
+
+d = dict(zip(nums, names)) # 可组成字典
+print(d)
+
+&amp;gt; {110:&apos;警察&apos;, 120:&apos;医院&apos;, 119:&apos;火警&apos;}
+
+for thing in enumerate(names):
+    print(thing)
+
+&amp;gt; (0, &apos;警察&apos;)
+&amp;gt; (1, &apos;医院&apos;)
+&amp;gt; (2, &apos;火警&apos;)
+
+for thing in enumerate(names, 100):
+    print(thing)
+
+&amp;gt; (100, &apos;警察&apos;)
+&amp;gt; (101, &apos;医院&apos;)
+&amp;gt; (102, &apos;火警&apos;)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;YouTube&lt;/h2&gt;
-&lt;p&gt;&amp;lt;iframe width=&quot;100%&quot; height=&quot;468&quot; src=&quot;https://www.youtube.com/embed/5gIf0_xpFPI?si=N1WTorLKL0uwLsU_&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; allowfullscreen&amp;gt;&amp;lt;/iframe&amp;gt;&lt;/p&gt;
-&lt;h2&gt;Bilibili&lt;/h2&gt;
-&lt;p&gt;&amp;lt;iframe width=&quot;100%&quot; height=&quot;468&quot; src=&quot;//player.bilibili.com/player.html?bvid=BV1fK4y1s7Qf&amp;amp;p=1&quot; scrolling=&quot;no&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;true&quot;&amp;gt; &amp;lt;/iframe&amp;gt;&lt;/p&gt;
+&lt;h1&gt;yield函数&lt;/h1&gt;
+&lt;h2&gt;一个例子：斐波那契数列&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://baike.baidu.com/item/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97&quot;&gt;斐波那契数列&lt;/a&gt;（Fibonacci）是这样一个数列，其任意一个数等于该数前两个数的和。&lt;/p&gt;
+&lt;h2&gt;斐波那契数列的简单实现&lt;/h2&gt;
+&lt;p&gt;一般可用如下代码实现该数列：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;def fibonacci(num):
+    n, a, b = 0, 0, 1
+    while n &amp;lt; num:
+        print(b)
+	a, b = b, a + b
+	n += 1
+
+fibonacci(5)
+
+&amp;gt; 1
+&amp;gt; 1
+&amp;gt; 2
+&amp;gt; 3
+&amp;gt; 5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;斐波那契数列实现的进一步讨论&lt;/h2&gt;
+&lt;p&gt;对于上面的实现函数，其实用性较差，因为这里直接print出数字，其返回值为None。其他函数无法获得该函数生成的数列。&lt;/p&gt;
+&lt;p&gt;因此，我们可以改进该函数，使其返回一个list：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;def fabonacci(num):
+    n, a, b = 0, 0, 1
+    result = []
+    while n &amp;lt; num:
+        result.append(b)
+	a, b = b, a + b
+	n += 1
+    return result
+
+fab = fabonacci(5)
+for n in fab:
+    print(n)
+
+&amp;gt; 1
+&amp;gt; 1
+&amp;gt; 2
+&amp;gt; 3
+&amp;gt; 5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;使用yield函数改进&lt;/h2&gt;
+&lt;p&gt;对于上面的改进版本，当传入的参数num的值很大时，其生成的list也很大，很占内存。要进一步改进，我们可以用迭代器，不用list保存中间结果，而是用iterable对象来迭代。可以通过写一个类，重载该类的__iter__函数和__next__函数来实现。&lt;/p&gt;
+&lt;p&gt;但这样显然十分繁琐，yield函数就提供了这样一种功能：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;def fabonacci(num):
+    n, a, b = 0, 0, 1
+    while n &amp;lt; num:
+        yield b
+	a, b = b, a + b
+	n += 1
+
+for n in fabonacci(5):
+    print(n)
+
+&amp;gt; 1
+&amp;gt; 1
+&amp;gt; 2
+&amp;gt; 3
+&amp;gt; 5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;仅仅通过把print(b)改成yield b就可以了，十分的简洁、高效。&lt;/p&gt;
+&lt;p&gt;一个带有yield的函数就是一个generator。这样的函数与普通函数的不同在于，对该函数进行调用时不会执行任何函数代码，直到对其调用next才开始执行（for循环中自动调用next）。&lt;/p&gt;
+&lt;h2&gt;yield的另一个应用场景&lt;/h2&gt;
+&lt;p&gt;文件读取时，若直接对文件对象使用read()函数，会导致不可预测的内存占用。可以通过设定一定大小的缓冲区来不断读取文件内容：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;def read_file(file_path, block_size=1024):
+    with open(file_path, &apos;rb&apos;) as f:
+        while True:
+	    block = f.read(block_size)
+	    if block:
+	        yield block
+	    else:
+	        return
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded></item><item><title>大糖帝国（The Great Sugar Empire）</title><link>https://fuwari.vercel.app/posts/new-society/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/new-society/</guid><description>无</description><pubDate>Tue, 15 Jan 2019 21:25:55 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
+&lt;h1&gt;模型&lt;/h1&gt;
+&lt;h1&gt;附录&lt;/h1&gt;
+&lt;h2&gt;源码&lt;/h2&gt;
+&lt;p&gt;代码见&lt;a href=&quot;https://github.com/JunkuiZhang/NewSociaty/&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;基尼系数的计算&lt;/h2&gt;
+&lt;p&gt;由于这里数据量较小，故可使用直接计算法计算&lt;/p&gt;
+&lt;p&gt;$$
+\Delta = \frac{1}{n^2}\sum^{n}&lt;em&gt;{j=1}\sum^{n}&lt;/em&gt;{i=1}|Y_j-Y_i|
+$$&lt;/p&gt;
+&lt;p&gt;这里$\Delta$是基尼平均差，$|Y_j-Y_i|$是任意一对样本差的绝对值，$n$是样本容量&lt;/p&gt;
+&lt;p&gt;则基尼系数可以计算为：&lt;/p&gt;
+&lt;p&gt;$$
+G = \frac{\Delta}{2u}
+$$&lt;/p&gt;
+&lt;p&gt;这里$G$表示基尼系数，$u$是样本均值。&lt;/p&gt;
+</content:encoded></item><item><title>深度学习——神经网络超参数的处理（02）</title><link>https://fuwari.vercel.app/posts/deep-02/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/deep-02/</guid><description>本文建立在[前一篇文章](https://junkuizhang.github.io/2018/01/04/deep-01/)的基础上进行讨论，这[一系列文章](https://junkuizhang.github.io/categories/深度学习/)的本意是记录本人的学习历程，避免“后面学，前面忘”的窘境。</description><pubDate>Fri, 05 Jan 2018 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
+&lt;p&gt;本文建立在&lt;a href=&quot;https://junkuizhang.github.io/2018/01/04/deep-01/&quot;&gt;前一篇文章&lt;/a&gt;的基础上进行讨论，这&lt;a href=&quot;https://junkuizhang.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/&quot;&gt;一系列文章&lt;/a&gt;的本意是记录本人的学习历程，避免“后面学，前面忘”的窘境。&lt;/p&gt;
+&lt;p&gt;前文讨论到超参数，本文继续讨论如何处理上文的问题。具体而言，主要涉及到：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对欠拟合、过拟合的处理&lt;/li&gt;
+&lt;li&gt;正则化方法（Regularization）
+&lt;ul&gt;
+&lt;li&gt;$L2$正则化&lt;/li&gt;
+&lt;li&gt;Dropout正则化&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;标准化方法（Normalization）
+&lt;ul&gt;
+&lt;li&gt;梯度消失（Vanishing Gradient）&lt;/li&gt;
+&lt;li&gt;梯度爆炸（Exploding Gradient）&lt;/li&gt;
+&lt;li&gt;梯度检查（Gradient Checking）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;神经网络训练数据&lt;/h1&gt;
+&lt;p&gt;深度学习的火爆离不开现如今的大量数据以及Tensorflow之类算力的加成buff，一般把数据分为训练集、开发集、测试集（Train/Dev/Test sets）。&lt;/p&gt;
+&lt;h2&gt;数据集&lt;/h2&gt;
+&lt;p&gt;训练集就是训练神经网络的数据集，一般而言越多越好；开发集则一般用来调参，因此最终神经网络实际上是包含了训练集和开发集的信息，因此开发集上的测试结果并不是无偏的；测试集则用来测试训练好的神经网络，结果也是无偏的。&lt;/p&gt;
+&lt;p&gt;一般而言，当数据量较少时（$&amp;lt;2000$），训练集、开发集、测试集的比例一般为$6:2:2$。这三个数据集中测试集可以没有，这样的话开发集实际上充当了测试集的功能。但由于上面提到的原因，开发集并不完全等价于测试集。&lt;/p&gt;
+&lt;p&gt;当数据量很大时，比如$1,000,000$，这时，并不一定要按照$6:2:2$的比例来划分。由于开发集、测试集的功能，其并不需要很多的数据，因此给两者分配一定数量的数据可以完成目标就可以了。因此，可以按照$98:1:1$的比例来分配数据。&lt;/p&gt;
+&lt;h2&gt;数据量&lt;/h2&gt;
+&lt;p&gt;当数据量很大时，神经网络将变得十分臃肿，进而拖慢训练速度。比如，当数据量为$1,000,000$时，我们可以把整个数据集$X$分为1000个小数据集$X^{\{i\}}$，每个小数据集包含1000个数据。&lt;/p&gt;
+&lt;p&gt;当神经网络在$X^{\{i\}}$上完成一次训练，便进行一次参数更新：即原本要跑完$1,000,000$条数据才会更新参数，现在每跑完一小部分数据就更新一次参数。在$X^{\{i\}}$上跑完一次，成为完成了一次epoch。&lt;/p&gt;
+&lt;h1&gt;初始化参数&lt;/h1&gt;
+&lt;p&gt;这里的参数指$W^{[l]}$和$b^{[l]}$，运用“He initialization”可以更快的使模型收敛。具体而言，只需要在常规初始化的参数后面乘上$\sqrt{2/n^{[l-1]}}$即可。用代码表示为：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;parameters[&apos;W&apos;+str(l)] = np.random.randn(layers_dims[l], layers_dims[l-1])*np.sqrt(2/layers_dims[l-1])
+parameters[&apos;b&apos;+str(l)] = np.zeros((layers_dims[l], 1))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;欠拟合与过拟合&lt;/h1&gt;
+&lt;p&gt;前文提到，区分两者的关键是模型在训练集和测试集上的表现：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;欠拟合：训练集误差大，测试集误差较小&lt;/li&gt;
+&lt;li&gt;过拟合：训练集误差小，测试集误差较大&lt;/li&gt;
+&lt;li&gt;同时发生：训练集、测试集上误差均较大&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;处理欠拟合的方法有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;增加神经网络深度&lt;/li&gt;
+&lt;li&gt;调整超参数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;处理过拟合的方法有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;正则化&lt;/li&gt;
+&lt;li&gt;标准化&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;$L2$正则化（Regularization）&lt;/h2&gt;
+&lt;p&gt;一般而言，避免过拟合的标准方法是$L2$正则化，它从改变成本函数开始。
+正常的成本函数是：
+$$
+J = -\frac1m\sum_{i=1}^{m}(y^{(i)}\ln(a^{&lt;a href=&quot;i&quot;&gt;L&lt;/a&gt;}) + (1-y^{(i)})\ln(1-a^{&lt;a href=&quot;i&quot;&gt;L&lt;/a&gt;}))
+$$&lt;/p&gt;
+&lt;p&gt;改变为：
+$$
+J = -\frac1m\sum_{i=1}^{m}(y^{(i)}\ln(a^{&lt;a href=&quot;i&quot;&gt;L&lt;/a&gt;})+(1-y^{(i)})\ln(1-a^{&lt;a href=&quot;i&quot;&gt;L&lt;/a&gt;})) + \frac1m\frac\lambda2\sum_l\sum_k\sum_jW_{k,j}^{[l]2}
+$$&lt;/p&gt;
+&lt;p&gt;这里$\lambda$成为正则化常数，是一个需要我们不断测试来选择最佳值的超参数。&lt;/p&gt;
+&lt;p&gt;进而，反向传播的计算公式也有所改变：
+$$
+\begin{aligned}
+dW^{[l]} &amp;amp;= \frac1mdZ^{[l]}A^{[l-1]T} + \frac{\lambda}{m}\times W^{[l]} \&lt;br /&gt;
+db^{[l]} &amp;amp;= \frac1m\sum_{row}dZ^{[l]}
+\end{aligned}
+$$&lt;/p&gt;
+&lt;h2&gt;Dropout&lt;/h2&gt;
+&lt;p&gt;Dropout也是常用的一种正则化手段，其在每次迭代过程中随机关闭一些神经节点，看起来不可思议，问题是它居然真的有用。&lt;/p&gt;
+&lt;p&gt;代码中通过一个由0和1为元素构成的矩阵来实现神经节点的开关。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Dl = np.random.rand(Al.shape[0], Al.shape[1]) #随机产生0-1间的数字
+Dl = (Dl &amp;lt; keep_prob) #keep_prob是保持概率，小于这个数的将被设置为1
+Al *= Dl
+Al /= keep_prob
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;规范化（Normalization）&lt;/h2&gt;
+&lt;p&gt;也称为标准化，是对输入数据进行的处理：把输入数据的均值变为0，方差变为1。
+$$
+\begin{aligned}
+X &amp;amp;= X - \bar{X} \&lt;br /&gt;
+X &amp;amp;= \frac{X}{\sqrt{Var(X)}}
+\end{aligned}
+$$&lt;/p&gt;
+&lt;p&gt;经过这样的处理后，模型收敛速度更快。&lt;/p&gt;
+&lt;h2&gt;梯度检测（Gradient Checking）&lt;/h2&gt;
+&lt;p&gt;根据导数的定义，即
+$$
+f&apos;(x) = \lim_{\epsilon\rightarrow0}\frac{f(x+\epsilon)-f(x)}{\epsilon}
+$$&lt;/p&gt;
+&lt;p&gt;进而赋予$\epsilon$一个很小的值来近似计算倒数来比较。&lt;/p&gt;
+&lt;h1&gt;算法优化&lt;/h1&gt;
+&lt;h2&gt;数据量&lt;/h2&gt;
+&lt;p&gt;这里是指前文提到的，当数据量很大时，把整体数据$X$分成一些小数据集$X^{\{i\}}$，在小数据集上训练数据。&lt;/p&gt;
+&lt;h2&gt;动量法（Momentum）&lt;/h2&gt;
+&lt;p&gt;动量法可以纠正梯度下降法的frustration。&lt;/p&gt;
+&lt;h3&gt;初始化动量&lt;/h3&gt;
+&lt;p&gt;动量$v$的维度应该和参数相同，具体而言：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;def initialize_velocity(parameters):
+    &quot;&quot;&quot;
+    参数：
+    parameters -- 包含参数W和b的python字典
+                  Wl = parameters[&apos;W&apos;+str(l)]
+		  bl = parameters[&apos;b&apos;+str(l)]
+    
+    返回值：
+    v -- 包含计算好的动量的python字典
+         dWl的动量 = v[&apos;dW&apos;+str(l)]
+	 dbl的动量 = v[&apos;db&apos;+str(l)]
+    &quot;&quot;&quot;
+
+    L = len(parameters) // 2
+    v = {}
+
+    for l in range(L):
+        v[&apos;dW&apos;+str(l+1)] = np.zeros(parameters[&apos;W&apos;+str(l+1)].shape)
+	v[&apos;db&apos;+str(l+1)] = np.zeros(parameters[&apos;b&apos;+str(l+1)].shape)
+
+    return v
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;更新参数W，b&lt;/h3&gt;
+&lt;p&gt;更新参数$W$和$b$的规则为：
+$$
+\begin{cases}
+v_{dW^{[l]}} = \beta v_{dW^{[l]}} + (1-\beta)dW^{[l]} \&lt;br /&gt;
+W^{[l]} = W^{[l]} - \alpha v_{dW^{[l]}}
+\end{cases}
+$$ $$
+\begin{cases}
+v_{db^{[l]}} = \beta v_{db^{[l]}} + (1-\beta)db^{[l]} \&lt;br /&gt;
+b^{[l]} = b^{[l]} - \alpha v_{db^{[l]}}
+\end{cases}
+$$&lt;/p&gt;
+&lt;p&gt;对应的代码为:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;def update(parameters, grads, v, beta, learning_rate):
+    &quot;&quot;&quot;
+    参数：
+    parameters -- Wl = parameters[&apos;W&apos;+str(l)]
+                  bl = parameters[&apos;b&apos;+str(l)]
+    grads -- dWl = grads[&apos;dW&apos;+str(l)]
+             dbl = grads[&apos;db&apos;+str(l)]
+    beta -- 常量，动量法的一个超参数
+    learning_rate -- 常量，学习速率
+
+    返回值：
+    parameters -- 同上，更新后的参数
+    v -- 保存计算好的动量值的字典
+    &quot;&quot;&quot;
+
+    L = len(parameters) // 2
+
+    for l in range(L):
+        v[&apos;dW&apos;+str(l+1)] = beta * v[&apos;dW&apos;+str(l+1)] + (1 - beta) * grads[&apos;dW&apos;+str(l+1)]
+	v[&apos;db&apos;+str(l+1)] = beta * v[&apos;db&apos;+str(l+1)] + (1 - beta) * grads[&apos;db&apos;+str(l+1)]
+
+	parameters[&apos;W&apos;+str(l+1)] -= learning_rate * v[&apos;dW&apos;+str(l+1)]
+	parameters[&apos;b&apos;+str(l+1)] -= learning_rate * v[&apos;db&apos;+str(l+1)]
+
+    return parameters, v
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一般而言，$\beta$的值一般选取0.8到0.999之间的某个数，$\beta = 0.9$是一个常用的数。&lt;/p&gt;
+&lt;h2&gt;Adam优化法&lt;/h2&gt;
+&lt;p&gt;Adam法结合了动量法和RMSProp，是效率较高的一种优化方法。
+其数学表示如下：
+$$
+\begin{cases}
+v_{dW^{[l]}} = \beta_1v_{dW^{[l]}} + (1-\beta_1)dW^{[l]} \&lt;br /&gt;
+v_{dW^{[l]}}^{corrected} = \frac{v_{dW^{[l]}}}{1 - (\beta_1)^t} \&lt;br /&gt;
+s_{dW^{[l]}} = \beta_2s_{dW^{[l]}} + (1-\beta_2)(dW^{[l]})^2 \&lt;br /&gt;
+s_{dW^{[l]}}^{corrected} = \frac{s_{dW^{[l]}}}{1 - (\beta_2)^t} \&lt;br /&gt;
+W^{[l]} = W^{[l]} - \alpha \frac{v_{dW^{[l]}}^{corrected}}{\sqrt{s_{dW^{[l]}}^{corrected}}+\epsilon}
+\end{cases}
+$$&lt;/p&gt;
+&lt;p&gt;这里：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$t$表示Adam算法的运行次数&lt;/li&gt;
+&lt;li&gt;$\beta_1$和$\beta_2$是两个超参数&lt;/li&gt;
+&lt;li&gt;$\epsilon$是一个非常小的常数，其主要目的是防止分母部分为零&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;代码如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;def update_parameters(parameters, grads, v, s, t, learning_rate=0.01, beta1=0.9, beta2=0.999, epsilon=1e-8):
+    &quot;&quot;&quot;
+    输入：
+    parameters -- 包含W和b的字典
+    grads -- 包含梯度的字典
+    v -- Adam法的动量部分一
+    s -- Adam法的栋梁部分二
+    t -- Adam法的执行次数
+
+    返回值：
+    parameters -- 调整后的参数字典
+    v, b -- 同上
+    &quot;&quot;&quot;
+
+    L = len(parameters) // 2
+    v_corrected = {}
+    s_corrected = {}
+
+    for l in range(L):
+        v[&apos;dW&apos;+str(l+1)] = beta1 * v[&apos;dW&apos;+str(l+1)] + (1 - beta1) * grads[&apos;dW&apos;+str(l+1)]
+	v[&apos;db&apos;+str(l+1)] = beta1 * v[&apos;db&apos;+str(l+1)] + (1 - beta1) * grads[&apos;bd&apos;+str(l+1)]
+
+	v_corrected[&apos;dW&apos;+str(l+1)] = v[&apos;dW&apos;+str(l+1)] / (1 - np.power(beta1, t))
+	v_corrected[&apos;db&apos;+str(l+1)] = v[&apos;db&apos;+str(l+1)] / (1 - np.power(beta1, t))
+
+	s[&apos;dW&apos;+str(l+1)] = beta2 * s[&apos;dW&apos;+str(l+1)] + (1 - beta2) * np.power(grads[&apos;dW&apos;+str(l+1)], 2)
+	s[&apos;db&apos;+str(l+1)] = beta2 * s[&apos;db&apos;+str(l+1)] + (1 - beta2) * np.power(grads[&apos;db&apos;+str(l+1)], 2)
+
+	s_corrected[&apos;dW&apos;+str(l+1)] = s[&apos;dW&apos;+str(l+1)] / (1 - np.power(beta2, t))
+	s_corrected[&apos;db&apos;+str(l+1)] = s[&apos;db&apos;+str(l+1)] / (1 - np.power(beta2, t))
+
+	parameters[&apos;dW&apos;+str(l+1)] -= learning_rate * v_corrected[&apos;dW&apos;+str(l+1)] / (np.sqrt(s_corrected[&apos;dW&apos;+str(l+1)]) + epsilon)
+	parameters[&apos;db&apos;+str(l+1)] -= learning_rate * v_corrected[&apos;db&apos;+str(l+1)] / (np.sqrt(s_corrected[&apos;db&apos;+str(l+1)]) + epsilon)
+
+    return parameters, v, s
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;超参数的调整&lt;/h1&gt;
+&lt;h2&gt;超参数&lt;/h2&gt;
+&lt;p&gt;常见的超参数按重要性分类：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;重要性No.1
+&lt;ul&gt;
+&lt;li&gt;学习速率$\alpha$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;重要性No.2
+&lt;ul&gt;
+&lt;li&gt;动量法参数$\beta$，常用$\beta=0.9$&lt;/li&gt;
+&lt;li&gt;隐藏层的神经单元数量&lt;/li&gt;
+&lt;li&gt;每个小的数据集$X^{\{i\}}$包含的数据量，多为2的倍数，如64，256&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;重要性No.3
+&lt;ul&gt;
+&lt;li&gt;神经网络的深度&lt;/li&gt;
+&lt;li&gt;学习速率递减参数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;不那么重要
+&lt;ul&gt;
+&lt;li&gt;Adam优化法参数，$\beta_1=0.9, , \beta_2=0.999, , \epsilon = 10^{-8}$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;调参的一般方法&lt;/h2&gt;
+&lt;p&gt;随机选取参数进行训练并观察结果是一般方法，要注意的是不能简单的取随机数。&lt;/p&gt;
+&lt;p&gt;比如学习速率$\alpha$的范围一般取$\alpha \in (0.001, 0.1)$，但是，下面这样的做法是不可取的：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;alpha = np.random.rand() * 0099 + 0.001
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;下面的方法是可取的：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;beta = -1 - np.random.rand() * 2
+alpha = np.power(10, beta)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Batch Norm&lt;/h2&gt;
+&lt;p&gt;BN是一种与之前的规范会类似的方法。前文说到的规范化是针对输入的，这里则是针对所有的$Z^{[l]}$做的处理。&lt;/p&gt;
+&lt;h2&gt;多种类分类器（Multi-class Classification）&lt;/h2&gt;
+&lt;h3&gt;Softmax回归&lt;/h3&gt;
+&lt;p&gt;与之前的二元分类器类似，当有$n^{[L]}$个种类时，这里的输出是一个$(n^{[L]}, 1)$矩阵。具体而言：
+$$
+\begin{aligned}
+Z^{[L]} &amp;amp;= [...] \&lt;br /&gt;
+Z_{temp}^{[L]} &amp;amp;= e^{Z^{[L]}} \&lt;br /&gt;
+A^{[L]} &amp;amp;= \frac{Z_{temp}^{[L]}}{\sum Z_{temp}^{[L]}}
+\end{aligned}
+$$&lt;/p&gt;
+&lt;p&gt;Softmax是与Hardmax相对的，Hardmax是直接把$Z^{[L]}$中最大的输出直接赋值为1，其余赋值为0。因该方法简单直接，因而被赋予Hard之名，Softmax较为柔和。&lt;/p&gt;
+&lt;h1&gt;Tensorflow&lt;/h1&gt;
+&lt;p&gt;Tensorflow作为Google的开源机器学习框架，可以很方便的帮助我们部署机器学习的内容，尤其是其可以自动计算Backward Propagation部分。&lt;/p&gt;
+</content:encoded></item><item><title>深度学习——神经网络基本内容（01）</title><link>https://fuwari.vercel.app/posts/deep-01/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/deep-01/</guid><description>A simple example of a Markdown blog post.</description><pubDate>Thu, 04 Jan 2018 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
+&lt;p&gt;深度学习几乎就等于神经网络算法，该算法主要由两个模块构成：前向传播（Forward Propagation）、后向传播（Backward Propagation）。&lt;/p&gt;
+&lt;p&gt;前向传播来计算预测值$\hat{y}$，而后向传播则根据预测值与实际值的差别计算成本方程（Cost Function），并根据该值改进神经网络各节点的权重值。经过多次迭代，逐渐收敛。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;Forward Propagation&lt;/h1&gt;
+&lt;p&gt;前向传播又有两个模块：线性模块、激发模块。&lt;/p&gt;
+&lt;h2&gt;线性模块&lt;/h2&gt;
+&lt;p&gt;线性模块是本层神经节点根据输入$X = {X^{(1)}, X^{(2)}, ... , X^{(m)}}$来计算输出：
+$$
+Z = WX + b
+$$
+这里$W$是本层神经节点的权重。有$m$个样本的情况下，假设每个样本有$n_x$个参数，即样本$X$的维度为$(n_x, m)$。假设本层共有$n^{[l]}$个神经节点，则$W$的维度为$(n^{[l]}, n_x)$。进而，$b$的维度为$(n^{[l]}, 1)$。&lt;/p&gt;
+&lt;h2&gt;激发模块&lt;/h2&gt;
+&lt;p&gt;由于神经网络的输出值域等问题，由线性模块计算得到的输出不能直接作为整个模型的输出，而需要经过激发模块的处理。假设激发函数（Activation Function）为$g(\bullet)$，则最终本层神经节点的输出为：
+$$
+A = g(Z)
+$$&lt;/p&gt;
+&lt;p&gt;常用的激发函数有几种：&lt;/p&gt;
+&lt;h3&gt;sigmoid函数&lt;/h3&gt;
+&lt;p&gt;该函数的表达式为：
+$$
+\sigma (x) = \frac{1}{1 + e^{-x}}
+$$
+该函数的图象为：
+{% asset_img 01.png Sigmoid函数图像 %}&lt;/p&gt;
+&lt;p&gt;从图像上可以看出，该函数的值域介于0，1之间，当处理分类问题（Classification）时，该函数能较好的进行最后的输出预测。
+若$a = \sigma (z)$，则该函数的导数为：$\sigma&apos;(z) = a(1-a)$&lt;/p&gt;
+&lt;h3&gt;tanh函数&lt;/h3&gt;
+&lt;p&gt;该函数的表达式为：
+$$
+\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}
+$$
+函数图象为：
+{% asset_img 02.png tanh函数图象 %}&lt;/p&gt;
+&lt;p&gt;该函数图像与Sigmoid函数类似，唯一不同的是Sigmoid函数图像介于0，1之间，而tanh函数图像则介于-1，1之间。从实践来看，tanh函数作为激发函数表现总是要比sigmoid函数好。&lt;/p&gt;
+&lt;p&gt;若$a = tanh(x)$，则该函数的导数$tanh&apos;(x) = 1-a^2$。&lt;/p&gt;
+&lt;p&gt;但是，两函数都存在同一个问题：当自变量的值过大或过小时，如$x = -1000$，此时，从图像上可以看出，函数的图像会变得十分扁平，意味着其导数会十分小，进而梯度下降法（Gradient Descent）对权重$W$的改变会十分的有限。进而，该神经网络的训练可能会十分的漫长。&lt;/p&gt;
+&lt;h3&gt;ReLU函数&lt;/h3&gt;
+&lt;p&gt;该函数就为改变上面两个函数的缺点诞生的，其表达式十分简单：
+$$
+f(x) =
+\begin{cases}
+x, &amp;amp; x &amp;gt; 0 \&lt;br /&gt;
+0, &amp;amp; else
+\end{cases}
+$$&lt;/p&gt;
+&lt;p&gt;其函数图象为：
+{% asset_img 03.png ReLU函数图象 %}&lt;/p&gt;
+&lt;p&gt;进而其导数也不存在上面两个函数的缺点，进而实践中，该函数的表现总是比以上两个函数都好。&lt;/p&gt;
+&lt;h2&gt;前向传播总结&lt;/h2&gt;
+&lt;p&gt;用$A^{[l-1]}$表示第$l$层神经网络的输入值，即第$l-1$层神经网络的激发值，其维度为$(n^{[l-1]}, m)$，其中$n^{[l]}$表示该层神经网络的节点个数；用$W^{[l]}$表示第$l$层神经网络的权重，其维度为$(n^{[l]}, n^{[l-1]})$，则
+$$
+Z^{[l]} = W^{[l]}A^{[l-1]} + b^{[l]}
+$$ $$
+A^{[l]} = g(Z^{[l]})
+$$
+其中，$Z^{[l]}$和$A^{[l]}$的维度均为$(n^{[l]}, m)$&lt;/p&gt;
+&lt;h1&gt;损失函数（Loss Function）和成本函数（Cost Function）&lt;/h1&gt;
+&lt;p&gt;在正向传播和逆向传播之间还要先计算正向传播的损失（与实际值），再利用这个损失来进行逆向传播从而对权重进行修正。&lt;/p&gt;
+&lt;p&gt;损失函数是对于整体$X$中的某一样本$X^{(i)}$而言的，即有：
+$$
+L(X^{(i)}) = (\hat{y}^{(i)} - y)^2
+$$
+而成本函数则是对整个整体$X$而言的，即有：
+$$
+J(X) = \frac1{2m}\sum_{i=1}^{m}L(X^{(i)})
+$$&lt;/p&gt;
+&lt;p&gt;可用如下的代码计算&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;1/2/m*np.sum(np.square(yhat-y))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;Backward Propagation&lt;/h1&gt;
+&lt;p&gt;反向传播的基础是成本函数，下面用逻辑回归（Logistical Regression）做例子说明。&lt;/p&gt;
+&lt;h2&gt;一个例子：逻辑回归&lt;/h2&gt;
+&lt;p&gt;逻辑回归下，一个常用的损失函数是：
+$$
+L(\hat{y}, y) = -(y\ln \hat{y} + (1-y)\ln(1-\hat{y}))
+$$&lt;/p&gt;
+&lt;p&gt;当该神经网络一共有$L$层时，该损失函数对$A^{[L]}$的导数即为：
+$$
+\frac{dL}{dA^{[L]}} = -\frac{y}{A^{[L]}} + \frac{1-y}{1-A^{[L]}}
+$$
+已知$dA^{[L]}/dZ^{[L]} = A^{[L]}(1-A^{[L]})$，则
+$$
+\begin{aligned}
+\frac{dL}{dZ^{[L]}} &amp;amp;= \frac{dL}{dA^{[L]}}\frac{dA^{[L]}}{dZ^{[L]}} \&lt;br /&gt;
+&amp;amp;= A^{[L]} - Y
+\end{aligned}
+$$&lt;/p&gt;
+&lt;p&gt;又由于$Z^{[L]} = W^{[L]}A^{[L-1]} + b^{[L]}$，则
+$$
+\frac{dZ^{[L]}}{dW^{[L]}} = A^{[L-1]T}
+$$
+那么，根据链式求导法则有：
+$$
+\begin{aligned}
+\frac{dL}{dW^{[L]}} &amp;amp;= \frac{dL}{dZ^{[L]}}\frac{dZ^{[L]}}{dW^{[L]}} \&lt;br /&gt;
+&amp;amp;= (A^{[L]} - Y)A^{[L-1]T}
+\end{aligned}
+$$
+进而对第$L$层神经网络有
+$$
+\frac{dJ}{dW^{[L]}} = \frac{1}{m}(A^{[L]}-Y)A^{[L-1]T}
+$$ $$
+\frac{dJ}{db^{[L]}} = \frac{1}{m}\sum(A^{[L]}-Y)
+$$
+对任意第$l$层神经网络有
+$$
+\begin{aligned}
+\frac{dJ}{dZ^{[l]}} &amp;amp;= \frac{dJ}{dZ^{[l+1]}}\frac{dZ^{[l+1]}}{dZ^{[l]}} \&lt;br /&gt;
+&amp;amp;= \frac{dJ}{dZ^{[l+1]}}\frac{dZ^{[l+1]}}{dA^{[l]}}\frac{dA^{[l]}}{dZ^{[l]}} \&lt;br /&gt;
+&amp;amp;= W^{[l]T}\frac{dJ}{dZ^{[l+1]}}\times g&apos;(Z^{[l]})
+\end{aligned}
+$$
+进而，有
+$$
+\begin{aligned}
+\frac{dJ}{dW^{[l]}} &amp;amp;= \frac{dJ}{dZ^{[l]}}\frac{dZ^{[l]}}{dW^{[l]}} \&lt;br /&gt;
+&amp;amp;= \frac1m\frac{dJ}{dZ^{[l]}}A^{[l-1]T}
+\end{aligned}
+$$ $$
+\begin{aligned}
+\frac{dJ}{db^{[l]}} &amp;amp;= \frac{dJ}{dZ^{[l]}}\frac{dZ^{[l]}}{db^{[l]}} \&lt;br /&gt;
+&amp;amp;= \frac1m\sum\frac{dJ}{dZ^{[l]}}
+\end{aligned}
+$$&lt;/p&gt;
+&lt;h2&gt;反向传播总结&lt;/h2&gt;
+&lt;p&gt;反向传播的关键是计算$\frac{dJ}{dZ^{[l]}}$，当用$d(\bullet)$表示$\frac{dJ}{d(\bullet)}$时，可表示为：
+$$
+\begin{aligned}
+dZ^{[l]} &amp;amp;= W^{[l]T}dZ^{[l+1]}\times g&apos;(Z^{[l]}) \&lt;br /&gt;
+dW^{[l]} &amp;amp;= \frac1mdZ^{[l]}A^{[l-1]T} \&lt;br /&gt;
+db^{[l]} &amp;amp;= \frac1m\sum dZ^{[l]}
+\end{aligned}
+$$&lt;/p&gt;
+&lt;h2&gt;更新变量&lt;/h2&gt;
+&lt;p&gt;运用梯度下降法计算时，还要更新变量。一般而言，为了保证算法的收敛，需要设定一个学习速率（Learning Rate）来控制神经网络的更新。学习速率（用$\alpha$来表示）作为一个超参数（Hyperparameter）需要我们不断进行测试来确定其最佳值。前文需要确定的神经网络层数$L$也是一个需要不断调整确定最佳值的超参数。
+$$
+\begin{aligned}
+W^{[l]} &amp;amp;= W^{[l]} - \alpha dW^{[l]} \&lt;br /&gt;
+b^{[l]} &amp;amp;= b^{[l]} - \alpha db^{[l]}
+\end{aligned}
+$$&lt;/p&gt;
+&lt;h1&gt;神经网络的训练&lt;/h1&gt;
+&lt;p&gt;经过上述从正向传播到计算成本函数，到进行反向传播后的一个完整循环成为一个epoch。一般而言，随着完成的epoch次数的增加，成本函数（在训练集上）一直呈下降趋势，并最终收敛于一个稳定值（但此时并非一定达到了全局最优解，有可能是局部最优解）：若与此同时，在测试集上的误差也较低，则神经网络训练较好；若训练集上误差很小，但是测试集上的误差较大，此时神经网络有较大的方差（Variance），或称为过拟合（Overfitting）；若训练集上的误差也很大，此时神经网络有较大的偏差（Bias），或称为欠拟合（underfitting）。&lt;/p&gt;
+&lt;p&gt;一般而言，欠拟合的解决方法是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;调整超参数&lt;/li&gt;
+&lt;li&gt;训练更深的神经网络（即增加神经网络层数）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;而过拟合的解决方法是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;收集更多的数据来进行训练&lt;/li&gt;
+&lt;li&gt;正则化（Regularization）&lt;/li&gt;
+&lt;li&gt;标准化（Normalization）&lt;/li&gt;
+&lt;/ul&gt;
 </content:encoded></item></channel></rss>
