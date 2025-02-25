@@ -1,1 +1,0 @@
-import"./zh_TW.DA4cTuyj.js";function i(e,r){return e.replace(/^\/|\/$/g,"").toLowerCase()===r.replace(/^\/|\/$/g,"").toLowerCase()}function t(...e){return e.join("/").replace(/\/+/g,"/")}function u(e){return t("","/junkuizhang.github.io/",e)}export{i as p,u};
