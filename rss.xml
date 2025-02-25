@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>张小白的小窝</title><description>Welcome!</description><link>https://fuwari.vercel.app/</link><language>zh_CN</language><item><title>小窝的新生</title><link>https://fuwari.vercel.app/posts/hello/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/hello/</guid><pubDate>Tue, 25 Feb 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;小窝又换主题了！感谢乐神！乐神牛逼（破音）！&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>张小白的小窝</title><description>Welcome!</description><link>https://blog.xiaobaizhang.top/</link><language>zh_CN</language><item><title>小窝的新生</title><link>https://blog.xiaobaizhang.top/posts/hello/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/hello/</guid><pubDate>Tue, 25 Feb 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;小窝又换主题了！感谢乐神！乐神牛逼（破音）！&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;代码测试&lt;/h1&gt;
 &lt;pre&gt;&lt;code&gt;import os
@@ -12,7 +12,7 @@ E = mc^2
 $$&lt;/p&gt;
 &lt;h1&gt;网页测试&lt;/h1&gt;
 &lt;p&gt;这是个&lt;a href=&quot;https://www.baidu.com&quot;&gt;网页&lt;/a&gt;&lt;/p&gt;
-</content:encoded></item><item><title>Rootless Docker</title><link>https://fuwari.vercel.app/posts/rootless-docker/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/rootless-docker/</guid><pubDate>Wed, 20 Nov 2024 20:57:24 GMT</pubDate><content:encoded>&lt;p&gt;配置Rootless Docker。&lt;/p&gt;
+</content:encoded></item><item><title>Rootless Docker</title><link>https://blog.xiaobaizhang.top/posts/rootless-docker/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/rootless-docker/</guid><pubDate>Wed, 20 Nov 2024 20:57:24 GMT</pubDate><content:encoded>&lt;p&gt;配置Rootless Docker。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;安装&lt;/h1&gt;
 &lt;p&gt;如果之前已安装docker：&lt;/p&gt;
@@ -51,7 +51,7 @@ systemctl --user enable docker
 &lt;h1&gt;Reference&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&quot;https://docs.docker.com/engine/security/rootless/&quot;&gt;Rootless Docker&lt;/a&gt;
 &lt;a href=&quot;https://stackoverflow.com/questions/59373710/gpu-with-rootless-docker&quot;&gt;GPU&lt;/a&gt;&lt;/p&gt;
-</content:encoded></item><item><title>给无外网的Ubuntu服务器安装VSCode Server及插件</title><link>https://fuwari.vercel.app/posts/ubuntu-vscode/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/ubuntu-vscode/</guid><pubDate>Sun, 06 Oct 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;如何给无外网的Ubuntu服务器安装VSCode Server及插件。&lt;/p&gt;
+</content:encoded></item><item><title>给无外网的Ubuntu服务器安装VSCode Server及插件</title><link>https://blog.xiaobaizhang.top/posts/ubuntu-vscode/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/ubuntu-vscode/</guid><pubDate>Sun, 06 Oct 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;如何给无外网的Ubuntu服务器安装VSCode Server及插件。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;安装Code Server&lt;/h1&gt;
 &lt;p&gt;使用remote ssh连接服务器，VSCode会自动下载Code Server，此时下载不通。记录下下载地址，手动下载，文件应为：&lt;code&gt;https://update.code.visualstudio.com/commit:&amp;lt;COMMIT_ID&amp;gt;/server-linux-x64/stable&lt;/code&gt;.&lt;/p&gt;
@@ -71,7 +71,7 @@ mv vscode-server-linux-x64 ${commit_id} # 注意把:${commit_id}替换成对应�
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;安装插件&lt;/h2&gt;
 &lt;p&gt;在侧边栏打开插件后，点击右上方的三个点，然后选择&lt;code&gt;从VSIX&lt;/code&gt;中安装&lt;/p&gt;
-</content:encoded></item><item><title>破解Termius</title><link>https://fuwari.vercel.app/posts/termius-crack/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/termius-crack/</guid><pubDate>Sun, 06 Oct 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Termius一定要登录才能使用，而我在公共的机器上显然不想登录。&lt;/p&gt;
+</content:encoded></item><item><title>破解Termius</title><link>https://blog.xiaobaizhang.top/posts/termius-crack/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/termius-crack/</guid><pubDate>Sun, 06 Oct 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Termius一定要登录才能使用，而我在公共的机器上显然不想登录。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;安装前置&lt;/h1&gt;
 &lt;p&gt;确保安装了&lt;code&gt;npm&lt;/code&gt;（https://nodejs.org），然后安装&lt;code&gt;asar&lt;/code&gt;：&lt;/p&gt;
@@ -135,7 +135,7 @@ return .......
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h1&gt;使用&lt;/h1&gt;
 &lt;p&gt;启动&lt;code&gt;Termius&lt;/code&gt;然后登录，自动有pro权限，登出后也不需要再次登录。&lt;/p&gt;
-</content:encoded></item><item><title>给无网络链接的Ubuntu安装NV驱动</title><link>https://fuwari.vercel.app/posts/ubuntu-offline/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/ubuntu-offline/</guid><pubDate>Sun, 08 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;需要使用ssh服务，&lt;code&gt;sudo systemctl status ssh&lt;/code&gt;来检查ssh服务是否启动，否则&lt;/p&gt;
+</content:encoded></item><item><title>给无网络链接的Ubuntu安装NV驱动</title><link>https://blog.xiaobaizhang.top/posts/ubuntu-offline/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/ubuntu-offline/</guid><pubDate>Sun, 08 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;需要使用ssh服务，&lt;code&gt;sudo systemctl status ssh&lt;/code&gt;来检查ssh服务是否启动，否则&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo apt update
 sudo apt install openssh-server
 sudo ufw allow ssh
@@ -205,7 +205,7 @@ tar -xzvf File.tar.gz
 &lt;h3&gt;导入容器&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;docker import ./FILE/PATH.tar &amp;lt;name&amp;gt;:latest
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>Docker命令指南</title><link>https://fuwari.vercel.app/posts/docker-south/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/docker-south/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Docker常用命令指南。&lt;/p&gt;
+</content:encoded></item><item><title>Docker命令指南</title><link>https://blog.xiaobaizhang.top/posts/docker-south/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/docker-south/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Docker常用命令指南。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;Docker Compose&lt;/h1&gt;
 &lt;h2&gt;General&lt;/h2&gt;
@@ -276,7 +276,7 @@ git lfs pull
 &lt;h3&gt;导入容器&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;docker import ./FILE/PATH.tar &amp;lt;name&amp;gt;:latest
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>Ubuntu离线部署机器学习</title><link>https://fuwari.vercel.app/posts/ml-offline-setup/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/ml-offline-setup/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;介绍。&lt;/p&gt;
+</content:encoded></item><item><title>Ubuntu离线部署机器学习</title><link>https://blog.xiaobaizhang.top/posts/ml-offline-setup/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/ml-offline-setup/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;介绍。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;离线安装Docker&lt;/h1&gt;
 &lt;h2&gt;下载对应版本的Docker安装包&lt;/h2&gt;
@@ -289,10 +289,10 @@ git lfs pull
 &lt;/blockquote&gt;
 &lt;h1&gt;离线安装NV Container Toolkit&lt;/h1&gt;
 &lt;p&gt;在&lt;a href=&quot;https://github.com/NVIDIA/nvidia-container-toolkit&quot;&gt;GitHub&lt;/a&gt;下载相应的包，执行&lt;code&gt;sudo dpkg -i *.deb&lt;/code&gt;。&lt;/p&gt;
-</content:encoded></item><item><title>为WSL安装多个Ubuntu实例</title><link>https://fuwari.vercel.app/posts/multi-wsl/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/multi-wsl/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;在&lt;a href=&quot;https://cloud-images.ubuntu.com/&quot;&gt;这里&lt;/a&gt;选择&lt;code&gt;wsl&lt;/code&gt;，然后下载相应的版本，如&lt;code&gt;jammy&lt;/code&gt;。然后&lt;code&gt;wsl --import &amp;lt;Name&amp;gt; &amp;lt;Dir&amp;gt; &amp;lt;File&amp;gt;&lt;/code&gt;来安装对应的Ubuntu。使用&lt;code&gt;wsl -d &amp;lt;Name&amp;gt;&lt;/code&gt;来启动相应的实例。&lt;/p&gt;
+</content:encoded></item><item><title>为WSL安装多个Ubuntu实例</title><link>https://blog.xiaobaizhang.top/posts/multi-wsl/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/multi-wsl/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;在&lt;a href=&quot;https://cloud-images.ubuntu.com/&quot;&gt;这里&lt;/a&gt;选择&lt;code&gt;wsl&lt;/code&gt;，然后下载相应的版本，如&lt;code&gt;jammy&lt;/code&gt;。然后&lt;code&gt;wsl --import &amp;lt;Name&amp;gt; &amp;lt;Dir&amp;gt; &amp;lt;File&amp;gt;&lt;/code&gt;来安装对应的Ubuntu。使用&lt;code&gt;wsl -d &amp;lt;Name&amp;gt;&lt;/code&gt;来启动相应的实例。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;p&gt;Ref: &lt;a href=&quot;https://stackoverflow.com/questions/51584765/how-do-you-install-multiple-separate-instances-of-ubuntu-in-wsl&quot;&gt;StackOverflow&lt;/a&gt;&lt;/p&gt;
-</content:encoded></item><item><title>给Nvidia显卡的电脑安装Ubuntu</title><link>https://fuwari.vercel.app/posts/ubuntu-nvidia/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/ubuntu-nvidia/</guid><pubDate>Fri, 06 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;下载安装介质后，进入安装介质可能会黑屏，要在选择&lt;code&gt;Try or install ubuntu&lt;/code&gt;时按&lt;code&gt;e&lt;/code&gt;进入编辑模式，在&lt;code&gt;--- quite splash&lt;/code&gt;删除&lt;code&gt;---&lt;/code&gt;并添加&lt;code&gt;nomodeset&lt;/code&gt;，然后按&lt;code&gt;F10&lt;/code&gt;进入安装介质。&lt;/p&gt;
+</content:encoded></item><item><title>给Nvidia显卡的电脑安装Ubuntu</title><link>https://blog.xiaobaizhang.top/posts/ubuntu-nvidia/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/ubuntu-nvidia/</guid><pubDate>Fri, 06 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;下载安装介质后，进入安装介质可能会黑屏，要在选择&lt;code&gt;Try or install ubuntu&lt;/code&gt;时按&lt;code&gt;e&lt;/code&gt;进入编辑模式，在&lt;code&gt;--- quite splash&lt;/code&gt;删除&lt;code&gt;---&lt;/code&gt;并添加&lt;code&gt;nomodeset&lt;/code&gt;，然后按&lt;code&gt;F10&lt;/code&gt;进入安装介质。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;配置Ubuntu&lt;/h1&gt;
 &lt;p&gt;安装完成后，在进入系统前，同样在&lt;code&gt;quite splash&lt;/code&gt;后添加&lt;code&gt;nomodeset&lt;/code&gt;，并按&lt;code&gt;F10&lt;/code&gt;进入系统。&lt;/p&gt;
@@ -312,7 +312,7 @@ nvidia-driver-550-server-open
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;一般安装专用驱动，输入&lt;code&gt;sudo ubuntu-drivers install nvidia:550&lt;/code&gt;，然后重启，不用再输入&lt;code&gt;nomodeset&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;重启后输入&lt;code&gt;nvidia-smi&lt;/code&gt;检查。&lt;/p&gt;
-</content:encoded></item><item><title>给Ubuntu配置运行CUDA的Docker</title><link>https://fuwari.vercel.app/posts/ubuntu-docker-cuda/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/ubuntu-docker-cuda/</guid><pubDate>Tue, 04 Jun 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;建议使用&lt;code&gt;Ubuntu 20.04&lt;/code&gt;以上的版本。&lt;/p&gt;
+</content:encoded></item><item><title>给Ubuntu配置运行CUDA的Docker</title><link>https://blog.xiaobaizhang.top/posts/ubuntu-docker-cuda/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/ubuntu-docker-cuda/</guid><pubDate>Tue, 04 Jun 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;建议使用&lt;code&gt;Ubuntu 20.04&lt;/code&gt;以上的版本。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;安装Cuda Toolkit&lt;/h1&gt;
 &lt;h2&gt;Ubuntu 20.04+&lt;/h2&gt;
@@ -383,7 +383,7 @@ docker run --gpus all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark
 &lt;h2&gt;让&lt;code&gt;Docker build&lt;/code&gt;使用本机proxy&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;docker build --network=host --build-arg http_proxy=$http_proxy --build-arg https_proxy=$https_proxy ...
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>给WSL2配置运行CUDA的Docker</title><link>https://fuwari.vercel.app/posts/wsl-docker/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/wsl-docker/</guid><pubDate>Mon, 03 Jun 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;注意，本文使用&lt;code&gt;WSL2&lt;/code&gt;+&lt;code&gt;Docker&lt;/code&gt;，而不是安装&lt;code&gt;Docker Desktop for Windows&lt;/code&gt;，因为后者占用的资源非常多，而且还有很多bug，比如，&lt;a href=&quot;https://github.com/docker/for-win/issues/13870&quot;&gt;GPU无法运行&lt;/a&gt;。&lt;/p&gt;
+</content:encoded></item><item><title>给WSL2配置运行CUDA的Docker</title><link>https://blog.xiaobaizhang.top/posts/wsl-docker/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/wsl-docker/</guid><pubDate>Mon, 03 Jun 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;注意，本文使用&lt;code&gt;WSL2&lt;/code&gt;+&lt;code&gt;Docker&lt;/code&gt;，而不是安装&lt;code&gt;Docker Desktop for Windows&lt;/code&gt;，因为后者占用的资源非常多，而且还有很多bug，比如，&lt;a href=&quot;https://github.com/docker/for-win/issues/13870&quot;&gt;GPU无法运行&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;安装WSL&lt;/h1&gt;
 &lt;p&gt;运行一下命令将安装WSL并安装Ubuntu发行版，如果需要安装其他Linux发行版（如Arch Linux），请参考&lt;a href=&quot;https://learn.microsoft.com/zh-cn/windows/wsl/install&quot;&gt;此链接&lt;/a&gt;。&lt;/p&gt;
@@ -482,10 +482,10 @@ detach vdisk
 exit
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/tuxiang79/article/details/121557798&quot;&gt;Reference&lt;/a&gt;。&lt;/p&gt;
-</content:encoded></item><item><title>再见，兔崽子</title><link>https://fuwari.vercel.app/posts/byte-little-rabbit/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/byte-little-rabbit/</guid><pubDate>Wed, 13 Mar 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Bye.&lt;/p&gt;
+</content:encoded></item><item><title>再见，兔崽子</title><link>https://blog.xiaobaizhang.top/posts/byte-little-rabbit/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/byte-little-rabbit/</guid><pubDate>Wed, 13 Mar 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Bye.&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--MORE--&amp;gt;&lt;/p&gt;
 &lt;p&gt;对不起我没有照顾好你，想家了就回家看看。&lt;/p&gt;
-</content:encoded></item><item><title>黑苹果</title><link>https://fuwari.vercel.app/posts/hackintosh/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/hackintosh/</guid><pubDate>Mon, 29 Jan 2024 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;记得分好区！&lt;/h1&gt;
+</content:encoded></item><item><title>黑苹果</title><link>https://blog.xiaobaizhang.top/posts/hackintosh/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/hackintosh/</guid><pubDate>Mon, 29 Jan 2024 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;记得分好区！&lt;/h1&gt;
 &lt;p&gt;第一步一定是分区，要至少200M的EFI分区，格式为FAT32。如果采用微PE安装Windows，也要给Windows提前分好EFI分区和安装的分区。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;macOS配置&lt;/h1&gt;
@@ -557,7 +557,7 @@ git config --global --unset https.proxy
 &lt;h1&gt;配置Homebrew&lt;/h1&gt;
 &lt;pre&gt;&lt;code&gt;/bin/bash -c &quot;$(curl -fsSL https://gitee.com/ineo6/homebrew-install/raw/master/install.sh)&quot;
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>NaiveProxy的配置</title><link>https://fuwari.vercel.app/posts/naiveproxy/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/naiveproxy/</guid><pubDate>Sun, 16 Jul 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;本文章主要记录一些VPS的设置，使得购买的VPS及域名能够支持科学上网，服务器为Ubuntu 20.04。在执行任何操作之前，切换到&lt;code&gt;/root&lt;/code&gt;目录，并使用&lt;code&gt;apt update &amp;amp;&amp;amp; apt upgrade&lt;/code&gt;来更新系统。&lt;/p&gt;
+</content:encoded></item><item><title>NaiveProxy的配置</title><link>https://blog.xiaobaizhang.top/posts/naiveproxy/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/naiveproxy/</guid><pubDate>Sun, 16 Jul 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;本文章主要记录一些VPS的设置，使得购买的VPS及域名能够支持科学上网，服务器为Ubuntu 20.04。在执行任何操作之前，切换到&lt;code&gt;/root&lt;/code&gt;目录，并使用&lt;code&gt;apt update &amp;amp;&amp;amp; apt upgrade&lt;/code&gt;来更新系统。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h2&gt;事前准备&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;apt install vim git curl wget -y
@@ -708,7 +708,7 @@ systemctl start caddy
 &lt;p&gt;使用更改的配置文件重新加载：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;systemctl reload caddy
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>Xray的配置</title><link>https://fuwari.vercel.app/posts/xray/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/xray/</guid><pubDate>Sun, 16 Jul 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;本文章主要记录一些VPS的设置，使得购买的VPS及域名能够支持科学上网，服务器为Ubuntu 20.04。在执行任何操作之前，切换到&lt;code&gt;/root&lt;/code&gt;目录，并使用&lt;code&gt;apt update &amp;amp;&amp;amp; apt upgrade&lt;/code&gt;来更新系统。&lt;/p&gt;
+</content:encoded></item><item><title>Xray的配置</title><link>https://blog.xiaobaizhang.top/posts/xray/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/xray/</guid><pubDate>Sun, 16 Jul 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;本文章主要记录一些VPS的设置，使得购买的VPS及域名能够支持科学上网，服务器为Ubuntu 20.04。在执行任何操作之前，切换到&lt;code&gt;/root&lt;/code&gt;目录，并使用&lt;code&gt;apt update &amp;amp;&amp;amp; apt upgrade&lt;/code&gt;来更新系统。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h2&gt;事前准备&lt;/h2&gt;
 &lt;h3&gt;服务器准备&lt;/h3&gt;
@@ -801,8 +801,8 @@ chmod +x ./caddy
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3&gt;配置XUI&lt;/h3&gt;
 &lt;p&gt;进入面板，把监听IP改为&lt;code&gt;127.0.0.1&lt;/code&gt;，端口改为上面定义的&lt;code&gt;xuiws&lt;/code&gt;端口。添加端口为&lt;code&gt;rayws&lt;/code&gt;端口的节点。&lt;/p&gt;
-</content:encoded></item><item><title>人工智能教我学习</title><link>https://fuwari.vercel.app/posts/gpt_awesome/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/gpt_awesome/</guid><pubDate>Tue, 03 Jan 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;ChatGPT真是太厉害了！&lt;/p&gt;
-</content:encoded></item><item><title>CS自学教程</title><link>https://fuwari.vercel.app/posts/cs-self-learn/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/cs-self-learn/</guid><pubDate>Sun, 27 Mar 2022 05:13:55 GMT</pubDate><content:encoded>&lt;h2&gt;编程入门&lt;/h2&gt;
+</content:encoded></item><item><title>人工智能教我学习</title><link>https://blog.xiaobaizhang.top/posts/gpt_awesome/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/gpt_awesome/</guid><pubDate>Tue, 03 Jan 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;ChatGPT真是太厉害了！&lt;/p&gt;
+</content:encoded></item><item><title>CS自学教程</title><link>https://blog.xiaobaizhang.top/posts/cs-self-learn/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/cs-self-learn/</guid><pubDate>Sun, 27 Mar 2022 05:13:55 GMT</pubDate><content:encoded>&lt;h2&gt;编程入门&lt;/h2&gt;
 &lt;h3&gt;CS106L&lt;/h3&gt;
 &lt;p&gt;Standard C++ Programming，这门课会深入到很多标准C++的特性和语法，让你编写出高质量的C++代码。例如auto binding，uniform initialization，lambda function，move semantics，RAII等技巧。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
@@ -1113,7 +1113,7 @@ chmod +x ./caddy
 &lt;/ul&gt;
 &lt;h2&gt;其他资料&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&quot;https://csdiy.wiki/&quot;&gt;CS自学指南&lt;/a&gt;&lt;/p&gt;
-</content:encoded></item><item><title>配置Arch Linux</title><link>https://fuwari.vercel.app/posts/archlinux-setup/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/archlinux-setup/</guid><pubDate>Thu, 17 Mar 2022 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;引导设置&lt;/h2&gt;
+</content:encoded></item><item><title>配置Arch Linux</title><link>https://blog.xiaobaizhang.top/posts/archlinux-setup/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/archlinux-setup/</guid><pubDate>Thu, 17 Mar 2022 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;引导设置&lt;/h2&gt;
 &lt;p&gt;这部分内容将把Linux暴露给Opencore，以从Opencore直接启动。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;ol&gt;
@@ -1431,7 +1431,7 @@ sudo systemctl enable touchegg.services
 &lt;p&gt;下载Mac mod flat icon，并启用Papirus。&lt;/p&gt;
 &lt;h3&gt;配置Kvantum&lt;/h3&gt;
 &lt;p&gt;从&lt;a href=&quot;https://store.kde.org/p/1325246/&quot;&gt;这里&lt;/a&gt;下载相应的文件，然后启动Kvantum manager，安装并使用该主题，编辑该主题，取消勾选&lt;code&gt;Disable translucency when non-integer scaling&lt;/code&gt;，否则部分内容不会blur。&lt;/p&gt;
-</content:encoded></item><item><title>安装Arch Linux</title><link>https://fuwari.vercel.app/posts/archlinux/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/archlinux/</guid><pubDate>Wed, 16 Mar 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;需要从&lt;a href=&quot;https://archlinux.org/download/&quot;&gt;官网下载系统镜像&lt;/a&gt;，制作USB安装介质，使用UEFI启动后再进行下一步行动。&lt;/p&gt;
+</content:encoded></item><item><title>安装Arch Linux</title><link>https://blog.xiaobaizhang.top/posts/archlinux/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/archlinux/</guid><pubDate>Wed, 16 Mar 2022 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;需要从&lt;a href=&quot;https://archlinux.org/download/&quot;&gt;官网下载系统镜像&lt;/a&gt;，制作USB安装介质，使用UEFI启动后再进行下一步行动。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;注意：USB盘符应为&lt;code&gt;ARCH_202203&lt;/code&gt;之类的，否则会无法进入安装介质。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -1678,7 +1678,7 @@ systemctl enable bluetooth
 &lt;blockquote&gt;
 &lt;p&gt;完成！&lt;/p&gt;
 &lt;/blockquote&gt;
-</content:encoded></item><item><title>Homebrew的安装</title><link>https://fuwari.vercel.app/posts/homebrewinstall/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/homebrewinstall/</guid><pubDate>Wed, 17 Jun 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;安装&lt;/h1&gt;
+</content:encoded></item><item><title>Homebrew的安装</title><link>https://blog.xiaobaizhang.top/posts/homebrewinstall/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/homebrewinstall/</guid><pubDate>Wed, 17 Jun 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;安装&lt;/h1&gt;
 &lt;p&gt;由于某些原因，官方提供的安装方法会非常慢，因此从Github直接下载源码包，然后再把下载地址替换为国内镜像。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--MORE--&amp;gt;&lt;/p&gt;
 &lt;h2&gt;替换安装地址&lt;/h2&gt;
@@ -1720,7 +1720,7 @@ source ~/.bash_profile
 
 brew update
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>Python中的重载</title><link>https://fuwari.vercel.app/posts/python-1-chongzai/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/python-1-chongzai/</guid><pubDate>Wed, 29 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
+</content:encoded></item><item><title>Python中的重载</title><link>https://blog.xiaobaizhang.top/posts/python-1-chongzai/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/python-1-chongzai/</guid><pubDate>Wed, 29 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
 &lt;p&gt;重载，即overwrite&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;字符串函数重载&lt;/h1&gt;
@@ -1939,7 +1939,7 @@ b. 若iadd不存在，add存在，则+=运算使用add&lt;/p&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-</content:encoded></item><item><title>Python中的迭代</title><link>https://fuwari.vercel.app/posts/python-2-iteration/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/python-2-iteration/</guid><pubDate>Wed, 29 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
+</content:encoded></item><item><title>Python中的迭代</title><link>https://blog.xiaobaizhang.top/posts/python-2-iteration/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/python-2-iteration/</guid><pubDate>Wed, 29 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
 &lt;p&gt;本文记录遇到的部分迭代技巧&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;迭代工具函数&lt;/h1&gt;
@@ -2065,7 +2065,7 @@ for n in fabonacci(5):
 	    else:
 	        return
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>大糖帝国（The Great Sugar Empire）</title><link>https://fuwari.vercel.app/posts/new-society/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/new-society/</guid><pubDate>Wed, 15 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
+</content:encoded></item><item><title>大糖帝国（The Great Sugar Empire）</title><link>https://blog.xiaobaizhang.top/posts/new-society/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/new-society/</guid><pubDate>Wed, 15 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
 &lt;h1&gt;模型&lt;/h1&gt;
 &lt;h1&gt;附录&lt;/h1&gt;
 &lt;h2&gt;源码&lt;/h2&gt;
@@ -2081,7 +2081,7 @@ $$&lt;/p&gt;
 G = \frac{\Delta}{2u}
 $$&lt;/p&gt;
 &lt;p&gt;这里$G$表示基尼系数，$u$是样本均值。&lt;/p&gt;
-</content:encoded></item><item><title>对宏观经济贫富差距的简单分析</title><link>https://fuwari.vercel.app/posts/macro25/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/macro25/</guid><pubDate>Mon, 13 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
+</content:encoded></item><item><title>对宏观经济贫富差距的简单分析</title><link>https://blog.xiaobaizhang.top/posts/macro25/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/macro25/</guid><pubDate>Mon, 13 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
 &lt;h1&gt;模型&lt;/h1&gt;
 &lt;h2&gt;Python中的线性规划求解&lt;/h2&gt;
 &lt;blockquote&gt;
@@ -2156,7 +2156,7 @@ print(res)
 # res.x = [0.9, 0.9, 0.1
 # res.success = True]
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>深度学习——神经网络超参数的处理（02）</title><link>https://fuwari.vercel.app/posts/deep-02/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/deep-02/</guid><pubDate>Sun, 05 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
+</content:encoded></item><item><title>深度学习——神经网络超参数的处理（02）</title><link>https://blog.xiaobaizhang.top/posts/deep-02/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/deep-02/</guid><pubDate>Sun, 05 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
 &lt;p&gt;本文建立在&lt;a href=&quot;https://junkuizhang.github.io/2018/01/04/deep-01/&quot;&gt;前一篇文章&lt;/a&gt;的基础上进行讨论，这&lt;a href=&quot;https://junkuizhang.github.io/category/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/&quot;&gt;一系列文章&lt;/a&gt;的本意是记录本人的学习历程，避免“后面学，前面忘”的窘境。&lt;/p&gt;
 &lt;p&gt;前文讨论到超参数，本文继续讨论如何处理上文的问题。具体而言，主要涉及到：&lt;/p&gt;
 &lt;ul&gt;
@@ -2426,7 +2426,7 @@ $$&lt;/p&gt;
 &lt;p&gt;Softmax是与Hardmax相对的，Hardmax是直接把$Z^{[L]}$中最大的输出直接赋值为1，其余赋值为0。因该方法简单直接，因而被赋予Hard之名，Softmax较为柔和。&lt;/p&gt;
 &lt;h1&gt;Tensorflow&lt;/h1&gt;
 &lt;p&gt;Tensorflow作为Google的开源机器学习框架，可以很方便的帮助我们部署机器学习的内容，尤其是其可以自动计算Backward Propagation部分。&lt;/p&gt;
-</content:encoded></item><item><title>深度学习——神经网络基本内容（01）</title><link>https://fuwari.vercel.app/posts/deep-01/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/deep-01/</guid><pubDate>Sat, 04 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
+</content:encoded></item><item><title>深度学习——神经网络基本内容（01）</title><link>https://blog.xiaobaizhang.top/posts/deep-01/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/deep-01/</guid><pubDate>Sat, 04 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
 &lt;p&gt;深度学习几乎就等于神经网络算法，该算法主要由两个模块构成：前向传播（Forward Propagation）、后向传播（Backward Propagation）。&lt;/p&gt;
 &lt;p&gt;前向传播来计算预测值$\hat{y}$，而后向传播则根据预测值与实际值的差别计算成本方程（Cost Function），并根据该值改进神经网络各节点的权重值。经过多次迭代，逐渐收敛。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
@@ -2588,7 +2588,7 @@ $$&lt;/p&gt;
 &lt;li&gt;正则化（Regularization）&lt;/li&gt;
 &lt;li&gt;标准化（Normalization）&lt;/li&gt;
 &lt;/ul&gt;
-</content:encoded></item><item><title>Life is Strange</title><link>https://fuwari.vercel.app/posts/lifs-is-strange/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/lifs-is-strange/</guid><pubDate>Sun, 19 May 2019 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;Life is strange, is it not?&lt;/h2&gt;
+</content:encoded></item><item><title>Life is Strange</title><link>https://blog.xiaobaizhang.top/posts/lifs-is-strange/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/lifs-is-strange/</guid><pubDate>Sun, 19 May 2019 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;Life is strange, is it not?&lt;/h2&gt;
 &lt;p&gt;Life is strange, is it not?&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;p&gt;You wake up everyday not knowing what&apos;s in store.&lt;/p&gt;
@@ -2650,7 +2650,7 @@ $$&lt;/p&gt;
 &lt;p&gt;So I wish you the best on your journey through this strange thing we call life.&lt;/p&gt;
 &lt;p&gt; &lt;/p&gt;
 &lt;p&gt;Peace&lt;/p&gt;
-</content:encoded></item><item><title>Include Video in the Posts</title><link>https://fuwari.vercel.app/posts/video/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/video/</guid><description>This post demonstrates how to include embedded video in a blog post.</description><pubDate>Fri, 04 Jan 2019 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Just copy the embed code from YouTube or other platforms, and paste it in the markdown file.&lt;/p&gt;
+</content:encoded></item><item><title>Include Video in the Posts</title><link>https://blog.xiaobaizhang.top/posts/video/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/video/</guid><description>This post demonstrates how to include embedded video in a blog post.</description><pubDate>Fri, 04 Jan 2019 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Just copy the embed code from YouTube or other platforms, and paste it in the markdown file.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;---
 title: Include Video in the Post
 published: 2023-10-19
@@ -2663,7 +2663,7 @@ published: 2023-10-19
 &lt;p&gt;&amp;lt;iframe width=&quot;100%&quot; height=&quot;468&quot; src=&quot;https://www.youtube.com/embed/5gIf0_xpFPI?si=N1WTorLKL0uwLsU_&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; allowfullscreen&amp;gt;&amp;lt;/iframe&amp;gt;&lt;/p&gt;
 &lt;h2&gt;Bilibili&lt;/h2&gt;
 &lt;p&gt;&amp;lt;iframe width=&quot;100%&quot; height=&quot;468&quot; src=&quot;//player.bilibili.com/player.html?bvid=BV1fK4y1s7Qf&amp;amp;p=1&quot; scrolling=&quot;no&quot; border=&quot;0&quot; frameborder=&quot;no&quot; framespacing=&quot;0&quot; allowfullscreen=&quot;true&quot;&amp;gt; &amp;lt;/iframe&amp;gt;&lt;/p&gt;
-</content:encoded></item><item><title>Markdown Example</title><link>https://fuwari.vercel.app/posts/markdown/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/markdown/</guid><description>A simple example of a Markdown blog post.</description><pubDate>Thu, 03 Jan 2019 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;An h1 header&lt;/h1&gt;
+</content:encoded></item><item><title>Markdown Example</title><link>https://blog.xiaobaizhang.top/posts/markdown/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/markdown/</guid><description>A simple example of a Markdown blog post.</description><pubDate>Thu, 03 Jan 2019 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;An h1 header&lt;/h1&gt;
 &lt;p&gt;Paragraphs are separated by a blank line.&lt;/p&gt;
 &lt;p&gt;2nd paragraph. &lt;em&gt;Italic&lt;/em&gt;, &lt;strong&gt;bold&lt;/strong&gt;, and &lt;code&gt;monospace&lt;/code&gt;. Itemized lists
 look like:&lt;/p&gt;
@@ -2792,7 +2792,7 @@ math should get its own line and be put in in double-dollarsigns:&lt;/p&gt;
 $$&lt;/p&gt;
 &lt;p&gt;And note that you can backslash-escape any punctuation characters
 which you wish to be displayed literally, ex.: `foo`, *bar*, etc.&lt;/p&gt;
-</content:encoded></item><item><title>Markdown Extended Features</title><link>https://fuwari.vercel.app/posts/markdown-extended/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/markdown-extended/</guid><description>Read more about Markdown features in Fuwari</description><pubDate>Wed, 02 Jan 2019 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;GitHub Repository Cards&lt;/h2&gt;
+</content:encoded></item><item><title>Markdown Extended Features</title><link>https://blog.xiaobaizhang.top/posts/markdown-extended/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/markdown-extended/</guid><description>Read more about Markdown features in Fuwari</description><pubDate>Wed, 02 Jan 2019 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;GitHub Repository Cards&lt;/h2&gt;
 &lt;p&gt;You can add dynamic cards that link to GitHub repositories, on page load, the repository information is pulled from the GitHub API.&lt;/p&gt;
 &lt;p&gt;::github{repo=&quot;Fabrizz/MMM-OnSpotify&quot;}&lt;/p&gt;
 &lt;p&gt;Create a GitHub repository card with the code &lt;code&gt;::github{repo=&quot;&amp;lt;owner&amp;gt;/&amp;lt;repo&amp;gt;&quot;}&lt;/code&gt;.&lt;/p&gt;
@@ -2844,7 +2844,7 @@ This is a note with a custom title.
 &amp;gt; [!TIP]
 &amp;gt; The GitHub syntax is also supported.
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>Simple Guides for Fuwari</title><link>https://fuwari.vercel.app/posts/guide/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/guide/</guid><description>How to use this blog template.</description><pubDate>Tue, 01 Jan 2019 00:00:00 GMT</pubDate><content:encoded>&lt;blockquote&gt;
+</content:encoded></item><item><title>Simple Guides for Fuwari</title><link>https://blog.xiaobaizhang.top/posts/guide/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/guide/</guid><description>How to use this blog template.</description><pubDate>Tue, 01 Jan 2019 00:00:00 GMT</pubDate><content:encoded>&lt;blockquote&gt;
 &lt;p&gt;Cover image source: &lt;a href=&quot;https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/208fc754-890d-4adb-9753-2c963332675d/width=2048/01651-1456859105-(colour_1.5),girl,_Blue,yellow,green,cyan,purple,red,pink,_best,8k,UHD,masterpiece,male%20focus,%201boy,gloves,%20ponytail,%20long%20hair,.jpeg&quot;&gt;Source&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;This blog template is built with &lt;a href=&quot;https://astro.build/&quot;&gt;Astro&lt;/a&gt;. For the things that are not mentioned in this guide, you may find the answers in the &lt;a href=&quot;https://docs.astro.build/&quot;&gt;Astro Docs&lt;/a&gt;.&lt;/p&gt;
