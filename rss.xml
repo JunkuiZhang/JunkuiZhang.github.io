@@ -2450,7 +2450,8 @@ $$
 \sigma (x) = \frac{1}{1 + e^{-x}}
 $$
 该函数的图象为：
-{% asset_img 01.png Sigmoid函数图像 %}&lt;/p&gt;
+{% asset_img 01.png Sigmoid函数图像 %}
+[Sigmoid函数图像](![example image](./01.png &quot;An exemplary image&quot;))&lt;/p&gt;
 &lt;p&gt;从图像上可以看出，该函数的值域介于0，1之间，当处理分类问题（Classification）时，该函数能较好的进行最后的输出预测。
 若$a = \sigma (z)$，则该函数的导数为：$\sigma&apos;(z) = a(1-a)$&lt;/p&gt;
 &lt;h3&gt;tanh函数&lt;/h3&gt;
