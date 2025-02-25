@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://junkuizhang.github.io/sitemap-index.xml
+Sitemap: https://fuwari.vercel.app/sitemap-index.xml
