@@ -1718,143 +1718,7 @@ source ~/.bash_profile
 
 brew update
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>对宏观经济贫富差距的简单分析</title><link>https://fuwari.vercel.app/posts/macro25/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/macro25/</guid><description>无话可说</description><pubDate>Mon, 13 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
-&lt;h1&gt;模型&lt;/h1&gt;
-&lt;h2&gt;Python中的线性规划求解&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;本部分内容引自《数学建模算法与应用》&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;求解如下的线性规划问题：&lt;/p&gt;
-&lt;p&gt;$$
-min \quad z = 2x_1+3x_2+x_3
-$$&lt;/p&gt;
-&lt;p&gt;$$
-\begin{aligned}
-s.t. \quad x_1+x_2+x_3&amp;amp;=7 \&lt;br /&gt;
-x_1+4x_2+2x_3&amp;amp;\geq8 \&lt;br /&gt;
-3x_1+2x_2&amp;amp;\geq6 \&lt;br /&gt;
-x_1,x_2,x_3&amp;amp;\geq0
-\end{aligned}
-$$&lt;/p&gt;
-&lt;p&gt;用Python进行线性规划求解时，&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;import numpy as np
-from scipy import optimize
-
-z = np.array([2, 3, 1])
-a = np.array([[1, 4, 2], [3, 2, 0]]
-b = np.array([8, 6])
-a_eq = np.array([[1, 1, 1]])
-b_eq = np.array([7])
-x1_bound = x2_bound = x3_bound = (0, None)
-bounds = (x1_bound, x2_bound, x3_bound)
-
-res = optimize.linprog(z, A_ub=-a, b_ub=-b, A_eq=a_eq, b_eq=b_eq, bounds=bounds)
-print(res)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Python中的非线性规划求解&lt;/h2&gt;
-&lt;p&gt;详见scipy的&lt;a href=&quot;https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html&quot;&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;考虑如下的非线性规划问题：&lt;/p&gt;
-&lt;p&gt;计算$(2+x_1)/(1+x_2)-3x_1+4x_3$的最小值，这里对任意$x_i$均有$0.1&amp;lt;x_i&amp;lt;0.9$成立。&lt;/p&gt;
-&lt;p&gt;Python代码如下：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;import numpy as np
-from scipy import optimize
-
-# 定义目标函数
-def func1(nums):
-    a, b, c, d = nums
-    def _func0(x):
-        y = (a+x[0])/(b+x[1]) - c*x[0] + d*x[2]
-	return y
-    return _func0
-
-# 有两种方法表示约束
-def cons1(nums):
-    # &apos;eq&apos;表示等式，&apos;ineq&apos;表示大于等于
-    x1_min, x1_max, x1_min, x2_max, x3_min, x3_max = nums
-    _cons = ({&apos;type&apos;:&apos;ineq&apos;, &apos;fun&apos;:lambda x: x[0]-x1_min},
-             {&apos;type&apos;:&apos;ineq&apos;, &apos;fun&apos;:lambda x: x1_max-x[0]}，
-	     {&apos;type&apos;:&apos;ineq&apos;, &apos;fun&apos;:lambda x: x[1]-x2_min},
-	     {&apos;type&apos;:&apos;ineq&apos;, &apos;fun&apos;:lambda x: x2_max-x[1]},
-	     {&apos;type&apos;:&apos;ineq&apos;, &apos;fun&apos;:lambda x: x[2]-x3_min},
-	     {&apos;type&apos;:&apos;ineq&apos;, &apos;fun&apos;:lambda x: x3_max-x[2]})
-    return _cons
-
-# 法2
-bouds = []
-for k in range(3):
-    # &apos;None&apos;为不限制
-    bounds.append((0.1, 0.9))
-
-args = [2, 1, 3, 4]
-x0 = np.array([0.5, 0.5, 0.5])
-res = optimize.minimize(func1(args), x0=x0, constraints=cons1([.1, .9]*3), bounds=bounds)
-print(res)
-
-# res.x = [0.9, 0.9, 0.1
-# res.success = True]
-&lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>Life is Strange</title><link>https://fuwari.vercel.app/posts/lifs-is-strange/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/lifs-is-strange/</guid><pubDate>Sun, 19 May 2019 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;Life is strange, is it not?&lt;/h2&gt;
-&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
-&lt;p&gt;You wake up everyday not knowing what&apos;s in store.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;You go to sleep only to journey yet again.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;Our universe is so vast and yet it is so detailed.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;Everthing has a story, including you.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;You may not be the first person to exists.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;You definately won&apos;t be the last.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;But you are the only you that exists.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;You&apos;re unique from everyone else in your own special way.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;Life is a journey.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;You will hit many bumps along the way.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;But you&apos;ll keep moving on.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;As cheesy as it sounds it&apos;s not the destination that matters, it&apos;s the journey.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;That&apos;s what makes life so wonderful.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;The good and the bad moments we go through.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;The people we meet.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;The places we go.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;And the goals we accomplish.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;It shows how incredible we can be and what we can do if we keep pushing on.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;If we keep on living.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;If you keep being you.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;So life may be strange but it&apos;s also very beautiful and you are a part of it.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;So live your life the way you want to.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;Do what you wanna do.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;Be who you wanna be.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;Just be you and never stop being you.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;So don&apos;t cry.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;Keep pushing on.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;And smile for all of the universe to see.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;So I wish you the best on your journey through this strange thing we call life.&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;p&gt;Peace&lt;/p&gt;
-</content:encoded></item><item><title>Python中的重载</title><link>https://fuwari.vercel.app/posts/python-1-chongzai/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/python-1-chongzai/</guid><pubDate>Tue, 29 Jan 2019 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
+</content:encoded></item><item><title>Python中的重载</title><link>https://fuwari.vercel.app/posts/python-1-chongzai/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/python-1-chongzai/</guid><pubDate>Wed, 29 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
 &lt;p&gt;重载，即overwrite&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;字符串函数重载&lt;/h1&gt;
@@ -2073,7 +1937,7 @@ b. 若iadd不存在，add存在，则+=运算使用add&lt;/p&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-</content:encoded></item><item><title>Python中的迭代</title><link>https://fuwari.vercel.app/posts/python-2-iteration/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/python-2-iteration/</guid><pubDate>Tue, 29 Jan 2019 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
+</content:encoded></item><item><title>Python中的迭代</title><link>https://fuwari.vercel.app/posts/python-2-iteration/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/python-2-iteration/</guid><pubDate>Wed, 29 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
 &lt;p&gt;本文记录遇到的部分迭代技巧&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;迭代工具函数&lt;/h1&gt;
@@ -2199,7 +2063,7 @@ for n in fabonacci(5):
 	    else:
 	        return
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>大糖帝国（The Great Sugar Empire）</title><link>https://fuwari.vercel.app/posts/new-society/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/new-society/</guid><description>无</description><pubDate>Tue, 15 Jan 2019 21:25:55 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
+</content:encoded></item><item><title>大糖帝国（The Great Sugar Empire）</title><link>https://fuwari.vercel.app/posts/new-society/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/new-society/</guid><description>无</description><pubDate>Wed, 15 Jan 2020 21:25:55 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
 &lt;h1&gt;模型&lt;/h1&gt;
 &lt;h1&gt;附录&lt;/h1&gt;
 &lt;h2&gt;源码&lt;/h2&gt;
@@ -2215,8 +2079,83 @@ $$&lt;/p&gt;
 G = \frac{\Delta}{2u}
 $$&lt;/p&gt;
 &lt;p&gt;这里$G$表示基尼系数，$u$是样本均值。&lt;/p&gt;
-</content:encoded></item><item><title>深度学习——神经网络超参数的处理（02）</title><link>https://fuwari.vercel.app/posts/deep-02/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/deep-02/</guid><description>本文建立在[前一篇文章](https://junkuizhang.github.io/2018/01/04/deep-01/)的基础上进行讨论，这[一系列文章](https://junkuizhang.github.io/categories/深度学习/)的本意是记录本人的学习历程，避免“后面学，前面忘”的窘境。</description><pubDate>Fri, 05 Jan 2018 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
-&lt;p&gt;本文建立在&lt;a href=&quot;https://junkuizhang.github.io/2018/01/04/deep-01/&quot;&gt;前一篇文章&lt;/a&gt;的基础上进行讨论，这&lt;a href=&quot;https://junkuizhang.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/&quot;&gt;一系列文章&lt;/a&gt;的本意是记录本人的学习历程，避免“后面学，前面忘”的窘境。&lt;/p&gt;
+</content:encoded></item><item><title>对宏观经济贫富差距的简单分析</title><link>https://fuwari.vercel.app/posts/macro25/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/macro25/</guid><description>无话可说</description><pubDate>Mon, 13 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
+&lt;h1&gt;模型&lt;/h1&gt;
+&lt;h2&gt;Python中的线性规划求解&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本部分内容引自《数学建模算法与应用》&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;求解如下的线性规划问题：&lt;/p&gt;
+&lt;p&gt;$$
+min \quad z = 2x_1+3x_2+x_3
+$$&lt;/p&gt;
+&lt;p&gt;$$
+\begin{aligned}
+s.t. \quad x_1+x_2+x_3&amp;amp;=7 \&lt;br /&gt;
+x_1+4x_2+2x_3&amp;amp;\geq8 \&lt;br /&gt;
+3x_1+2x_2&amp;amp;\geq6 \&lt;br /&gt;
+x_1,x_2,x_3&amp;amp;\geq0
+\end{aligned}
+$$&lt;/p&gt;
+&lt;p&gt;用Python进行线性规划求解时，&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import numpy as np
+from scipy import optimize
+
+z = np.array([2, 3, 1])
+a = np.array([[1, 4, 2], [3, 2, 0]]
+b = np.array([8, 6])
+a_eq = np.array([[1, 1, 1]])
+b_eq = np.array([7])
+x1_bound = x2_bound = x3_bound = (0, None)
+bounds = (x1_bound, x2_bound, x3_bound)
+
+res = optimize.linprog(z, A_ub=-a, b_ub=-b, A_eq=a_eq, b_eq=b_eq, bounds=bounds)
+print(res)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Python中的非线性规划求解&lt;/h2&gt;
+&lt;p&gt;详见scipy的&lt;a href=&quot;https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html&quot;&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;考虑如下的非线性规划问题：&lt;/p&gt;
+&lt;p&gt;计算$(2+x_1)/(1+x_2)-3x_1+4x_3$的最小值，这里对任意$x_i$均有$0.1&amp;lt;x_i&amp;lt;0.9$成立。&lt;/p&gt;
+&lt;p&gt;Python代码如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import numpy as np
+from scipy import optimize
+
+# 定义目标函数
+def func1(nums):
+    a, b, c, d = nums
+    def _func0(x):
+        y = (a+x[0])/(b+x[1]) - c*x[0] + d*x[2]
+	return y
+    return _func0
+
+# 有两种方法表示约束
+def cons1(nums):
+    # &apos;eq&apos;表示等式，&apos;ineq&apos;表示大于等于
+    x1_min, x1_max, x1_min, x2_max, x3_min, x3_max = nums
+    _cons = ({&apos;type&apos;:&apos;ineq&apos;, &apos;fun&apos;:lambda x: x[0]-x1_min},
+             {&apos;type&apos;:&apos;ineq&apos;, &apos;fun&apos;:lambda x: x1_max-x[0]}，
+	     {&apos;type&apos;:&apos;ineq&apos;, &apos;fun&apos;:lambda x: x[1]-x2_min},
+	     {&apos;type&apos;:&apos;ineq&apos;, &apos;fun&apos;:lambda x: x2_max-x[1]},
+	     {&apos;type&apos;:&apos;ineq&apos;, &apos;fun&apos;:lambda x: x[2]-x3_min},
+	     {&apos;type&apos;:&apos;ineq&apos;, &apos;fun&apos;:lambda x: x3_max-x[2]})
+    return _cons
+
+# 法2
+bouds = []
+for k in range(3):
+    # &apos;None&apos;为不限制
+    bounds.append((0.1, 0.9))
+
+args = [2, 1, 3, 4]
+x0 = np.array([0.5, 0.5, 0.5])
+res = optimize.minimize(func1(args), x0=x0, constraints=cons1([.1, .9]*3), bounds=bounds)
+print(res)
+
+# res.x = [0.9, 0.9, 0.1
+# res.success = True]
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded></item><item><title>深度学习——神经网络超参数的处理（02）</title><link>https://fuwari.vercel.app/posts/deep-02/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/deep-02/</guid><description>本文建立在[前一篇文章](https://junkuizhang.github.io/2018/01/04/deep-01/)的基础上进行讨论，这[一系列文章](https://junkuizhang.github.io/category/深度学习/)的本意是记录本人的学习历程，避免“后面学，前面忘”的窘境。</description><pubDate>Sun, 05 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
+&lt;p&gt;本文建立在&lt;a href=&quot;https://junkuizhang.github.io/2018/01/04/deep-01/&quot;&gt;前一篇文章&lt;/a&gt;的基础上进行讨论，这&lt;a href=&quot;https://junkuizhang.github.io/category/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/&quot;&gt;一系列文章&lt;/a&gt;的本意是记录本人的学习历程，避免“后面学，前面忘”的窘境。&lt;/p&gt;
 &lt;p&gt;前文讨论到超参数，本文继续讨论如何处理上文的问题。具体而言，主要涉及到：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;对欠拟合、过拟合的处理&lt;/li&gt;
@@ -2343,7 +2282,8 @@ $$
 v_{dW^{[l]}} = \beta v_{dW^{[l]}} + (1-\beta)dW^{[l]} \&lt;br /&gt;
 W^{[l]} = W^{[l]} - \alpha v_{dW^{[l]}}
 \end{cases}
-$$ $$
+$$&lt;/p&gt;
+&lt;p&gt;$$
 \begin{cases}
 v_{db^{[l]}} = \beta v_{db^{[l]}} + (1-\beta)db^{[l]} \&lt;br /&gt;
 b^{[l]} = b^{[l]} - \alpha v_{db^{[l]}}
@@ -2484,7 +2424,7 @@ $$&lt;/p&gt;
 &lt;p&gt;Softmax是与Hardmax相对的，Hardmax是直接把$Z^{[L]}$中最大的输出直接赋值为1，其余赋值为0。因该方法简单直接，因而被赋予Hard之名，Softmax较为柔和。&lt;/p&gt;
 &lt;h1&gt;Tensorflow&lt;/h1&gt;
 &lt;p&gt;Tensorflow作为Google的开源机器学习框架，可以很方便的帮助我们部署机器学习的内容，尤其是其可以自动计算Backward Propagation部分。&lt;/p&gt;
-</content:encoded></item><item><title>深度学习——神经网络基本内容（01）</title><link>https://fuwari.vercel.app/posts/deep-01/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/deep-01/</guid><description>A simple example of a Markdown blog post.</description><pubDate>Thu, 04 Jan 2018 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
+</content:encoded></item><item><title>深度学习——神经网络基本内容（01）</title><link>https://fuwari.vercel.app/posts/deep-01/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/deep-01/</guid><description>A simple example of a Markdown blog post.</description><pubDate>Sat, 04 Jan 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;概述&lt;/h1&gt;
 &lt;p&gt;深度学习几乎就等于神经网络算法，该算法主要由两个模块构成：前向传播（Forward Propagation）、后向传播（Backward Propagation）。&lt;/p&gt;
 &lt;p&gt;前向传播来计算预测值$\hat{y}$，而后向传播则根据预测值与实际值的差别计算成本方程（Cost Function），并根据该值改进神经网络各节点的权重值。经过多次迭代，逐渐收敛。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
@@ -2537,7 +2477,8 @@ $$&lt;/p&gt;
 &lt;p&gt;用$A^{[l-1]}$表示第$l$层神经网络的输入值，即第$l-1$层神经网络的激发值，其维度为$(n^{[l-1]}, m)$，其中$n^{[l]}$表示该层神经网络的节点个数；用$W^{[l]}$表示第$l$层神经网络的权重，其维度为$(n^{[l]}, n^{[l-1]})$，则
 $$
 Z^{[l]} = W^{[l]}A^{[l-1]} + b^{[l]}
-$$ $$
+$$&lt;/p&gt;
+&lt;p&gt;$$
 A^{[l]} = g(Z^{[l]})
 $$
 其中，$Z^{[l]}$和$A^{[l]}$的维度均为$(n^{[l]}, m)$&lt;/p&gt;
@@ -2639,4 +2580,65 @@ $$&lt;/p&gt;
 &lt;li&gt;正则化（Regularization）&lt;/li&gt;
 &lt;li&gt;标准化（Normalization）&lt;/li&gt;
 &lt;/ul&gt;
+</content:encoded></item><item><title>Life is Strange</title><link>https://fuwari.vercel.app/posts/lifs-is-strange/</link><guid isPermaLink="true">https://fuwari.vercel.app/posts/lifs-is-strange/</guid><pubDate>Sun, 19 May 2019 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;Life is strange, is it not?&lt;/h2&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;p&gt;You wake up everyday not knowing what&apos;s in store.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;You go to sleep only to journey yet again.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Our universe is so vast and yet it is so detailed.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Everthing has a story, including you.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;You may not be the first person to exists.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;You definately won&apos;t be the last.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;But you are the only you that exists.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;You&apos;re unique from everyone else in your own special way.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Life is a journey.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;You will hit many bumps along the way.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;But you&apos;ll keep moving on.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;As cheesy as it sounds it&apos;s not the destination that matters, it&apos;s the journey.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;That&apos;s what makes life so wonderful.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;The good and the bad moments we go through.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;The people we meet.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;The places we go.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;And the goals we accomplish.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;It shows how incredible we can be and what we can do if we keep pushing on.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;If we keep on living.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;If you keep being you.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;So life may be strange but it&apos;s also very beautiful and you are a part of it.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;So live your life the way you want to.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Do what you wanna do.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Be who you wanna be.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Just be you and never stop being you.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;So don&apos;t cry.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Keep pushing on.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;And smile for all of the universe to see.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;So I wish you the best on your journey through this strange thing we call life.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Peace&lt;/p&gt;
 </content:encoded></item></channel></rss>
