@@ -1,4 +1,89 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>张小白的小窝</title><description>Welcome!</description><link>https://blog.xiaobaizhang.top/</link><language>zh_CN</language><item><title>如何安装RedHat WSL2</title><link>https://blog.xiaobaizhang.top/posts/redhat-wsl/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/redhat-wsl/</guid><pubDate>Mon, 19 May 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;ReadHat WSL居然这么复杂，我是没想到的。&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>张小白的小窝</title><description>Welcome!</description><link>https://blog.xiaobaizhang.top/</link><language>zh_CN</language><item><title>使用Linux搭建proxy和dns服务器进行测试</title><link>https://blog.xiaobaizhang.top/posts/self-hosted-proxy/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/self-hosted-proxy/</guid><pubDate>Mon, 16 Jun 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;如何使用&lt;code&gt;coreDNS&lt;/code&gt;和&lt;code&gt;Squid&lt;/code&gt;搭建一个自托管的代理服务器。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;使用&lt;code&gt;Squid&lt;/code&gt;搭建http proxy&lt;/h1&gt;
+&lt;h2&gt;安装&lt;code&gt;Squid&lt;/code&gt;&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;# Ubuntu/Debian
+sudo apt update &amp;amp;&amp;amp; sudo apt install squid apache2-utils
+# CentOS/RHEL
+sudo yum install squid httpd-tools
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;配置&lt;code&gt;Squid&lt;/code&gt;&lt;/h2&gt;
+&lt;h3&gt;准备认证的用户&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;sudo touch /etc/squid/passwds
+sudo htpasswd -c /etc/squid/passwds username # 按照提示设置密码
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;修改&lt;code&gt;Squid&lt;/code&gt;配置文件&lt;/h3&gt;
+&lt;p&gt;创建&lt;code&gt;/etc/squid/squid.conf&lt;/code&gt;文件，如果已经存在则编辑它。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo cp /etc/squid/squid.conf /etc/squid/squid-http.conf
+sudo vim /etc/squid/squid-http.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;编辑&lt;code&gt;/etc/squid/squid.conf&lt;/code&gt;文件，添加以下配置：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;http_port 3128
+auth_param basic program /usr/lib/squid/basic_ncsa_auth /etc/squid/passwords
+auth_param basic children 5
+acl auth_users proxy_auth REQUIRED
+http_access allow auth_users
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;开启防火墙&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;# Ubuntu/Debian
+sudo ufw allow 3128/tcp
+sudo ufw reload
+# CentOS/RHEL
+sudo firewall-cmd --permanent --add-port=3128/tcp
+sudo firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;启动&lt;code&gt;Squid&lt;/code&gt;&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;sudo squid -f /etc/squid/squid-http.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;使用&lt;code&gt;coreDNS&lt;/code&gt;搭建dns服务器&lt;/h1&gt;
+&lt;h2&gt;下载&lt;code&gt;coreDNS&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;从&lt;a href=&quot;https://github.com/coredns/coredns/releases&quot;&gt;这里&lt;/a&gt;下载最新版本的&lt;code&gt;coreDNS&lt;/code&gt;，并解压缩。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wget https://github.com/coredns/coredns/releases/latest/download/coredns_1.12.2_linux_arm.tgz
+tar -zxvf coredns_1.12.2_linux_arm.tgz
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;配置&lt;code&gt;coreDNS&lt;/code&gt;&lt;/h2&gt;
+&lt;h3&gt;创建配置文件&lt;/h3&gt;
+&lt;p&gt;创建&lt;code&gt;Corefile&lt;/code&gt;配置文件：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo vim Corefile
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;注意这里的ip要与需要测试的机器处于同一网络段。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;.:53 {
+    hosts {
+        10.254.7.38 http-proxy.test
+        fallthrough
+    }
+    forward . 114.114.114.114
+    log
+    errors
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;开启防火墙&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;# Ubuntu/Debian
+sudo ufw allow 53/tcp
+sudo ufw allow 53/udp
+sudo ufw reload
+# CentOS/RHEL
+sudo firewall-cmd --permanent --add-port=53/tcp
+sudo firewall-cmd --permanent --add-port=53/udp
+sudo firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;启动&lt;code&gt;coreDNS&lt;/code&gt;&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;sudo ./coredns -conf Corefile
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;测试&lt;/h1&gt;
+&lt;h2&gt;测试&lt;code&gt;Squid&lt;/code&gt;代理&lt;/h2&gt;
+&lt;p&gt;使用任意软件测试，代理填好后，如果成功连接，代理的日志会有相应的输出。&lt;/p&gt;
+&lt;h2&gt;测试&lt;code&gt;coreDNS&lt;/code&gt;&lt;/h2&gt;
+&lt;h3&gt;不设置DNS服务器&lt;/h3&gt;
+&lt;p&gt;可以使用使用&lt;code&gt;nslookup&lt;/code&gt;命令进行测试：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;nslookup http-proxy.test 10.254.7.38
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;设置DNS服务器&lt;/h3&gt;
+&lt;p&gt;在Windows或Linux上设置DNS服务器为&lt;code&gt;10.254.7.38&lt;/code&gt;，然后使用&lt;code&gt;nslookup&lt;/code&gt;或&lt;code&gt;dig&lt;/code&gt;命令测试解析。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;nslookup http-proxy.test
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;如果配置正确，应该会返回&lt;code&gt;10.254.7.38&lt;/code&gt;。&lt;/p&gt;
+</content:encoded></item><item><title>如何安装RedHat WSL2</title><link>https://blog.xiaobaizhang.top/posts/redhat-wsl/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/redhat-wsl/</guid><pubDate>Mon, 19 May 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;ReadHat WSL居然这么复杂，我是没想到的。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;1. 获得适用于WSL2的RedHat安装介质&lt;/h1&gt;
 &lt;ol&gt;
@@ -294,9 +379,6 @@ git lfs pull
 &lt;h3&gt;导入容器&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;docker import ./FILE/PATH.tar &amp;lt;name&amp;gt;:latest
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>为WSL安装多个Ubuntu实例</title><link>https://blog.xiaobaizhang.top/posts/multi-wsl/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/multi-wsl/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;在&lt;a href=&quot;https://cloud-images.ubuntu.com/&quot;&gt;这里&lt;/a&gt;选择&lt;code&gt;wsl&lt;/code&gt;，然后下载相应的版本，如&lt;code&gt;jammy&lt;/code&gt;。然后&lt;code&gt;wsl --import &amp;lt;Name&amp;gt; &amp;lt;Dir&amp;gt; &amp;lt;File&amp;gt;&lt;/code&gt;来安装对应的Ubuntu。使用&lt;code&gt;wsl -d &amp;lt;Name&amp;gt;&lt;/code&gt;来启动相应的实例。&lt;/p&gt;
-&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
-&lt;p&gt;Ref: &lt;a href=&quot;https://stackoverflow.com/questions/51584765/how-do-you-install-multiple-separate-instances-of-ubuntu-in-wsl&quot;&gt;StackOverflow&lt;/a&gt;&lt;/p&gt;
 </content:encoded></item><item><title>Ubuntu离线部署机器学习</title><link>https://blog.xiaobaizhang.top/posts/ml-offline-setup/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/ml-offline-setup/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;介绍。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;离线安装Docker&lt;/h1&gt;
@@ -310,6 +392,9 @@ git lfs pull
 &lt;/blockquote&gt;
 &lt;h1&gt;离线安装NV Container Toolkit&lt;/h1&gt;
 &lt;p&gt;在&lt;a href=&quot;https://github.com/NVIDIA/nvidia-container-toolkit&quot;&gt;GitHub&lt;/a&gt;下载相应的包，执行&lt;code&gt;sudo dpkg -i *.deb&lt;/code&gt;。&lt;/p&gt;
+</content:encoded></item><item><title>为WSL安装多个Ubuntu实例</title><link>https://blog.xiaobaizhang.top/posts/multi-wsl/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/multi-wsl/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;在&lt;a href=&quot;https://cloud-images.ubuntu.com/&quot;&gt;这里&lt;/a&gt;选择&lt;code&gt;wsl&lt;/code&gt;，然后下载相应的版本，如&lt;code&gt;jammy&lt;/code&gt;。然后&lt;code&gt;wsl --import &amp;lt;Name&amp;gt; &amp;lt;Dir&amp;gt; &amp;lt;File&amp;gt;&lt;/code&gt;来安装对应的Ubuntu。使用&lt;code&gt;wsl -d &amp;lt;Name&amp;gt;&lt;/code&gt;来启动相应的实例。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;p&gt;Ref: &lt;a href=&quot;https://stackoverflow.com/questions/51584765/how-do-you-install-multiple-separate-instances-of-ubuntu-in-wsl&quot;&gt;StackOverflow&lt;/a&gt;&lt;/p&gt;
 </content:encoded></item><item><title>给Nvidia显卡的电脑安装Ubuntu</title><link>https://blog.xiaobaizhang.top/posts/ubuntu-nvidia/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/ubuntu-nvidia/</guid><pubDate>Fri, 06 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;下载安装介质后，进入安装介质可能会黑屏，要在选择&lt;code&gt;Try or install ubuntu&lt;/code&gt;时按&lt;code&gt;e&lt;/code&gt;进入编辑模式，在&lt;code&gt;--- quite splash&lt;/code&gt;删除&lt;code&gt;---&lt;/code&gt;并添加&lt;code&gt;nomodeset&lt;/code&gt;，然后按&lt;code&gt;F10&lt;/code&gt;进入安装介质。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;配置Ubuntu&lt;/h1&gt;
