@@ -1,4 +1,91 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>张小白的小窝</title><description>Welcome!</description><link>https://blog.xiaobaizhang.top/</link><language>zh_CN</language><item><title>使用Linux搭建proxy和dns服务器进行测试</title><link>https://blog.xiaobaizhang.top/posts/self-hosted-proxy/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/self-hosted-proxy/</guid><pubDate>Mon, 16 Jun 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;如何使用&lt;code&gt;coreDNS&lt;/code&gt;和&lt;code&gt;Squid&lt;/code&gt;搭建一个自托管的代理服务器。&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>张小白的小窝</title><description>Welcome!</description><link>https://blog.xiaobaizhang.top/</link><language>zh_CN</language><item><title>给无网络环境的RedHat配置Docker和CUDA</title><link>https://blog.xiaobaizhang.top/posts/redhat-offline/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/redhat-offline/</guid><pubDate>Wed, 25 Jun 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;RedHat真是我用过的最垃圾、最恶心的系统。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;安装RedHat&lt;/h1&gt;
+&lt;p&gt;下载的iso文件应该为&lt;code&gt;*-dvd.iso&lt;/code&gt;格式，安装时选择最小化安装。&lt;/p&gt;
+&lt;p&gt;删除磁盘的所有分区，点击&lt;code&gt;+&lt;/code&gt;创建新分区：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/boot&lt;/code&gt; 1 GiB&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/boot/efi&lt;/code&gt; 300 MiB&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/swap&lt;/code&gt; 8 GiB，这里还要修改文件类型为&lt;code&gt;swap&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/&lt;/code&gt; 留空会自动分配剩余空间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;安装Nvidia相关的内容&lt;/h1&gt;
+&lt;h2&gt;安装&lt;code&gt;gcc&lt;/code&gt;等&lt;/h2&gt;
+&lt;h3&gt;配置本地安装源&lt;/h3&gt;
+&lt;p&gt;首先，把之前下载的&lt;code&gt;dvd.iso&lt;/code&gt;挂载到系统中，首先要把&lt;code&gt;iso&lt;/code&gt;复制到&lt;code&gt;/isos/rhel.iso&lt;/code&gt;，然后再挂载。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo mkdir -p /isos
+sudo cp ~/Downloads/rhel.iso /isos/rhel.iso
+sudo mkdir -p /mnt/rhel-iso
+sudo mount -o loop /isos/rhel.iso /mnt/rhel-iso
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;此时ISO内容被挂载到&lt;code&gt;/mnt/rhel-iso&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;然后配置本地仓库文件：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo tee /etc/yum.repos.d/local.repo &amp;lt;&amp;lt;EOF
+[local-baseos]
+name=Local RHEL 9.2 BaseOS
+baseurl=file:///mnt/rhel-iso/BaseOS
+enabled=1
+gpgcheck=0
+
+[local-appstream]
+name=Local RHEL 9.2 AppStream
+baseurl=file:///mnt/rhel-iso/AppStream
+enabled=1
+gpgcheck=0
+EOF
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;安装&lt;code&gt;gcc&lt;/code&gt;和相关工具&lt;/h3&gt;
+&lt;p&gt;然后进行清理&lt;code&gt;sudo dnf clean all&lt;/code&gt;，然后就可以进行安装了：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo dnf install -y gcc make kernel-devel-matched kernel-headers libglvnd-devel
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;安装&lt;code&gt;Nvidia&lt;/code&gt;驱动&lt;/h2&gt;
+&lt;h3&gt;下载&lt;code&gt;Nvidia&lt;/code&gt;驱动&lt;/h3&gt;
+&lt;p&gt;从&lt;a href=&quot;https://www.nvidia.com/Download/index.aspx&quot;&gt;Nvidia官网&lt;/a&gt;下载适合你显卡的驱动，注意选择正确的操作系统版本。下载的应该是&lt;code&gt;.run&lt;/code&gt;文件。然后记得把下载的文件复制到&lt;code&gt;/home&lt;/code&gt;下。&lt;/p&gt;
+&lt;h3&gt;取消默认的驱动&lt;/h3&gt;
+&lt;p&gt;创建文件&lt;code&gt;/etc/modprobe.d/disable-nouveau.conf&lt;/code&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;echo -e &quot;blacklist nouveau\noptions nouveau modeset=0&quot; | sudo tee /etc/modprobe.d/disable-nouveau.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;更新&lt;code&gt;initramfs&lt;/code&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo dracut --force
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后重启。&lt;/p&gt;
+&lt;h3&gt;安装&lt;code&gt;Nvidia&lt;/code&gt;驱动&lt;/h3&gt;
+&lt;p&gt;使用&lt;code&gt;Ctrl+Alt+F3&lt;/code&gt;登录命令行，然后&lt;code&gt;sudo ./NVIDIA-Linux-x86_64-*.run&lt;/code&gt;安装驱动。重启后使用&lt;code&gt;nvidia-smi&lt;/code&gt;检查驱动是否安装成功。&lt;/p&gt;
+&lt;h1&gt;安装&lt;code&gt;Docker&lt;/code&gt;&lt;/h1&gt;
+&lt;h2&gt;下载&lt;code&gt;Docker&lt;/code&gt;安装包&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;参考网址：https://docs.docker.com/engine/install/rhel/&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;从&lt;a href=&quot;https://download.docker.com/linux/rhel/&quot;&gt;Docker官网&lt;/a&gt;下载最新版本的&lt;code&gt;Docker&lt;/code&gt;，下载的应该是&lt;code&gt;.tar.gz&lt;/code&gt;文件。然后记得把下载的文件复制到&lt;code&gt;/home&lt;/code&gt;下。使用&lt;code&gt;sudo dnf install *.rpm&lt;/code&gt;安装所有的依赖包。&lt;/p&gt;
+&lt;p&gt;然后：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo usermod $USER -aG docker # 添加本用户到docker的组中
+sudo service docker start
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;安装&lt;code&gt;Container Toolkit&lt;/code&gt;&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;参考网址：https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在有网的机器上配置&lt;code&gt;Nvidia&lt;/code&gt;的仓库：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl -s -L https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo | \
+  sudo tee /etc/yum.repos.d/nvidia-container-toolkit.repo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后下载相应的安装包：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo dnf download --resolve nvidia-container-toolkit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;把下载好的包复制到无网的机器上，然后&lt;code&gt;sudo dnf install *.rpm&lt;/code&gt;安装所有的依赖包。&lt;/p&gt;
+&lt;h2&gt;配置&lt;code&gt;Docker&lt;/code&gt;使用&lt;code&gt;Nvidia&lt;/code&gt;运行时&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;sudo nvidia-ctk runtime configure --runtime=docker
+sudo systemctl restart docker
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在这里建议&lt;strong&gt;重启&lt;/strong&gt;。&lt;/p&gt;
+&lt;h1&gt;测试&lt;/h1&gt;
+&lt;p&gt;安装完成后，可以使用以下命令测试&lt;code&gt;Docker&lt;/code&gt;和&lt;code&gt;Nvidia&lt;/code&gt;是否正常工作：&lt;/p&gt;
+&lt;p&gt;从有网的机器上使用&lt;code&gt;docker save -o ./cuda-sample.tar nvcr.io/nvidia/k8s/cuda-sample:nbody&lt;/code&gt;命令下载&lt;code&gt;cuda-sample&lt;/code&gt;镜像，然后把&lt;code&gt;cuda-sample.tar&lt;/code&gt;复制到无网的机器上。&lt;/p&gt;
+&lt;p&gt;在无网的机器上使用以下命令加载镜像并测试：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;docker load -i cuda-sample.tar
+docker run --rm --gpus all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded></item><item><title>使用Linux搭建proxy和dns服务器进行测试</title><link>https://blog.xiaobaizhang.top/posts/self-hosted-proxy/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/self-hosted-proxy/</guid><pubDate>Mon, 16 Jun 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;如何使用&lt;code&gt;coreDNS&lt;/code&gt;和&lt;code&gt;Squid&lt;/code&gt;搭建一个自托管的代理服务器。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;使用&lt;code&gt;Squid&lt;/code&gt;搭建http proxy&lt;/h1&gt;
 &lt;h2&gt;安装&lt;code&gt;Squid&lt;/code&gt;&lt;/h2&gt;
