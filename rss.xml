@@ -477,6 +477,9 @@ git lfs pull
 &lt;h3&gt;导入容器&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;docker import ./FILE/PATH.tar &amp;lt;name&amp;gt;:latest
 &lt;/code&gt;&lt;/pre&gt;
+</content:encoded></item><item><title>为WSL安装多个Ubuntu实例</title><link>https://blog.xiaobaizhang.top/posts/multi-wsl/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/multi-wsl/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;在&lt;a href=&quot;https://cloud-images.ubuntu.com/&quot;&gt;这里&lt;/a&gt;选择&lt;code&gt;wsl&lt;/code&gt;，然后下载相应的版本，如&lt;code&gt;jammy&lt;/code&gt;。然后&lt;code&gt;wsl --import &amp;lt;Name&amp;gt; &amp;lt;Dir&amp;gt; &amp;lt;File&amp;gt;&lt;/code&gt;来安装对应的Ubuntu。使用&lt;code&gt;wsl -d &amp;lt;Name&amp;gt;&lt;/code&gt;来启动相应的实例。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;p&gt;Ref: &lt;a href=&quot;https://stackoverflow.com/questions/51584765/how-do-you-install-multiple-separate-instances-of-ubuntu-in-wsl&quot;&gt;StackOverflow&lt;/a&gt;&lt;/p&gt;
 </content:encoded></item><item><title>Ubuntu离线部署机器学习</title><link>https://blog.xiaobaizhang.top/posts/ml-offline-setup/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/ml-offline-setup/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;介绍。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;离线安装Docker&lt;/h1&gt;
@@ -490,9 +493,6 @@ git lfs pull
 &lt;/blockquote&gt;
 &lt;h1&gt;离线安装NV Container Toolkit&lt;/h1&gt;
 &lt;p&gt;在&lt;a href=&quot;https://github.com/NVIDIA/nvidia-container-toolkit&quot;&gt;GitHub&lt;/a&gt;下载相应的包，执行&lt;code&gt;sudo dpkg -i *.deb&lt;/code&gt;。&lt;/p&gt;
-</content:encoded></item><item><title>为WSL安装多个Ubuntu实例</title><link>https://blog.xiaobaizhang.top/posts/multi-wsl/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/multi-wsl/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;在&lt;a href=&quot;https://cloud-images.ubuntu.com/&quot;&gt;这里&lt;/a&gt;选择&lt;code&gt;wsl&lt;/code&gt;，然后下载相应的版本，如&lt;code&gt;jammy&lt;/code&gt;。然后&lt;code&gt;wsl --import &amp;lt;Name&amp;gt; &amp;lt;Dir&amp;gt; &amp;lt;File&amp;gt;&lt;/code&gt;来安装对应的Ubuntu。使用&lt;code&gt;wsl -d &amp;lt;Name&amp;gt;&lt;/code&gt;来启动相应的实例。&lt;/p&gt;
-&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
-&lt;p&gt;Ref: &lt;a href=&quot;https://stackoverflow.com/questions/51584765/how-do-you-install-multiple-separate-instances-of-ubuntu-in-wsl&quot;&gt;StackOverflow&lt;/a&gt;&lt;/p&gt;
 </content:encoded></item><item><title>给Nvidia显卡的电脑安装Ubuntu</title><link>https://blog.xiaobaizhang.top/posts/ubuntu-nvidia/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/ubuntu-nvidia/</guid><pubDate>Fri, 06 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;下载安装介质后，进入安装介质可能会黑屏，要在选择&lt;code&gt;Try or install ubuntu&lt;/code&gt;时按&lt;code&gt;e&lt;/code&gt;进入编辑模式，在&lt;code&gt;--- quite splash&lt;/code&gt;删除&lt;code&gt;---&lt;/code&gt;并添加&lt;code&gt;nomodeset&lt;/code&gt;，然后按&lt;code&gt;F10&lt;/code&gt;进入安装介质。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;配置Ubuntu&lt;/h1&gt;
@@ -584,29 +584,29 @@ docker run --gpus all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark
 &lt;h2&gt;让&lt;code&gt;Docker build&lt;/code&gt;使用本机proxy&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;docker build --network=host --build-arg http_proxy=$http_proxy --build-arg https_proxy=$https_proxy ...
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>给WSL2配置运行CUDA的Docker</title><link>https://blog.xiaobaizhang.top/posts/wsl-docker/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/wsl-docker/</guid><pubDate>Mon, 03 Jun 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;注意，本文使用&lt;code&gt;WSL2&lt;/code&gt;+&lt;code&gt;Docker&lt;/code&gt;，而不是安装&lt;code&gt;Docker Desktop for Windows&lt;/code&gt;，因为后者占用的资源非常多，而且还有很多bug，比如，&lt;a href=&quot;https://github.com/docker/for-win/issues/13870&quot;&gt;GPU无法运行&lt;/a&gt;。&lt;/p&gt;
+</content:encoded></item><item><title>给WSL2配置运行CUDA的Docker</title><link>https://blog.xiaobaizhang.top/posts/wsl-docker/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/wsl-docker/</guid><pubDate>Mon, 03 Jun 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;注意，本文使用&lt;code&gt;WSL2&lt;/code&gt;+&lt;code&gt;Docker&lt;/code&gt;，而不是安装&lt;code&gt;Docker Desktop for Windows&lt;/code&gt;，因为后者占用的资源非常多，而且还有很多 bug，比如，&lt;a href=&quot;https://github.com/docker/for-win/issues/13870&quot;&gt;GPU 无法运行&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
-&lt;h1&gt;安装WSL&lt;/h1&gt;
-&lt;p&gt;运行一下命令将安装WSL并安装Ubuntu发行版，如果需要安装其他Linux发行版（如Arch Linux），请参考&lt;a href=&quot;https://learn.microsoft.com/zh-cn/windows/wsl/install&quot;&gt;此链接&lt;/a&gt;。&lt;/p&gt;
+&lt;h1&gt;安装 WSL&lt;/h1&gt;
+&lt;p&gt;运行一下命令将安装 WSL 并安装 Ubuntu 发行版，如果需要安装其他 Linux 发行版（如 Arch Linux），请参考&lt;a href=&quot;https://learn.microsoft.com/zh-cn/windows/wsl/install&quot;&gt;此链接&lt;/a&gt;。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;wsl --install
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;常用WSL命令&lt;/h2&gt;
+&lt;h2&gt;常用 WSL 命令&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;列出WSL子系统: &lt;code&gt;wsl --list&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;关闭WSL：&lt;code&gt;wsl --shutdown&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;WSL配置文件：&lt;code&gt;C:/users/YOUR_NAME/.wslconfig&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;列出 WSL 子系统: &lt;code&gt;wsl --list&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;关闭 WSL：&lt;code&gt;wsl --shutdown&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;WSL 配置文件：&lt;code&gt;C:/users/YOUR_NAME/.wslconfig&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Notes&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;让WSL使用本机的代理，编写&lt;code&gt;.wslconfig&lt;/code&gt;如下：&lt;/p&gt;
+&lt;p&gt;让 WSL 使用本机的代理，编写&lt;code&gt;.wslconfig&lt;/code&gt;如下：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;[wsl2]
 networkingMode=mirrored
 dnsTunneling=true
 autoProxy=true
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
-&lt;h1&gt;安装Docker&lt;/h1&gt;
-&lt;h2&gt;配置Docker的repo&lt;/h2&gt;
+&lt;h1&gt;安装 Docker&lt;/h1&gt;
+&lt;h2&gt;配置 Docker 的 repo&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;sudo apt-get update
 sudo apt-get install ca-certificates curl
 sudo install -m 0755 -d /etc/apt/keyrings
@@ -619,61 +619,61 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list &amp;gt; /dev/null
 sudo apt-get update
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;安装Docker&lt;/h2&gt;
+&lt;h2&gt;安装 Docker&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 sudo usermod $USER -aG docker # 添加本用户到docker的组中
 sudo service docker start
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;要确认Docker成功安装，进入WSL的Ubuntu（使用命令&lt;code&gt;wsl&lt;/code&gt;），并输入命令&lt;code&gt;docker --version&lt;/code&gt;查看输出，还可以通过尝试运行&lt;code&gt;docker run hello-world&lt;/code&gt;运行简单的内置Docker映像，测试安装是否正常工作。&lt;/p&gt;
-&lt;h1&gt;给Docker配置CUDA&lt;/h1&gt;
-&lt;h2&gt;安装NVIDIA Container Toolkit&lt;/h2&gt;
-&lt;p&gt;首先配置repo：&lt;/p&gt;
+&lt;p&gt;要确认 Docker 成功安装，进入 WSL 的 Ubuntu（使用命令&lt;code&gt;wsl&lt;/code&gt;），并输入命令&lt;code&gt;docker --version&lt;/code&gt;查看输出，还可以通过尝试运行&lt;code&gt;docker run hello-world&lt;/code&gt;运行简单的内置 Docker 映像，测试安装是否正常工作。&lt;/p&gt;
+&lt;h1&gt;给 Docker 配置 CUDA&lt;/h1&gt;
+&lt;h2&gt;安装 NVIDIA Container Toolkit&lt;/h2&gt;
+&lt;p&gt;首先配置 repo：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
   &amp;amp;&amp;amp; curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
     sed &apos;s#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g&apos; | \
     sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;然后更新repo&lt;code&gt;sudo apt-get update&lt;/code&gt;，再运行&lt;code&gt;sudo apt-get install -y nvidia-container-toolkit&lt;/code&gt;来安装NVIDIA Container Toolkit。&lt;/p&gt;
-&lt;h2&gt;配置Docker&lt;/h2&gt;
+&lt;p&gt;然后更新 repo&lt;code&gt;sudo apt-get update&lt;/code&gt;，再运行&lt;code&gt;sudo apt-get install -y nvidia-container-toolkit&lt;/code&gt;来安装 NVIDIA Container Toolkit。&lt;/p&gt;
+&lt;h2&gt;配置 Docker&lt;/h2&gt;
 &lt;p&gt;使用&lt;code&gt;nvidia-ctk&lt;/code&gt;命令配置容器运行时：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo nvidia-ctk runtime configure --runtime=docker
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;重新启动Docker进程：&lt;/p&gt;
+&lt;p&gt;重新启动 Docker 进程：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo systemctl restart docker
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;测试&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;docker run --gpus all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h1&gt;配置Docker&lt;/h1&gt;
-&lt;h2&gt;配置iptable&lt;/h2&gt;
-&lt;p&gt;让WSL中的Ubuntu使用iptable（option 1），否则Docker的NAT会有问题。&lt;/p&gt;
+&lt;h1&gt;配置 Docker&lt;/h1&gt;
+&lt;h2&gt;配置 iptable&lt;/h2&gt;
+&lt;p&gt;让 WSL 中的 Ubuntu 使用 iptable（option 1），否则 Docker 的 NAT 会有问题。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;update-alternatives --config iptables
 &lt;/code&gt;&lt;/pre&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Ref: https://nickjanetakis.com/blog/install-docker-in-wsl-2-without-docker-desktop&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2&gt;配置proxy&lt;/h2&gt;
+&lt;h2&gt;配置 proxy&lt;/h2&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://docs.docker.com/config/daemon/systemd/#httphttps-proxy&quot;&gt;给daemon配置proxy&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://docs.docker.com/network/proxy/&quot;&gt;给client配置proxy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.docker.com/config/daemon/systemd/#httphttps-proxy&quot;&gt;给 daemon 配置 proxy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.docker.com/network/proxy/&quot;&gt;给 client 配置 proxy&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2&gt;让&lt;code&gt;Docker build&lt;/code&gt;使用本机proxy&lt;/h2&gt;
+&lt;h2&gt;让&lt;code&gt;Docker build&lt;/code&gt;使用本机 proxy&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;docker build --network=host --build-arg http_proxy=$http_proxy --build-arg https_proxy=$https_proxy ...
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Docker部分命令&lt;/h2&gt;
+&lt;h2&gt;Docker 部分命令&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;docker builder prune -a
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;a href=&quot;https://docs.docker.com/reference/cli/docker/builder/prune/&quot;&gt;参考链接&lt;/a&gt;&lt;/p&gt;
-&lt;h1&gt;给Docker瘦身&lt;/h1&gt;
-&lt;h2&gt;迁移WSL至其他盘&lt;/h2&gt;
-&lt;p&gt;把Ubuntu的虚拟磁盘复制到其他盘符，然后创建符号链接&lt;/p&gt;
+&lt;h1&gt;给 Docker 瘦身&lt;/h1&gt;
+&lt;h2&gt;迁移 WSL 至其他盘&lt;/h2&gt;
+&lt;p&gt;把 Ubuntu 的虚拟磁盘复制到其他盘符，然后创建符号链接&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;New-Item -ItemType SymbolicLink -Path &quot;C:\Users\36477\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc\LocalState\ext4.vhdx&quot; -Target &quot;D:\wsl\ubuntu\ext4.vhdx&quot;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;a href=&quot;https://www.delftstack.com/zh/howto/powershell/create-symbolic-links-in-powershell/&quot;&gt;Reference&lt;/a&gt;&lt;/p&gt;
-&lt;h2&gt;停止WSL&lt;/h2&gt;
+&lt;h2&gt;停止 WSL&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;wsl --shutdown
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;使用Diskpart来瘦身&lt;/h2&gt;
+&lt;h2&gt;使用 Diskpart 来瘦身&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;diskpart
 
 select vdisk file=&quot;C:\PATH\TO\ext4.vhd&quot;
@@ -683,6 +683,13 @@ detach vdisk
 exit
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/tuxiang79/article/details/121557798&quot;&gt;Reference&lt;/a&gt;。&lt;/p&gt;
+&lt;h2&gt;使用新命令瘦身&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;Optimize-VHD -Path .\ext4.vhdx -Mode full
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href=&quot;https://learn.microsoft.com/en-us/answers/questions/4006845/reduce-disk-space-consumption-for-wsl&quot;&gt;Reference&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;注意不要把 WSL 设置为稀疏模式，有重大 bug 损坏文件：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/MicrosoftDocs/WSL/issues/1855#issuecomment-2152690065&quot;&gt;Reference1&lt;/a&gt;
+&lt;a href=&quot;https://github.com/microsoft/WSL/issues/10609&quot;&gt;Reference2&lt;/a&gt;&lt;/p&gt;
 </content:encoded></item><item><title>再见，兔崽子</title><link>https://blog.xiaobaizhang.top/posts/byte-little-rabbit/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/byte-little-rabbit/</guid><pubDate>Wed, 13 Mar 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Bye.&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--MORE--&amp;gt;&lt;/p&gt;
 &lt;p&gt;对不起我没有照顾好你，想家了就回家看看。&lt;/p&gt;
