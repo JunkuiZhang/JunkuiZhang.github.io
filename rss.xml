@@ -1,4 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>张小白的小窝</title><description>Welcome!</description><link>https://blog.xiaobaizhang.top/</link><language>zh_CN</language><item><title>Overleaf服务器搭建教程</title><link>https://blog.xiaobaizhang.top/posts/overleaf-server/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/overleaf-server/</guid><pubDate>Thu, 13 Nov 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Overleaf 是一个非常流行的在线 LaTeX 编辑平台，本文将介绍如何在自己的服务器上搭建 Overleaf，以便更好地管理和使用 LaTeX 文档。&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>张小白的小窝</title><description>Welcome!</description><link>https://blog.xiaobaizhang.top/</link><language>zh_CN</language><item><title>MurmurHash：一种高性能哈希函数</title><link>https://blog.xiaobaizhang.top/posts/murmur_hash/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/murmur_hash/</guid><pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;MurmurHash 是一种非加密哈希函数，广泛应用于高性能计算和数据处理领域。它由 Austin Appleby 在 2008 年开发，旨在提供快速且高质量的哈希值生成。MurmurHash 的设计目标是实现高速度和良好的分布特性，使其适用于各种应用场景，如哈希表、数据去重和分布式系统中的负载均衡。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;p&gt;它的核心思想是通过混合输入数据的位来生成哈希值，从而减少碰撞的可能性。MurmurHash 使用了一系列的位操作和乘法来混合输入数据，确保生成的哈希值具有良好的分布特性。此外，MurmurHash 还支持不同的种子值，使得同一输入数据可以生成不同的哈希值，进一步增强了其安全性和适用性。&lt;/p&gt;
+&lt;p&gt;HFT中一般在扁平哈希表中使用这个算法，从而可以减少碰撞，该算法主要有如下四个步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;初始化&lt;/strong&gt;：设置一个初始的哈希值，通常是一个固定的常数。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;处理输入数据&lt;/strong&gt;：将输入数据分成固定大小的块（通常为 4 或 8 字节），并对每个块进行处理。对于每个块，使用一系列的位操作和乘法来混合数据。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;处理剩余数据&lt;/strong&gt;：如果输入数据的长度不是块大小的整数倍，处理剩余的数据，并将其混合到哈希值中。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最终化&lt;/strong&gt;：对生成的哈希值进行最终化处理，以确保其分布均匀。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;返回哈希值&lt;/strong&gt;：返回最终生成的哈希值。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;HFT中一般用最后一步的计算：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;cstdint&amp;gt;
+
+struct ExchangeIdHasher {
+    // 强制内联，这几个指令会被编译器直接融合到调用处的代码中
+    inline size_t operator()(uint64_t k) const {
+        // 第一步：将高位的变化折叠到低位
+        k ^= k &amp;gt;&amp;gt; 33;
+        // 第二步：乘以一个经过严密数学测试的“魔法素数”，利用乘法的进位特性将 bit 彻底打散
+        k *= 0xff51afd7ed558ccdULL;
+        // 第三步：再次高低位混合
+        k ^= k &amp;gt;&amp;gt; 33;
+        // 第四步：乘以第二个“魔法素数”
+        k *= 0xc4ceb9fe1a85ec53ULL;
+        // 第五步：最后一次高低位混合
+        k ^= k &amp;gt;&amp;gt; 33;
+        
+        return k;
+    }
+};
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded></item><item><title>Overleaf服务器搭建教程</title><link>https://blog.xiaobaizhang.top/posts/overleaf-server/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/overleaf-server/</guid><pubDate>Thu, 13 Nov 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Overleaf 是一个非常流行的在线 LaTeX 编辑平台，本文将介绍如何在自己的服务器上搭建 Overleaf，以便更好地管理和使用 LaTeX 文档。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;1. 准备工作&lt;/h1&gt;
 &lt;p&gt;在开始之前，确保你有一台运行 Ubuntu 20.04 或更高版本的服务器，并且具有 sudo 权限。&lt;/p&gt;
@@ -477,9 +509,6 @@ git lfs pull
 &lt;h3&gt;导入容器&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;docker import ./FILE/PATH.tar &amp;lt;name&amp;gt;:latest
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded></item><item><title>为WSL安装多个Ubuntu实例</title><link>https://blog.xiaobaizhang.top/posts/multi-wsl/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/multi-wsl/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;在&lt;a href=&quot;https://cloud-images.ubuntu.com/&quot;&gt;这里&lt;/a&gt;选择&lt;code&gt;wsl&lt;/code&gt;，然后下载相应的版本，如&lt;code&gt;jammy&lt;/code&gt;。然后&lt;code&gt;wsl --import &amp;lt;Name&amp;gt; &amp;lt;Dir&amp;gt; &amp;lt;File&amp;gt;&lt;/code&gt;来安装对应的Ubuntu。使用&lt;code&gt;wsl -d &amp;lt;Name&amp;gt;&lt;/code&gt;来启动相应的实例。&lt;/p&gt;
-&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
-&lt;p&gt;Ref: &lt;a href=&quot;https://stackoverflow.com/questions/51584765/how-do-you-install-multiple-separate-instances-of-ubuntu-in-wsl&quot;&gt;StackOverflow&lt;/a&gt;&lt;/p&gt;
 </content:encoded></item><item><title>Ubuntu离线部署机器学习</title><link>https://blog.xiaobaizhang.top/posts/ml-offline-setup/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/ml-offline-setup/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;介绍。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;离线安装Docker&lt;/h1&gt;
@@ -493,6 +522,9 @@ git lfs pull
 &lt;/blockquote&gt;
 &lt;h1&gt;离线安装NV Container Toolkit&lt;/h1&gt;
 &lt;p&gt;在&lt;a href=&quot;https://github.com/NVIDIA/nvidia-container-toolkit&quot;&gt;GitHub&lt;/a&gt;下载相应的包，执行&lt;code&gt;sudo dpkg -i *.deb&lt;/code&gt;。&lt;/p&gt;
+</content:encoded></item><item><title>为WSL安装多个Ubuntu实例</title><link>https://blog.xiaobaizhang.top/posts/multi-wsl/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/multi-wsl/</guid><pubDate>Sat, 07 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;在&lt;a href=&quot;https://cloud-images.ubuntu.com/&quot;&gt;这里&lt;/a&gt;选择&lt;code&gt;wsl&lt;/code&gt;，然后下载相应的版本，如&lt;code&gt;jammy&lt;/code&gt;。然后&lt;code&gt;wsl --import &amp;lt;Name&amp;gt; &amp;lt;Dir&amp;gt; &amp;lt;File&amp;gt;&lt;/code&gt;来安装对应的Ubuntu。使用&lt;code&gt;wsl -d &amp;lt;Name&amp;gt;&lt;/code&gt;来启动相应的实例。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;p&gt;Ref: &lt;a href=&quot;https://stackoverflow.com/questions/51584765/how-do-you-install-multiple-separate-instances-of-ubuntu-in-wsl&quot;&gt;StackOverflow&lt;/a&gt;&lt;/p&gt;
 </content:encoded></item><item><title>给Nvidia显卡的电脑安装Ubuntu</title><link>https://blog.xiaobaizhang.top/posts/ubuntu-nvidia/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/ubuntu-nvidia/</guid><pubDate>Fri, 06 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;下载安装介质后，进入安装介质可能会黑屏，要在选择&lt;code&gt;Try or install ubuntu&lt;/code&gt;时按&lt;code&gt;e&lt;/code&gt;进入编辑模式，在&lt;code&gt;--- quite splash&lt;/code&gt;删除&lt;code&gt;---&lt;/code&gt;并添加&lt;code&gt;nomodeset&lt;/code&gt;，然后按&lt;code&gt;F10&lt;/code&gt;进入安装介质。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;配置Ubuntu&lt;/h1&gt;
