@@ -1015,12 +1015,15 @@ chmod +x ./caddy
         protocols tls1.2 tls1.3
     }
 
-    reverse_proxy /rayws* localhost:port {
+    reverse_proxy /rayws* 127.0.0.1:port {
         header_up Host {host}
         header_up X-Real-IP {remote_host}
     }
 
-    reverse_proxy /xuiws* localhost:port
+    reverse_proxy /xuiws* 127.0.0.1:port {
+        header_up Host {host}
+        header_up X-Real-IP {remote_host}
+    }
 
     # 伪装网址
     reverse_proxy https://demo.cloudreve.org {
@@ -1034,13 +1037,17 @@ chmod +x ./caddy
 &lt;p&gt;&lt;code&gt;caddy run&lt;/code&gt;查看tls是否生效：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;tls.obtain      certificate obtained successfully
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;XUI&lt;/h2&gt;
-&lt;h3&gt;安装XUI&lt;/h3&gt;
-&lt;p&gt;参考&lt;a href=&quot;https://github.com/FranzKafkaYu/x-ui&quot;&gt;官方仓库&lt;/a&gt;：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;bash &amp;lt;(curl -Ls https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install.sh)
+&lt;pre&gt;&lt;code&gt;sudo systemctl reload caddy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;3X-UI&lt;/h2&gt;
+&lt;h3&gt;安装3X-UI&lt;/h3&gt;
+&lt;p&gt;参考&lt;a href=&quot;https://github.com/MHSanaei/3x-ui&quot;&gt;官方仓库&lt;/a&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh | sudo bash
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3&gt;配置XUI&lt;/h3&gt;
 &lt;p&gt;进入面板，把监听IP改为&lt;code&gt;127.0.0.1&lt;/code&gt;，端口改为上面定义的&lt;code&gt;xuiws&lt;/code&gt;端口。添加端口为&lt;code&gt;rayws&lt;/code&gt;端口的节点。&lt;/p&gt;
+&lt;h3&gt;配置节点&lt;/h3&gt;
+&lt;p&gt;监听设置为&lt;code&gt;127.0.0.1&lt;/code&gt;，端口设置为&lt;code&gt;rayws&lt;/code&gt;的端口，传输方式为&lt;code&gt;WebSocket&lt;/code&gt;，路径填&lt;code&gt;/rayws&lt;/code&gt;&lt;/p&gt;
 </content:encoded></item><item><title>人工智能教我学习</title><link>https://blog.xiaobaizhang.top/posts/gpt_awesome/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/gpt_awesome/</guid><pubDate>Tue, 03 Jan 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;ChatGPT真是太厉害了！&lt;/p&gt;
 </content:encoded></item><item><title>CS自学教程</title><link>https://blog.xiaobaizhang.top/posts/cs-self-learn/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/cs-self-learn/</guid><pubDate>Sun, 27 Mar 2022 05:13:55 GMT</pubDate><content:encoded>&lt;h2&gt;编程入门&lt;/h2&gt;
 &lt;h3&gt;CS106L&lt;/h3&gt;
