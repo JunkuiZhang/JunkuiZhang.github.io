@@ -1048,6 +1048,9 @@ chmod +x ./caddy
 &lt;p&gt;进入面板，把监听IP改为&lt;code&gt;127.0.0.1&lt;/code&gt;，端口改为上面定义的&lt;code&gt;xuiws&lt;/code&gt;端口。添加端口为&lt;code&gt;rayws&lt;/code&gt;端口的节点。&lt;/p&gt;
 &lt;h3&gt;配置节点&lt;/h3&gt;
 &lt;p&gt;监听设置为&lt;code&gt;127.0.0.1&lt;/code&gt;，端口设置为&lt;code&gt;rayws&lt;/code&gt;的端口，传输方式为&lt;code&gt;WebSocket&lt;/code&gt;，路径填&lt;code&gt;/rayws&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Ref: https://bulianglin.com/archives/newcdn.html&lt;/p&gt;
+&lt;/blockquote&gt;
 </content:encoded></item><item><title>人工智能教我学习</title><link>https://blog.xiaobaizhang.top/posts/gpt_awesome/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/gpt_awesome/</guid><pubDate>Tue, 03 Jan 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;ChatGPT真是太厉害了！&lt;/p&gt;
 </content:encoded></item><item><title>CS自学教程</title><link>https://blog.xiaobaizhang.top/posts/cs-self-learn/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/cs-self-learn/</guid><pubDate>Sun, 27 Mar 2022 05:13:55 GMT</pubDate><content:encoded>&lt;h2&gt;编程入门&lt;/h2&gt;
 &lt;h3&gt;CS106L&lt;/h3&gt;
