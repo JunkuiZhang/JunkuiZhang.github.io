@@ -1015,12 +1015,19 @@ chmod +x ./caddy
         protocols tls1.2 tls1.3
     }
 
-    reverse_proxy /rayws* 127.0.0.1:port {
+    reverse_proxy /xui* 127.0.0.1:port {
         header_up Host {host}
         header_up X-Real-IP {remote_host}
     }
 
-    reverse_proxy /xuiws* 127.0.0.1:port {
+    # ws
+    # reverse_proxy /ray* 127.0.0.1:port {
+    #     header_up Host {host}
+    #     header_up X-Real-IP {remote_host}
+    # }
+
+    # xhttp
+    reverse_proxy /ray* h2c://127.0.0.1:port {
         header_up Host {host}
         header_up X-Real-IP {remote_host}
     }
@@ -1045,12 +1052,509 @@ chmod +x ./caddy
 &lt;pre&gt;&lt;code&gt;curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh | sudo bash
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3&gt;配置XUI&lt;/h3&gt;
-&lt;p&gt;进入面板，把监听IP改为&lt;code&gt;127.0.0.1&lt;/code&gt;，端口改为上面定义的&lt;code&gt;xuiws&lt;/code&gt;端口。添加端口为&lt;code&gt;rayws&lt;/code&gt;端口的节点。&lt;/p&gt;
-&lt;h3&gt;配置节点&lt;/h3&gt;
-&lt;p&gt;监听设置为&lt;code&gt;127.0.0.1&lt;/code&gt;，端口设置为&lt;code&gt;rayws&lt;/code&gt;的端口，传输方式为&lt;code&gt;WebSocket&lt;/code&gt;，路径填&lt;code&gt;/rayws&lt;/code&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Ref: https://bulianglin.com/archives/newcdn.html&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;进入面板，把监听IP改为&lt;code&gt;127.0.0.1&lt;/code&gt;，端口改为上面定义的&lt;code&gt;xui&lt;/code&gt;端口。添加端口为&lt;code&gt;ray&lt;/code&gt;端口的节点。&lt;/p&gt;
+&lt;h3&gt;配置节点 vmess+ws&lt;/h3&gt;
+&lt;p&gt;监听设置为&lt;code&gt;127.0.0.1&lt;/code&gt;，端口设置为&lt;code&gt;ray&lt;/code&gt;的端口，传输方式为&lt;code&gt;WebSocket&lt;/code&gt;，路径填&lt;code&gt;/ray&lt;/code&gt;&lt;/p&gt;
+&lt;h3&gt;配置节点 vless+xhttp&lt;/h3&gt;
+&lt;p&gt;监听设置为&lt;code&gt;127.0.0.1&lt;/code&gt;，端口设置为&lt;code&gt;ray&lt;/code&gt;的端口，传输方式为&lt;code&gt;xhttp&lt;/code&gt;，路径填&lt;code&gt;/ray&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;优选ip&lt;/h2&gt;
+&lt;p&gt;到&lt;a href=&quot;https://bulianglin.com/archives/newcdn.html&quot;&gt;这里&lt;/a&gt;使用假节点&lt;code&gt;vless://11111111-2222-3333-4444-555555555555@aaa.bbb.ccc:443?encryption=none&amp;amp;security=tls&amp;amp;sni=aaa.bbb.ccc&amp;amp;type=websocket&amp;amp;path=%2F123&amp;amp;#temp%20-%2054&lt;/code&gt;，然后使用如下脚本拿到ip：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import base64
+import json
+import urllib.parse
+import os
+
+INPUT_FILE = &quot;cf_ips.txt&quot;
+OUTPUT_FILE = &quot;new_ips.txt&quot;
+
+def extract_ips():
+    ips = []
+    if not os.path.exists(INPUT_FILE):
+        print(f&quot;[!] 找不到 {INPUT_FILE}，请确保该文件存在。&quot;)
+        return
+
+    with open(INPUT_FILE, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+
+            if line.startswith(&quot;vless://&quot;):
+                try:
+                    parsed = urllib.parse.urlparse(line)
+                    netloc = parsed.netloc
+                    # 解析如 uuid@ip:port 的格式
+                    if &quot;@&quot; in netloc:
+                        host_port = netloc.split(&quot;@&quot;)[-1]
+                        ip = host_port.split(&quot;:&quot;)[0]
+                        ips.append(ip)
+                except Exception as e:
+                    print(f&quot;[!] VLESS 解析失败: {line[:30]}... 错误信息: {e}&quot;)
+
+            elif line.startswith(&quot;vmess://&quot;):
+                try:
+                    payloadstr = line[8:]
+                    padding = len(payloadstr) % 4
+                    if padding:
+                        payloadstr += &apos;=&apos; * (4 - padding)
+                    config = json.loads(base64.b64decode(payloadstr).decode(&apos;utf-8&apos;))
+                    ip = config.get(&quot;add&quot;)
+                    if ip:
+                        ips.append(ip)
+                except Exception as e:
+                    print(f&quot;[!] VMESS 解析失败: {line[:30]}... 错误信息: {e}&quot;)
+
+    # 去重处理（如有需要可取消注释下面这行进行去重过滤，但为了保持与源文件等量这里原样输出）
+    # ips = list(dict.fromkeys(ips))
+
+    if ips:
+        with open(OUTPUT_FILE, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+            for ip in ips:
+                f.write(ip + &quot;\n&quot;)
+        print(f&quot;[+] 成功提取 {len(ips)} 个 IP 地址，已保存至 {OUTPUT_FILE}&quot;)
+    else:
+        print(&quot;[!] 未能从文件中提取到任何 IP。&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    extract_ips()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;拿到&lt;code&gt;new_ips.txt&lt;/code&gt;后，新建一个&lt;code&gt;ips.txt&lt;/code&gt;，把内容复制进去，然后使用如下脚本生成对应的链接：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import urllib.parse
+import os
+import base64
+import json
+
+# ==========================================
+# ⚙️ 配置区
+# ==========================================
+# 你的 3x-ui 生成的“本地母体链接”
+BASE_URI = &quot;vless://...&quot;
+# 域名
+# TODO: 替换为你的真实域名
+DOMAIN = &quot;aaa.bbb.ccc&quot;
+# 节点名称
+# TODO: 替换为你喜欢的节点名称前缀
+NODE_NAME_PREFIX = &quot;MyNode&quot;
+
+TXT_FILE = &quot;ips.txt&quot;
+OUTPUT_FILE = &quot;v2rayn.txt&quot;
+# ==========================================
+
+def build_links():
+    if not os.path.exists(TXT_FILE):
+        print(f&quot;[!] 找不到 {TXT_FILE}，请先创建。&quot;)
+        return
+
+    is_vmess = BASE_URI.startswith(&quot;vmess://&quot;)
+    is_vless = BASE_URI.startswith(&quot;vless://&quot;)
+
+    if not is_vmess and not is_vless:
+        print(&quot;[!] 初始化失败，母体链接必须以 vless:// 或 vmess:// 开头&quot;)
+        return
+
+    # 1. 拆解母体链接
+    if is_vless:
+        parsed_base = urllib.parse.urlparse(BASE_URI)
+        qs = urllib.parse.parse_qs(parsed_base.query)
+
+        uuid = parsed_base.username
+
+        # 提取核心固定参数（如果母体里有，就继承；没有就用默认值）
+        network_type = qs.get(&apos;type&apos;, [&apos;xhttp&apos;])[0]
+        path = qs.get(&apos;path&apos;, [&apos;/&apos;])[0]
+        mode = qs.get(&apos;mode&apos;, [&apos;auto&apos;])[0]
+        encryption = qs.get(&apos;encryption&apos;, [&apos;none&apos;])[0]
+    else:
+        # 解析 vmess
+        payloadstr = BASE_URI[8:]
+        padding = len(payloadstr) % 4
+        if padding:
+            payloadstr += &apos;=&apos; * (4 - padding)
+        try:
+            base_config = json.loads(base64.b64decode(payloadstr).decode(&apos;utf-8&apos;))
+        except Exception as e:
+            print(f&quot;[!] VMESS 解析失败: {e}&quot;)
+            return
+
+    links_list = []
+    index = 1
+
+    # 2. 遍历优选 IP 列表
+    with open(TXT_FILE, &apos;r&apos;, encoding=&apos;utf-8&apos;) as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith(&apos;#&apos;):
+                continue
+
+            parts = line.split()
+            ip = parts[0]
+            domain = DOMAIN # 跟 build_nodes.py 保持一致
+            node_name_base = f&quot;{NODE_NAME_PREFIX} - {index}&quot;
+
+            if is_vless:
+                # 3. 组装全新的查询参数 (Query String)
+                new_qs = {
+                    &apos;encryption&apos;: encryption,
+                    &apos;security&apos;: &apos;tls&apos;,          # 强制开启 TLS
+                    &apos;sni&apos;: domain,              # 注入真实域名
+                    &apos;type&apos;: network_type,
+                    &apos;path&apos;: path,
+                    &apos;mode&apos;: mode,
+                    # &apos;alpn&apos;: &apos;h2,http/1.1&apos;,      # 注入 CF 兼容的 ALPN
+                    # &apos;fp&apos;: &apos;chrome&apos;,             # 注入浏览器指纹
+                    # &apos;host&apos;: domain,             # 注入 Host 头
+                }
+
+                # 如果母体带有 extra 的 padding 参数，原样继承
+                if &apos;extra&apos; in qs:
+                    new_qs[&apos;extra&apos;] = qs[&apos;extra&apos;][0]
+                if &apos;x_padding_bytes&apos; in qs:
+                    new_qs[&apos;x_padding_bytes&apos;] = qs[&apos;x_padding_bytes&apos;][0]
+
+                # 4. URL 编码参数
+                encoded_qs = urllib.parse.urlencode(new_qs, doseq=True)
+
+                # 5. 组装节点名称（备注名），与 build_nodes.py 保持一致
+                node_name = urllib.parse.quote(node_name_base)
+
+                # 6. 拼接最终的 URI
+                final_uri = f&quot;vless://{uuid}@{ip}:443?{encoded_qs}#{node_name}&quot;
+                links_list.append(final_uri)
+            else:
+                # VMESS 处理逻辑
+                config = base_config.copy()
+                config[&apos;add&apos;] = ip
+                config[&apos;port&apos;] = 443       # 使用 CF 的 TLS 端口
+                config[&apos;tls&apos;] = &apos;tls&apos;      # 强制 TLS
+                config[&apos;sni&apos;] = domain     # 注入真实域名
+                config[&apos;ps&apos;] = node_name_base  # 节点名称
+
+                b64str = base64.b64encode(json.dumps(config).encode(&apos;utf-8&apos;)).decode(&apos;utf-8&apos;)
+                links_list.append(f&quot;vmess://{b64str}&quot;)
+
+            index += 1
+
+    # 追加最后一个直连域名的节点
+    node_name_base = f&quot;{NODE_NAME_PREFIX} - {index}&quot;
+    if is_vless:
+        new_qs[&apos;sni&apos;] = DOMAIN
+        new_qs[&apos;host&apos;] = DOMAIN
+        encoded_qs = urllib.parse.urlencode(new_qs, doseq=True)
+        node_name = urllib.parse.quote(node_name_base)
+        final_uri = f&quot;vless://{uuid}@{DOMAIN}:443?{encoded_qs}#{node_name}&quot;
+        links_list.append(final_uri)
+    else:
+        config = base_config.copy()
+        config[&apos;add&apos;] = DOMAIN
+        config[&apos;port&apos;] = 443
+        config[&apos;tls&apos;] = &apos;tls&apos;
+        config[&apos;sni&apos;] = DOMAIN
+        config[&apos;host&apos;] = DOMAIN
+        config[&apos;ps&apos;] = node_name_base
+        b64str = base64.b64encode(json.dumps(config).encode(&apos;utf-8&apos;)).decode(&apos;utf-8&apos;)
+        links_list.append(f&quot;vmess://{b64str}&quot;)
+
+    # 7. 导出到文件
+    if links_list:
+        with open(OUTPUT_FILE, &apos;w&apos;, encoding=&apos;utf-8&apos;) as f:
+            for link in links_list:
+                f.write(link + &apos;\n&apos;)
+        schema_name = &quot;VMESS&quot; if is_vmess else &quot;VLESS&quot;
+        print(f&quot;[+] 成功生成 {len(links_list)} 个标准 {schema_name} 链接，已保存至 {OUTPUT_FILE}&quot;)
+
+if __name__ == &apos;__main__&apos;:
+    build_links()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;或者使用&lt;code&gt;clash&lt;/code&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import urllib.parse
+import json
+import yaml
+import os
+import base64
+
+# ==========================================
+# ⚙️ 配置区
+# ==========================================
+# 你的母体链接，支持 vless:// 或 vmess://
+BASE_URI = &quot;vless://...&quot;
+
+# 域名
+DOMAIN = &quot;aaa.bbb.ccc&quot;
+# 节点名称
+NODE_NAME_PREFIX = &quot;MyNode&quot;
+
+TXT_FILE = &quot;ips.txt&quot;
+OUTPUT_YAML = &quot;optimized_nodes.yaml&quot;
+# ==========================================
+
+def build_node_yaml(protocol, ip, uuid, network, path, mode, domain, index, config_dict):
+    # 构造 Mihomo 标准 YAML 字典
+    proxy = {
+        &apos;name&apos;: f&quot;{NODE_NAME_PREFIX} - {index}&quot;,
+        &apos;type&apos;: protocol,
+        &apos;server&apos;: ip,
+        &apos;port&apos;: 443,          # 强制使用 HTTPS 端口
+        &apos;uuid&apos;: uuid,         # 继承母体的 UUID
+        &apos;network&apos;: network,
+        &apos;udp&apos;: True,
+        &apos;tls&apos;: True,          # 强制开启 TLS
+        # &apos;alpn&apos;: [&apos;h2&apos;, &apos;http/1.1&apos;], # 强制指定 ALPN，部分 CF 节点非常挑剔
+        # &apos;sni&apos;: domain,
+        &apos;servername&apos;: domain, # 许多受限内核 VLESS 配置只认 servername
+        &apos;skip-cert-verify&apos;: False,
+        &apos;client-fingerprint&apos;: &apos;chrome&apos;, # 极其重要：伪装 TLS 指纹，防 CF 阻断
+    }
+
+    if protocol == &apos;vmess&apos;:
+        proxy[&apos;alterId&apos;] = 0
+        proxy[&apos;cipher&apos;] = config_dict.get(&apos;scy&apos;, &apos;auto&apos;)
+
+    if network == &apos;xhttp&apos;:
+        proxy[&apos;xhttp-opts&apos;] = {
+            &apos;mode&apos;: mode,
+            &apos;path&apos;: path,
+            # &apos;headers&apos;: {
+            #     &apos;Host&apos;: [domain]
+            # }
+        }
+        if protocol == &apos;vless&apos; and &apos;extra&apos; in config_dict:
+            try:
+                extra_json = json.loads(urllib.parse.unquote(config_dict[&apos;extra&apos;][0]))
+                proxy[&apos;xhttp-opts&apos;][&apos;extra&apos;] = extra_json
+            except:
+                pass
+    elif network == &apos;ws&apos;:
+        proxy[&apos;ws-opts&apos;] = {
+            &apos;path&apos;: path,
+            # &apos;headers&apos;: {
+            #     &apos;Host&apos;: domain # ws-opts 的 Host 在 Mihomo 中通常是字符串
+            # }
+        }
+
+    return proxy
+
+def build_nodes():
+    if not os.path.exists(TXT_FILE):
+        print(f&quot;[!] 找不到 {TXT_FILE}，请先创建。&quot;)
+        return
+
+    # 1. 拆解母体链接
+    if BASE_URI.startswith(&apos;vmess://&apos;):
+        protocol = &apos;vmess&apos;
+        b64_str = BASE_URI[8:]
+        b64_str += &quot;=&quot; * ((4 - len(b64_str) % 4) % 4)
+        config_dict = json.loads(base64.b64decode(b64_str).decode(&apos;utf-8&apos;))
+        uuid = config_dict.get(&apos;id&apos;)
+        network = config_dict.get(&apos;net&apos;, &apos;ws&apos;)
+        path = config_dict.get(&apos;path&apos;, &apos;/&apos;)
+        mode = &apos;auto&apos;
+    elif BASE_URI.startswith(&apos;vless://&apos;):
+        protocol = &apos;vless&apos;
+        parsed_base = urllib.parse.urlparse(BASE_URI)
+        config_dict = urllib.parse.parse_qs(parsed_base.query)
+        uuid = parsed_base.username
+        network = config_dict.get(&apos;type&apos;, [&apos;tcp&apos;])[0]
+        path = urllib.parse.unquote(config_dict.get(&apos;path&apos;, [&apos;/&apos;])[0])
+        mode = config_dict.get(&apos;mode&apos;, [&apos;auto&apos;])[0]
+    else:
+        print(&quot;[!] 不支持的协议类型，只能处理 vmess:// 或 vless://&quot;)
+        return
+
+    proxies_list = []
+    index = 1
+
+    # 2. 读取优选列表并进行批量克隆
+    with open(TXT_FILE, &apos;r&apos;, encoding=&apos;utf-8&apos;) as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith(&apos;#&apos;):
+                continue
+
+            parts = line.split()
+            ip = parts[0]
+            domain = DOMAIN
+
+            proxy = build_node_yaml(protocol, ip, uuid, network, path, mode, domain, index, config_dict)
+            index += 1
+            proxies_list.append(proxy)
+
+    # 追加最后一个兜底真实域名的节点
+    proxy = build_node_yaml(protocol, DOMAIN, uuid, network, path, mode, DOMAIN, index, config_dict)
+    proxies_list.append(proxy)
+
+    # 3. 读取与注入 config.yaml
+    CONFIG_TEMPLATE = &quot;config.yaml&quot;
+    FINAL_CONFIG = &quot;final_config.yaml&quot;
+
+    if proxies_list:
+        try:
+            from ruamel.yaml import YAML
+            yaml_parser = YAML()
+            yaml_parser.preserve_quotes = True
+            with open(CONFIG_TEMPLATE, &apos;r&apos;, encoding=&apos;utf-8&apos;) as f:
+                config_data = yaml_parser.load(f)
+
+            if &apos;proxy-providers&apos; in config_data:
+                del config_data[&apos;proxy-providers&apos;]
+
+            config_data[&apos;proxies&apos;] = proxies_list
+
+            proxy_names = [p[&apos;name&apos;] for p in proxies_list]
+            if &apos;proxy-groups&apos; in config_data:
+                for group in config_data[&apos;proxy-groups&apos;]:
+                    if &apos;use&apos; in group and &apos;my_optimized_nodes&apos; in group[&apos;use&apos;]:
+                        group[&apos;use&apos;].remove(&apos;my_optimized_nodes&apos;)
+                        if not group[&apos;use&apos;]:
+                            del group[&apos;use&apos;]
+                        if &apos;proxies&apos; not in group:
+                            group[&apos;proxies&apos;] = []
+                        group[&apos;proxies&apos;] = proxy_names + group[&apos;proxies&apos;]
+
+            with open(FINAL_CONFIG, &apos;w&apos;, encoding=&apos;utf-8&apos;) as f:
+                yaml_parser.dump(config_data, f)
+            print(f&quot;[+] 成功生成独立配置: {FINAL_CONFIG} (类型: {protocol}, 包含 {len(proxies_list)} 个节点)&quot;)
+
+        except ImportError:
+            if os.path.exists(CONFIG_TEMPLATE):
+                with open(CONFIG_TEMPLATE, &apos;r&apos;, encoding=&apos;utf-8&apos;) as f:
+                    config_data = yaml.safe_load(f)
+                if &apos;proxy-providers&apos; in config_data:
+                    del config_data[&apos;proxy-providers&apos;]
+                config_data[&apos;proxies&apos;] = proxies_list
+                proxy_names = [p[&apos;name&apos;] for p in proxies_list]
+                if &apos;proxy-groups&apos; in config_data:
+                    for group in config_data[&apos;proxy-groups&apos;]:
+                        if &apos;use&apos; in group and &apos;my_optimized_nodes&apos; in group[&apos;use&apos;]:
+                            group[&apos;use&apos;].remove(&apos;my_optimized_nodes&apos;)
+                            if not group[&apos;use&apos;]:
+                                del group[&apos;use&apos;]
+                            if &apos;proxies&apos; not in group:
+                                group[&apos;proxies&apos;] = []
+                            group[&apos;proxies&apos;] = proxy_names + group[&apos;proxies&apos;]
+                with open(FINAL_CONFIG, &apos;w&apos;, encoding=&apos;utf-8&apos;) as f:
+                    yaml.dump(config_data, f, allow_unicode=True, sort_keys=False, indent=2)
+                print(f&quot;[+] 成功生成独立配置 (无注释版): {FINAL_CONFIG} (类型: {protocol}, 包含 {len(proxies_list)} 个节点)&quot;)
+            else:
+                with open(OUTPUT_YAML, &apos;w&apos;, encoding=&apos;utf-8&apos;) as f:
+                    yaml.dump({&apos;proxies&apos;: proxies_list}, f, allow_unicode=True, sort_keys=False, indent=2)
+                print(f&quot;[+] 成功生成节点文件: {OUTPUT_YAML}&quot;)
+
+if __name__ == &apos;__main__&apos;:
+    build_nodes()
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;配套的&lt;code&gt;config.yaml&lt;/code&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# ==========================================================
+# 个人专属顶级安全 Clash 配置文件 (Mihomo/Meta 内核专属)
+# ==========================================================
+mixed-port: 7890
+allow-lan: false
+mode: rule
+log-level: info
+unified-delay: true
+
+# 1. 动态节点提供者（指向同目录下的节点文件）
+proxy-providers:
+  my_optimized_nodes:
+    type: file
+    path: ./nodes.yaml # 核心：告诉内核去当前目录下读 nodes.yaml
+    health-check:
+      enable: true
+      interval: 300
+      url: http://www.gstatic.com/generate_204
+
+# 2. 策略组设计（控制流网格）
+proxy-groups:
+  - name: 核心代理
+    type: select
+    use:
+      - my_optimized_nodes # 动态引入外部文件里的所有优选 IP 节点
+    proxies:
+      - DIRECT
+
+  - name: 微软服务
+    type: select
+    proxies:
+      - DIRECT
+      - 核心代理
+
+  - name: 广告拦截
+    type: select
+    proxies:
+      - REJECT # 默认拒绝流量，即黑洞模式
+      - DIRECT # 如果某个网页误杀，你可以切到 DIRECT 放行
+
+  - name: 漏网之鱼
+    type: select
+    proxies:
+      - 核心代理
+      - DIRECT
+
+  - name: 苹果服务
+    type: select
+    proxies:
+      - DIRECT
+      - 核心代理
+
+  - name: 电报消息
+    type: select
+    proxies:
+      - 核心代理
+
+  - name: 游戏平台
+    type: select
+    proxies:
+      - DIRECT
+      - 核心代理
+
+  - name: 奈飞视频
+    type: select
+    proxies:
+      - 核心代理
+
+# 3. 路由规则栈（基于高性能 GeoIP/GeoSite 的国内外自动分流）
+rules:
+  # 优先放行本地局域网
+  - GEOIP,lan,DIRECT,no-resolve
+
+  # 广告与隐私追踪拦截
+  - GEOSITE,category-ads-all,广告拦截 # 拦截各大主流广告联盟和追踪器
+
+  # 苹果服务分流
+  - GEOSITE,apple,苹果服务
+
+  # 微软服务默认分流
+  - GEOSITE,microsoft,微软服务
+
+  # 电报消息分流 (Telegram)
+  - GEOSITE,telegram,电报消息
+  - GEOIP,telegram,电报消息,no-resolve
+
+  # Steam 下载（游戏更新与下载 CDN）强制直连
+  - DOMAIN-SUFFIX,steamcontent.com,DIRECT
+  - DOMAIN-SUFFIX,steamserver.net,DIRECT
+  - DOMAIN-SUFFIX,cm.steampowered.com,DIRECT
+  - DOMAIN-KEYWORD,steamcontent,DIRECT
+
+  # 游戏平台分流 (Steam 商店/社区, Epic 等)
+  - GEOSITE,category-games,游戏平台
+
+  # 奈飞流媒体分流
+  - GEOSITE,netflix,奈飞视频
+
+  # 常见开发与学术高频域名精准分流
+  - GEOSITE,google,核心代理
+  - GEOSITE,github,核心代理
+  - GEOSITE,openai,核心代理
+  - DOMAIN-SUFFIX,youtube.com,核心代理
+
+  # 核心分流：国内网站与国内 IP 全部无损直连
+  - GEOSITE,cn,DIRECT
+  - GEOIP,CN,DIRECT,no-resolve
+
+  # 兜底规则
+  - MATCH,漏网之鱼
+&lt;/code&gt;&lt;/pre&gt;
 </content:encoded></item><item><title>人工智能教我学习</title><link>https://blog.xiaobaizhang.top/posts/gpt_awesome/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/gpt_awesome/</guid><pubDate>Tue, 03 Jan 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;ChatGPT真是太厉害了！&lt;/p&gt;
 </content:encoded></item><item><title>CS自学教程</title><link>https://blog.xiaobaizhang.top/posts/cs-self-learn/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/cs-self-learn/</guid><pubDate>Sun, 27 Mar 2022 05:13:55 GMT</pubDate><content:encoded>&lt;h2&gt;编程入门&lt;/h2&gt;
 &lt;h3&gt;CS106L&lt;/h3&gt;
