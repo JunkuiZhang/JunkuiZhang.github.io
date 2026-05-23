@@ -1118,7 +1118,8 @@ def extract_ips():
 if __name__ == &quot;__main__&quot;:
     extract_ips()
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;拿到&lt;code&gt;new_ips.txt&lt;/code&gt;后，新建一个&lt;code&gt;ips.txt&lt;/code&gt;，把内容复制进去，然后使用如下脚本生成对应的链接：&lt;/p&gt;
+&lt;h3&gt;v2rayn&lt;/h3&gt;
+&lt;p&gt;拿到&lt;code&gt;new_ips.txt&lt;/code&gt;后，新建一个&lt;code&gt;ips.txt&lt;/code&gt;，把内容复制进去，然后使用如下脚本生成对应的链接，然后进行测速：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;import urllib.parse
 import os
 import base64
@@ -1265,12 +1266,18 @@ def build_links():
 if __name__ == &apos;__main__&apos;:
     build_links()
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;或者使用&lt;code&gt;clash&lt;/code&gt;：&lt;/p&gt;
+&lt;h3&gt;clash&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;vmess://ew0KICAidiI6ICIyIiwNCiAgInBzIjogIlJFUExBQ0VNRSIsDQogICJhZGQiOiAiMTA0LjE4LjExOS4yMCIsDQogICJwb3J0IjogIjQ0MyIsDQogICJpZCI6ICIwY2MzMjY3ZS1kNmIwLTRiMjctYTM0Zi0zOGY3MGI5ZjhjZGMiLA0KICAiYWlkIjogIjAiLA0KICAic2N5IjogImF1dG8iLA0KICAibmV0IjogIndzIiwNCiAgInR5cGUiOiAibm9uZSIsDQogICJob3N0IjogImFhYS5iYmIiLA0KICAicGF0aCI6ICIvYWJjZGVmZyIsDQogICJ0bHMiOiAidGxzIiwNCiAgInNuaSI6ICIiLA0KICAiYWxwbiI6ICIiDQp9&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;使用上面的假链接到&lt;a href=&quot;https://acl4ssr-sub.github.io/&quot;&gt;这里&lt;/a&gt;生成订阅链接，获取配置文件，保存到&lt;code&gt;configs/mini_adplus.yaml&lt;/code&gt;。然后使用如下的脚本生成：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;import urllib.parse
+import urllib.request
 import json
 import yaml
 import os
 import base64
+import ssl
 
 # ==========================================
 # ⚙️ 配置区
@@ -1285,6 +1292,12 @@ NODE_NAME_PREFIX = &quot;MyNode&quot;
 
 TXT_FILE = &quot;ips.txt&quot;
 OUTPUT_YAML = &quot;optimized_nodes.yaml&quot;
+
+# mini_adplus 配置模板
+MINI_ADPLUS_YAML = os.path.join(os.path.dirname(os.path.abspath(__file__)), &quot;configs&quot;, &quot;mini_adplus.yaml&quot;)
+MINI_ADPLUS_URL = (
+    &quot;https://api.wcc.best/sub?target=clash&amp;amp;url=vmess%3A%2F%2Few0KICAidiI6ICIyIiwNCiAgInBzIjogIlJFUExBQ0VNRSIsDQogICJhZGQiOiAiMTA0LjE4LjExOS4yMCIsDQogICJwb3J0IjogIjQ0MyIsDQogICJpZCI6ICIwY2MzMjY3ZS1kNmIwLTRiMjctYTM0Zi0zOGY3MGI5ZjhjZGMiLA0KICAiYWlkIjogIjAiLA0KICAic2N5IjogImF1dG8iLA0KICAibmV0IjogIndzIiwNCiAgInR5cGUiOiAibm9uZSIsDQogICJob3N0IjogImFhYS5iYmIiLA0KICAicGF0aCI6ICIvYWJjZGVmZyIsDQogICJ0bHMiOiAidGxzIiwNCiAgInNuaSI6ICIiLA0KICAiYWxwbiI6ICIiDQp9%7C&amp;amp;insert=false&amp;amp;config=https%3A%2F%2Fraw.githubusercontent.com%2FACL4SSR%2FACL4SSR%2Fmaster%2FClash%2Fconfig%2FACL4SSR_Online_Mini_AdblockPlus.ini&quot;
+)
 # ==========================================
 
 def build_node_yaml(protocol, ip, uuid, network, path, mode, domain, index, config_dict):
@@ -1333,7 +1346,43 @@ def build_node_yaml(protocol, ip, uuid, network, path, mode, domain, index, conf
 
     return proxy
 
+def download_mini_adplus():
+    &quot;&quot;&quot;检测 mini_adplus.yaml 是否存在，不存在则从远程下载&quot;&quot;&quot;
+    if os.path.exists(MINI_ADPLUS_YAML):
+        print(f&quot;[✓] 配置模板已存在: {MINI_ADPLUS_YAML}&quot;)
+        return True
+
+    print(f&quot;[*] 配置模板不存在，正在从远程下载...&quot;)
+    os.makedirs(os.path.dirname(MINI_ADPLUS_YAML), exist_ok=True)
+
+    try:
+        # 跳过 SSL 验证（subconverter API 可能证书不完整）
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+
+        req = urllib.request.Request(MINI_ADPLUS_URL, headers={
+            &apos;User-Agent&apos;: &apos;ClashForAndroid/2.5.12&apos;
+        })
+        with urllib.request.urlopen(req, context=ctx, timeout=30) as resp:
+            data = resp.read()
+
+        with open(MINI_ADPLUS_YAML, &apos;wb&apos;) as f:
+            f.write(data)
+
+        print(f&quot;[✓] 下载成功: {MINI_ADPLUS_YAML} ({len(data)} bytes)&quot;)
+        return True
+    except Exception as e:
+        print(f&quot;[✗] 下载失败: {e}&quot;)
+        return False
+
+
 def build_nodes():
+    # 0. 确保 mini_adplus.yaml 模板存在
+    if not download_mini_adplus():
+        print(&quot;[!] 无法获取配置模板，退出。&quot;)
+        return
+
     if not os.path.exists(TXT_FILE):
         print(f&quot;[!] 找不到 {TXT_FILE}，请先创建。&quot;)
         return
@@ -1382,178 +1431,105 @@ def build_nodes():
     proxy = build_node_yaml(protocol, DOMAIN, uuid, network, path, mode, DOMAIN, index, config_dict)
     proxies_list.append(proxy)
 
-    # 3. 读取与注入 config.yaml
-    CONFIG_TEMPLATE = &quot;config.yaml&quot;
+    # 3. 基于 mini_adplus.yaml 模板生成最终配置
     FINAL_CONFIG = &quot;final_config.yaml&quot;
 
     if proxies_list:
+        proxy_names = [p[&apos;name&apos;] for p in proxies_list]
+
         try:
             from ruamel.yaml import YAML
             yaml_parser = YAML()
             yaml_parser.preserve_quotes = True
-            with open(CONFIG_TEMPLATE, &apos;r&apos;, encoding=&apos;utf-8&apos;) as f:
+            with open(MINI_ADPLUS_YAML, &apos;r&apos;, encoding=&apos;utf-8&apos;) as f:
                 config_data = yaml_parser.load(f)
-
-            if &apos;proxy-providers&apos; in config_data:
-                del config_data[&apos;proxy-providers&apos;]
-
-            config_data[&apos;proxies&apos;] = proxies_list
-
-            proxy_names = [p[&apos;name&apos;] for p in proxies_list]
-            if &apos;proxy-groups&apos; in config_data:
-                for group in config_data[&apos;proxy-groups&apos;]:
-                    if &apos;use&apos; in group and &apos;my_optimized_nodes&apos; in group[&apos;use&apos;]:
-                        group[&apos;use&apos;].remove(&apos;my_optimized_nodes&apos;)
-                        if not group[&apos;use&apos;]:
-                            del group[&apos;use&apos;]
-                        if &apos;proxies&apos; not in group:
-                            group[&apos;proxies&apos;] = []
-                        group[&apos;proxies&apos;] = proxy_names + group[&apos;proxies&apos;]
-
-            with open(FINAL_CONFIG, &apos;w&apos;, encoding=&apos;utf-8&apos;) as f:
-                yaml_parser.dump(config_data, f)
-            print(f&quot;[+] 成功生成独立配置: {FINAL_CONFIG} (类型: {protocol}, 包含 {len(proxies_list)} 个节点)&quot;)
-
         except ImportError:
-            if os.path.exists(CONFIG_TEMPLATE):
-                with open(CONFIG_TEMPLATE, &apos;r&apos;, encoding=&apos;utf-8&apos;) as f:
-                    config_data = yaml.safe_load(f)
-                if &apos;proxy-providers&apos; in config_data:
-                    del config_data[&apos;proxy-providers&apos;]
-                config_data[&apos;proxies&apos;] = proxies_list
-                proxy_names = [p[&apos;name&apos;] for p in proxies_list]
-                if &apos;proxy-groups&apos; in config_data:
-                    for group in config_data[&apos;proxy-groups&apos;]:
-                        if &apos;use&apos; in group and &apos;my_optimized_nodes&apos; in group[&apos;use&apos;]:
-                            group[&apos;use&apos;].remove(&apos;my_optimized_nodes&apos;)
-                            if not group[&apos;use&apos;]:
-                                del group[&apos;use&apos;]
-                            if &apos;proxies&apos; not in group:
-                                group[&apos;proxies&apos;] = []
-                            group[&apos;proxies&apos;] = proxy_names + group[&apos;proxies&apos;]
+            with open(MINI_ADPLUS_YAML, &apos;r&apos;, encoding=&apos;utf-8&apos;) as f:
+                config_data = yaml.safe_load(f)
+            yaml_parser = None
+
+        # 替换 proxies 为新生成的节点
+        if &apos;proxy-providers&apos; in config_data:
+            del config_data[&apos;proxy-providers&apos;]
+        config_data[&apos;proxies&apos;] = proxies_list
+
+        # 期望的策略组结构（用于变更检测）
+        EXPECTED_GROUPS = [
+            &apos;🚀 节点选择&apos;,
+            &apos;♻️ 自动选择&apos;,
+            &apos;🎯 全球直连&apos;,
+            &apos;🛑 全球拦截&apos;,
+            &apos;🐟 漏网之鱼&apos;,
+        ]
+        # 需要注入节点的策略组
+        INJECT_GROUPS = {&apos;🚀 节点选择&apos;, &apos;♻️ 自动选择&apos;}
+        # 需要删除的策略组
+        REMOVE_GROUPS = {&apos;🐟 漏网之鱼&apos;}
+
+        if &apos;proxy-groups&apos; in config_data:
+            # ⚠️ 变更检测：检查模板的策略组是否与预期一致
+            actual_groups = [g[&apos;name&apos;] for g in config_data[&apos;proxy-groups&apos;]]
+            if actual_groups != EXPECTED_GROUPS:
+                print(&quot;=&quot; * 60)
+                print(&quot;⚠️  警告: 模板策略组结构已发生变化！&quot;)
+                print(f&quot;   期望: {EXPECTED_GROUPS}&quot;)
+                print(f&quot;   实际: {actual_groups}&quot;)
+                added = set(actual_groups) - set(EXPECTED_GROUPS)
+                removed = set(EXPECTED_GROUPS) - set(actual_groups)
+                if added:
+                    print(f&quot;   新增: {added}&quot;)
+                if removed:
+                    print(f&quot;   缺失: {removed}&quot;)
+                if actual_groups != EXPECTED_GROUPS and not (added or removed):
+                    print(f&quot;   顺序不同&quot;)
+                print(&quot;   请检查是否需要更新脚本逻辑！&quot;)
+                print(&quot;=&quot; * 60)
+
+            # 收集内置策略和分组名，用于区分&quot;具体节点&quot;和&quot;引用&quot;
+            builtin_names = {&apos;DIRECT&apos;, &apos;REJECT&apos;}
+            group_names = {g[&apos;name&apos;] for g in config_data[&apos;proxy-groups&apos;]}
+            skip_names = builtin_names | group_names
+
+            for group in config_data[&apos;proxy-groups&apos;]:
+                gname = group[&apos;name&apos;]
+
+                # 处理 use 字段（proxy-provider 引用）
+                if &apos;use&apos; in group:
+                    del group[&apos;use&apos;]
+
+                if gname in INJECT_GROUPS:
+                    # 只在 节点选择 和 自动选择 中注入新节点
+                    if &apos;proxies&apos; in group:
+                        kept = [p for p in group[&apos;proxies&apos;] if p in skip_names]
+                        group[&apos;proxies&apos;] = proxy_names + kept
+                    else:
+                        group[&apos;proxies&apos;] = proxy_names[:]
+
+            # 删除 漏网之鱼 策略组
+            config_data[&apos;proxy-groups&apos;] = [
+                g for g in config_data[&apos;proxy-groups&apos;] if g[&apos;name&apos;] not in REMOVE_GROUPS
+            ]
+            # 同时清理 rules 中引用漏网之鱼的规则
+            if &apos;rules&apos; in config_data:
+                config_data[&apos;rules&apos;] = [
+                    r for r in config_data[&apos;rules&apos;] if not any(rg in str(r) for rg in REMOVE_GROUPS)
+                ]
+
+        # 写入最终配置
+        try:
+            if yaml_parser is not None:
+                with open(FINAL_CONFIG, &apos;w&apos;, encoding=&apos;utf-8&apos;) as f:
+                    yaml_parser.dump(config_data, f)
+            else:
                 with open(FINAL_CONFIG, &apos;w&apos;, encoding=&apos;utf-8&apos;) as f:
                     yaml.dump(config_data, f, allow_unicode=True, sort_keys=False, indent=2)
-                print(f&quot;[+] 成功生成独立配置 (无注释版): {FINAL_CONFIG} (类型: {protocol}, 包含 {len(proxies_list)} 个节点)&quot;)
-            else:
-                with open(OUTPUT_YAML, &apos;w&apos;, encoding=&apos;utf-8&apos;) as f:
-                    yaml.dump({&apos;proxies&apos;: proxies_list}, f, allow_unicode=True, sort_keys=False, indent=2)
-                print(f&quot;[+] 成功生成节点文件: {OUTPUT_YAML}&quot;)
+            print(f&quot;[+] 成功生成配置: {FINAL_CONFIG} (基于 mini_adplus.yaml, 类型: {protocol}, 包含 {len(proxies_list)} 个节点)&quot;)
+        except Exception as e:
+            print(f&quot;[✗] 写入配置失败: {e}&quot;)
 
 if __name__ == &apos;__main__&apos;:
     build_nodes()
 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;配套的&lt;code&gt;config.yaml&lt;/code&gt;：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# ==========================================================
-# 个人专属顶级安全 Clash 配置文件 (Mihomo/Meta 内核专属)
-# ==========================================================
-mixed-port: 7890
-allow-lan: false
-mode: rule
-log-level: info
-unified-delay: true
-
-# 1. 动态节点提供者（指向同目录下的节点文件）
-proxy-providers:
-  my_optimized_nodes:
-    type: file
-    path: ./nodes.yaml # 核心：告诉内核去当前目录下读 nodes.yaml
-    health-check:
-      enable: true
-      interval: 300
-      url: http://www.gstatic.com/generate_204
-
-# 2. 策略组设计（控制流网格）
-proxy-groups:
-  - name: 核心代理
-    type: select
-    use:
-      - my_optimized_nodes # 动态引入外部文件里的所有优选 IP 节点
-    proxies:
-      - DIRECT
-
-  - name: 微软服务
-    type: select
-    proxies:
-      - DIRECT
-      - 核心代理
-
-  - name: 广告拦截
-    type: select
-    proxies:
-      - REJECT # 默认拒绝流量，即黑洞模式
-      - DIRECT # 如果某个网页误杀，你可以切到 DIRECT 放行
-
-  - name: 漏网之鱼
-    type: select
-    proxies:
-      - 核心代理
-      - DIRECT
-
-  - name: 苹果服务
-    type: select
-    proxies:
-      - DIRECT
-      - 核心代理
-
-  - name: 电报消息
-    type: select
-    proxies:
-      - 核心代理
-
-  - name: 游戏平台
-    type: select
-    proxies:
-      - DIRECT
-      - 核心代理
-
-  - name: 奈飞视频
-    type: select
-    proxies:
-      - 核心代理
-
-# 3. 路由规则栈（基于高性能 GeoIP/GeoSite 的国内外自动分流）
-rules:
-  # 优先放行本地局域网
-  - GEOIP,lan,DIRECT,no-resolve
-
-  # 广告与隐私追踪拦截
-  - GEOSITE,category-ads-all,广告拦截 # 拦截各大主流广告联盟和追踪器
-
-  # 苹果服务分流
-  - GEOSITE,apple,苹果服务
-
-  # 微软服务默认分流
-  - GEOSITE,microsoft,微软服务
-
-  # 电报消息分流 (Telegram)
-  - GEOSITE,telegram,电报消息
-  - GEOIP,telegram,电报消息,no-resolve
-
-  # Steam 下载（游戏更新与下载 CDN）强制直连
-  - DOMAIN-SUFFIX,steamcontent.com,DIRECT
-  - DOMAIN-SUFFIX,steamserver.net,DIRECT
-  - DOMAIN-SUFFIX,cm.steampowered.com,DIRECT
-  - DOMAIN-KEYWORD,steamcontent,DIRECT
-
-  # 游戏平台分流 (Steam 商店/社区, Epic 等)
-  - GEOSITE,category-games,游戏平台
-
-  # 奈飞流媒体分流
-  - GEOSITE,netflix,奈飞视频
-
-  # 常见开发与学术高频域名精准分流
-  - GEOSITE,google,核心代理
-  - GEOSITE,github,核心代理
-  - GEOSITE,openai,核心代理
-  - DOMAIN-SUFFIX,youtube.com,核心代理
-
-  # 核心分流：国内网站与国内 IP 全部无损直连
-  - GEOSITE,cn,DIRECT
-  - GEOIP,CN,DIRECT,no-resolve
-
-  # 兜底规则
-  - MATCH,漏网之鱼
 &lt;/code&gt;&lt;/pre&gt;
 </content:encoded></item><item><title>人工智能教我学习</title><link>https://blog.xiaobaizhang.top/posts/gpt_awesome/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/gpt_awesome/</guid><pubDate>Tue, 03 Jan 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;ChatGPT真是太厉害了！&lt;/p&gt;
 </content:encoded></item><item><title>CS自学教程</title><link>https://blog.xiaobaizhang.top/posts/cs-self-learn/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/cs-self-learn/</guid><pubDate>Sun, 27 Mar 2022 05:13:55 GMT</pubDate><content:encoded>&lt;h2&gt;编程入门&lt;/h2&gt;
