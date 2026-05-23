@@ -1453,6 +1453,9 @@ def build_nodes():
             del config_data[&apos;proxy-providers&apos;]
         config_data[&apos;proxies&apos;] = proxies_list
 
+        # mode 值需要小写
+        if &apos;mode&apos; in config_data:
+            config_data[&apos;mode&apos;] = config_data[&apos;mode&apos;].lower()
         # 期望的策略组结构（用于变更检测）
         EXPECTED_GROUPS = [
             &apos;🚀 节点选择&apos;,
@@ -1461,10 +1464,10 @@ def build_nodes():
             &apos;🛑 全球拦截&apos;,
             &apos;🐟 漏网之鱼&apos;,
         ]
-        # 需要注入节点的策略组
+        # 需要注入新节点的策略组
         INJECT_GROUPS = {&apos;🚀 节点选择&apos;, &apos;♻️ 自动选择&apos;}
-        # 需要删除的策略组
-        REMOVE_GROUPS = {&apos;🐟 漏网之鱼&apos;}
+        # 需要清理旧节点但不注入新节点的策略组（只保留分组引用）
+        CLEAN_GROUPS = {&apos;🐟 漏网之鱼&apos;}
 
         if &apos;proxy-groups&apos; in config_data:
             # ⚠️ 变更检测：检查模板的策略组是否与预期一致
@@ -1498,22 +1501,16 @@ def build_nodes():
                     del group[&apos;use&apos;]
 
                 if gname in INJECT_GROUPS:
-                    # 只在 节点选择 和 自动选择 中注入新节点
+                    # 节点选择 / 自动选择：替换为新节点
                     if &apos;proxies&apos; in group:
                         kept = [p for p in group[&apos;proxies&apos;] if p in skip_names]
                         group[&apos;proxies&apos;] = proxy_names + kept
                     else:
                         group[&apos;proxies&apos;] = proxy_names[:]
-
-            # 删除 漏网之鱼 策略组
-            config_data[&apos;proxy-groups&apos;] = [
-                g for g in config_data[&apos;proxy-groups&apos;] if g[&apos;name&apos;] not in REMOVE_GROUPS
-            ]
-            # 同时清理 rules 中引用漏网之鱼的规则
-            if &apos;rules&apos; in config_data:
-                config_data[&apos;rules&apos;] = [
-                    r for r in config_data[&apos;rules&apos;] if not any(rg in str(r) for rg in REMOVE_GROUPS)
-                ]
+                elif gname in CLEAN_GROUPS:
+                    # 漏网之鱼：只删掉具体节点名（REPLACEME等），保留分组引用
+                    if &apos;proxies&apos; in group:
+                        group[&apos;proxies&apos;] = [p for p in group[&apos;proxies&apos;] if p in skip_names]
 
         # 写入最终配置
         try:
@@ -1529,7 +1526,17 @@ def build_nodes():
 
 if __name__ == &apos;__main__&apos;:
     build_nodes()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;注意事项&lt;/h3&gt;
+&lt;p&gt;如果clash遇到wsl无网络的问题，在最前面加入mtu设置：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mixed-port: 7890
+allow-lan: true
+mode: rule
+log-level: info
+external-controller: :9090
 
+tun:
+  mtu: 1280
 &lt;/code&gt;&lt;/pre&gt;
 </content:encoded></item><item><title>人工智能教我学习</title><link>https://blog.xiaobaizhang.top/posts/gpt_awesome/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/gpt_awesome/</guid><pubDate>Tue, 03 Jan 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;ChatGPT真是太厉害了！&lt;/p&gt;
 </content:encoded></item><item><title>CS自学教程</title><link>https://blog.xiaobaizhang.top/posts/cs-self-learn/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/cs-self-learn/</guid><pubDate>Sun, 27 Mar 2022 05:13:55 GMT</pubDate><content:encoded>&lt;h2&gt;编程入门&lt;/h2&gt;
