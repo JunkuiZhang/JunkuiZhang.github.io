@@ -1377,7 +1377,7 @@ def download_mini_adplus():
         return False
 
 
-def build_nodes():
+def build_clash():
     # 0. 确保 mini_adplus.yaml 模板存在
     if not download_mini_adplus():
         print(&quot;[!] 无法获取配置模板，退出。&quot;)
@@ -1512,6 +1512,40 @@ def build_nodes():
                     if &apos;proxies&apos; in group:
                         group[&apos;proxies&apos;] = [p for p in group[&apos;proxies&apos;] if p in skip_names]
 
+        # 修补 rules 尾部，防止 DNS 泄露
+        if &apos;rules&apos; in config_data:
+            rules = config_data[&apos;rules&apos;]
+            new_rules = []
+            for r in rules:
+                rule_str = str(r)
+                # GEOIP,CN 加上 no-resolve
+                if rule_str.startswith(&apos;GEOIP,CN,&apos;) and &apos;no-resolve&apos; not in rule_str:
+                    new_rules.append(rule_str + &apos;,no-resolve&apos;)
+                else:
+                    new_rules.append(r)
+            # 在 MATCH 之前插入 GEOSITE,CN（如果不存在）
+            has_geosite_cn = any(&apos;GEOSITE,CN,&apos; in str(r) for r in new_rules)
+            if not has_geosite_cn:
+                # 找到 MATCH 规则的位置，插入到它前面
+                match_idx = next((i for i, r in enumerate(new_rules) if str(r).startswith(&apos;MATCH,&apos;)), len(new_rules))
+                new_rules.insert(match_idx, &apos;GEOSITE,CN,🎯 全球直连&apos;)
+            config_data[&apos;rules&apos;] = new_rules
+
+            # ⚠️ 检查所有 IP 类规则是否都有 no-resolve
+            IP_RULE_PREFIXES = (&apos;IP-CIDR,&apos;, &apos;IP-CIDR6,&apos;, &apos;GEOIP,&apos;)
+            missing = []
+            for i, r in enumerate(new_rules):
+                rule_str = str(r)
+                if any(rule_str.startswith(p) for p in IP_RULE_PREFIXES) and &apos;no-resolve&apos; not in rule_str:
+                    missing.append((i + 1, rule_str))
+            if missing:
+                print(&quot;=&quot; * 60)
+                print(f&quot;⚠️  警告: 发现 {len(missing)} 条 IP 类规则缺少 no-resolve，可能导致 DNS 泄露！&quot;)
+                for idx, rule in missing[:10]:  # 最多显示10条
+                    print(f&quot;   第 {idx} 条: {rule}&quot;)
+                if len(missing) &amp;gt; 10:
+                    print(f&quot;   ... 还有 {len(missing) - 10} 条&quot;)
+                print(&quot;=&quot; * 60)
         # 写入最终配置
         try:
             if yaml_parser is not None:
@@ -1525,7 +1559,7 @@ def build_nodes():
             print(f&quot;[✗] 写入配置失败: {e}&quot;)
 
 if __name__ == &apos;__main__&apos;:
-    build_nodes()
+    build_clash()
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3&gt;注意事项&lt;/h3&gt;
 &lt;p&gt;如果clash遇到wsl无网络的问题，在最前面加入mtu设置：&lt;/p&gt;
