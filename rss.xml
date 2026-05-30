@@ -622,6 +622,9 @@ docker run --gpus all nvcr.io/nvidia/k8s/cuda-sample:nbody nbody -gpu -benchmark
 &lt;p&gt;运行一下命令将安装 WSL 并安装 Ubuntu 发行版，如果需要安装其他 Linux 发行版（如 Arch Linux），请参考&lt;a href=&quot;https://learn.microsoft.com/zh-cn/windows/wsl/install&quot;&gt;此链接&lt;/a&gt;。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;wsl --install
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;或者安装到指定的位置：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wsl --install Ubuntu --location D:\WSL\Ubuntu
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;常用 WSL 命令&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;列出 WSL 子系统: &lt;code&gt;wsl --list&lt;/code&gt;&lt;/li&gt;
