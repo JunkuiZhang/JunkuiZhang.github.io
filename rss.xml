@@ -1,4 +1,118 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>张小白的小窝</title><description>Welcome!</description><link>https://blog.xiaobaizhang.top/</link><language>zh_CN</language><item><title>MurmurHash：一种高性能哈希函数</title><link>https://blog.xiaobaizhang.top/posts/murmur_hash/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/murmur_hash/</guid><pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;MurmurHash 是一种非加密哈希函数，广泛应用于高性能计算和数据处理领域。它由 Austin Appleby 在 2008 年开发，旨在提供快速且高质量的哈希值生成。MurmurHash 的设计目标是实现高速度和良好的分布特性，使其适用于各种应用场景，如哈希表、数据去重和分布式系统中的负载均衡。&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>张小白的小窝</title><description>Welcome!</description><link>https://blog.xiaobaizhang.top/</link><language>zh_CN</language><item><title>原子操作简介</title><link>https://blog.xiaobaizhang.top/posts/atomic-operation/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/atomic-operation/</guid><pubDate>Sat, 20 Jun 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;在高频交易（HFT）和其他需要极高性能的领域中，原子操作是一种重要的工具。原子操作是一种不可分割的操作，它要么完全执行，要么完全不执行。这意味着在多线程环境中，原子操作可以确保数据的一致性和正确性，而无需使用锁或其他同步机制。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;为什么需要原子操作&lt;/h1&gt;
+&lt;p&gt;原子操作主要解决两个问题：不可分割性和可见性。&lt;/p&gt;
+&lt;h2&gt;不可分割性&lt;/h2&gt;
+&lt;p&gt;原子操作是不可分割的，这意味着在执行过程中，其他线程无法观察到它的中间状态。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;int counter = 0;
+
+void increment() {
+    counter++; // 这不是一个原子操作
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在上面的代码中，&lt;code&gt;counter++&lt;/code&gt; 不是一个原子操作，因为它实际上是由多个步骤组成的：读取 &lt;code&gt;counter&lt;/code&gt; 的值、增加它的值、然后写回 &lt;code&gt;counter&lt;/code&gt;。如果两个线程同时执行 &lt;code&gt;increment()&lt;/code&gt;，可能会导致竞态条件，最终结果可能不正确。&lt;/p&gt;
+&lt;p&gt;而使用原子操作可以避免这个问题：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;atomic&amp;gt;
+std::atomic&amp;lt;int&amp;gt; counter(0);
+void increment() {
+    counter++; // 这是一个原子操作
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在这个例子中，&lt;code&gt;counter++&lt;/code&gt; 是一个原子操作，确保了即使多个线程同时执行 &lt;code&gt;increment()&lt;/code&gt;，&lt;code&gt;counter&lt;/code&gt; 的值也会正确地增加。&lt;/p&gt;
+&lt;h2&gt;可见性&lt;/h2&gt;
+&lt;p&gt;原子操作可以通过使用正确的内存序列来确保线程之间的可见性，建立同步关系，保证内存操作的先后顺序。它可以确保当一个线程看到标志位被改变时，也能安全地看到标志位改变前写入的数据。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;int payload = 0; // 普通的非原子变量（代表我们要传递的数据）
+std::atomic&amp;lt;bool&amp;gt; flag(false);
+
+// 线程 A 执行
+void producer() {
+    payload = 42; // 1. 准备数据
+    flag.store(true, std::memory_order_release); // 2. 发布标志
+}
+
+// 线程 B 执行
+void consumer() {
+    while (!flag.load(std::memory_order_acquire)) {
+        // 等待标志被设置
+    }
+    // 3. 标志已设置，安全读取数据
+    // 此时 payload 保证等于 42，不会读到旧值
+    int data = payload; 
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在这个例子中，&lt;code&gt;std::memory_order_release&lt;/code&gt;像是一个屏障，它保证了在设置 &lt;code&gt;flag&lt;/code&gt; 之前的所有写入操作（比如写入 &lt;code&gt;payload&lt;/code&gt;），绝不会被编译器或 CPU 重排到 &lt;code&gt;flag&lt;/code&gt; 设置之后；&lt;code&gt;std::memory_order_acquire&lt;/code&gt; 则保证了在读取到 &lt;code&gt;flag&lt;/code&gt; 为 &lt;code&gt;true&lt;/code&gt; 之后，后续的读取操作（比如读取 &lt;code&gt;payload&lt;/code&gt;）能看到之前线程发布的所有数据。&lt;/p&gt;
+&lt;h1&gt;原子操作是如何实现的&lt;/h1&gt;
+&lt;p&gt;同样从原子性和可见性的角度来看，原子操作的实现依赖于底层的硬件支持和编译器的优化。&lt;/p&gt;
+&lt;h2&gt;原子性&lt;/h2&gt;
+&lt;p&gt;原子操作通常由处理器提供的特殊指令来实现，这些指令确保了操作的不可分割性。例如，在 x86 架构上，&lt;code&gt;LOCK&lt;/code&gt; 前缀可以用于确保某些指令的原子性。&lt;/p&gt;
+&lt;p&gt;在最开始的单核CPU中，原子操作主要通过禁用中断来实现，以确保操作的不可分割性。&lt;/p&gt;
+&lt;p&gt;后来的多核CPU引入了复杂性，最初原子性是通过总线锁定来实现的，更详细的说，当一个处理器执行原子操作时，它会锁定总线，确保其他处理器无法访问内存。这种方法虽然有效，但性能较差。&lt;/p&gt;
+&lt;p&gt;现代CPU引入了缓存一致性协议（MESI协议），允许处理器在不锁定总线的情况下实现原子操作。更详细的说，当一个处理器执行原子操作时，它会获取相关缓存行的独占权，确保其他处理器无法访问这些缓存行，从而实现原子性。这种方法大大提高了性能。此时，“锁”的粒度从整个总线缩小到单个缓存行，极大地减少了锁竞争，提高了系统的整体性能。&lt;/p&gt;
+&lt;h2&gt;可见性&lt;/h2&gt;
+&lt;p&gt;原子操作的可见性是通过内存屏障（memory barriers）来实现的。&lt;/p&gt;
+&lt;p&gt;常用的内存屏障是 &lt;code&gt;std::memory_order_release&lt;/code&gt; 和 &lt;code&gt;std::memory_order_acquire&lt;/code&gt;，它们分别用于确保写操作和读操作的可见性。对于&lt;code&gt;release&lt;/code&gt;语义，根据&lt;a href=&quot;https://cppreference.com/cpp/atomic/memory_order&quot;&gt;cppreference&lt;/a&gt;：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;no reads or writes in the current thread can be reordered after this store.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;对于&lt;code&gt;acquire&lt;/code&gt;语义：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;no reads or writes in the current thread can be reordered before this load.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;需要注意的是，这里是&lt;strong&gt;所有的内存操作&lt;/strong&gt;不允许重排，不仅仅是读或者写。&lt;/p&gt;
+&lt;p&gt;而为了实现可见性，通过软件和硬件两部分实现。&lt;/p&gt;
+&lt;h3&gt;软件方面&lt;/h3&gt;
+&lt;p&gt;这部分主要由编译器来处理。比如&lt;code&gt;std::memory_order_release&lt;/code&gt;，这意味着编译器在优化代码时，不能将当前线程中的读写操作重新排序到这个存储操作之后。同样的，&lt;code&gt;std::memory_order_acquire&lt;/code&gt;，这意味着编译器不能将当前线程中的读写操作重新排序到这个加载操作之前。&lt;/p&gt;
+&lt;h3&gt;硬件方面&lt;/h3&gt;
+&lt;p&gt;这部分主要由CPU来处理，这部分依然有两个问题。第一个问题比较简单，CPU在执行指令时，可能会对指令进行乱序执行，这意味着CPU可能会将某些指令提前或延后执行，从而提高性能。&lt;/p&gt;
+&lt;p&gt;第二个问题是，CPU在对缓存进行操作时，CPU为了加速MESI协议，存在Invalidate Queue和Store Buffer。&lt;/p&gt;
+&lt;h4&gt;CPU的乱序执行&lt;/h4&gt;
+&lt;p&gt;CPU的乱序执行是指CPU在执行指令时，并不严格按照程序中指令的顺序来执行，而是根据指令之间的依赖关系和资源的可用性来决定执行顺序。这种优化可以提高CPU的利用率和整体性能。&lt;/p&gt;
+&lt;p&gt;编译器在翻译带有原子序的代码时，会向 CPU 发送特定的&lt;strong&gt;硬件内存屏障指令（Hardware Memory Barriers）&lt;/strong&gt;，具体而言，对于存储操作的&lt;code&gt;release&lt;/code&gt;，保证该操作之前的内存操作不会乱序执行到该操作之后。对于加载操作的&lt;code&gt;acquire&lt;/code&gt;，保证该操作之后的内存操作不会乱序执行到该操作之前。&lt;/p&gt;
+&lt;h4&gt;Invalidate Queue和Store Buffer&lt;/h4&gt;
+&lt;p&gt;Invalidate Queue和Store Buffer是CPU在实现MESI协议时，为了提高性能而引入的两个机制。&lt;/p&gt;
+&lt;p&gt;Invalidate Queue是指CPU在接收到其他CPU的Invalidate请求时，并不会立即处理这个请求，而是将其放入一个队列中，等到合适的时机再去处理。这样可以减少CPU在处理Invalidate请求时的等待时间，从而提高性能。&lt;/p&gt;
+&lt;p&gt;Store Buffer是指CPU在执行Store操作时，并不会立即将数据写入缓存，而是先将数据放入一个缓冲区中，等到合适的时机再去写入缓存。这样可以减少CPU在执行Store操作时的等待时间，从而提高性能。&lt;/p&gt;
+&lt;p&gt;但是，这两个机制可能会导致可见性问题。例如，假设有两个线程，线程A和线程B，线程A在执行一个原子操作之前，先执行了一些非原子操作，而线程B在执行原子操作之后，读取了线程A的非原子操作的结果。如果CPU在处理Invalidate请求时，将其放入Invalidate Queue中，而不是立即处理，那么线程B可能会看到一个不一致的状态，从而导致程序错误。&lt;/p&gt;
+&lt;h4&gt;x86结构&lt;/h4&gt;
+&lt;p&gt;对于x86架构，x86是完全存储定序架构（Total Store Order, TSO），因此存在Reorder Buffer，指令存在execute（执行）和retire（提交）两个阶段。&lt;/p&gt;
+&lt;h5&gt;Load指令&lt;/h5&gt;
+&lt;p&gt;1、执行阶段&lt;/p&gt;
+&lt;p&gt;CPU执行时，发生所谓的推测性读取，首先检查Store Buffer，如果Store Buffer中有一个Store指令正在等待提交，并且这个Store指令的地址与当前Load指令的地址相同，那么这个Load指令就会直接从Store Buffer中读取数据，而不是从缓存中读取数据。如果Store Buffer中没有这样的Store指令，那么这个Load指令就会从缓存中读取。&lt;/p&gt;
+&lt;p&gt;2、等待提交阶段&lt;/p&gt;
+&lt;p&gt;当一个指令执行完成后，它的结果会被存入Reorder Buffer中，并且按照程序原本的顺序进行提交（Retire）。如果一个Load指令在执行阶段从Store Buffer中读取了数据，那么它的结果就会被标记为“未决状态”，直到它所在的指令被提交后，才会正式生效。&lt;/p&gt;
+&lt;p&gt;此时，如果在这个Load指令被提交之前，其他CPU核心修改了这个地址的值，那么这个Load指令就会被标记为无效（Invalid），并且重新执行。&lt;/p&gt;
+&lt;p&gt;3、提交阶段&lt;/p&gt;
+&lt;p&gt;如果没有发生无效化，那么这个Load指令就会按照程序原本的顺序提交（Retire），并且它的结果正式生效。&lt;/p&gt;
+&lt;h5&gt;Store指令&lt;/h5&gt;
+&lt;p&gt;1、执行阶段&lt;/p&gt;
+&lt;p&gt;在乱序执行引擎中，当 CPU 执行单元计算出 Store 指令的目标地址和要写入的数据时，它就会立刻把这笔数据塞进 Store Buffer，该指令也是具有推测性。因为CPU 前面可能还有分支预测指令，如&lt;code&gt;if&lt;/code&gt;语句，如果分支预测错误，那么这个Store指令就会被丢弃（Squash），并且Store Buffer中的数据也会被丢弃。&lt;/p&gt;
+&lt;p&gt;在此阶段，虽然数据已经被放入Store Buffer中，但它没有被Reorder Buffer退休，因此没有资格被刷入 L1 Cache。&lt;/p&gt;
+&lt;p&gt;2、提交阶段&lt;/p&gt;
+&lt;p&gt;Reorder Buffer按指令顺序提交指令，确认它前面没有任何指令抛出异常，分支预测也没有出错时，ROB 就会宣布这条 Store 指令 “正式提交（Retire）”。此时，该存在于Store Buffer的指令才有资格被刷入 L1 Cache。&lt;/p&gt;
+&lt;p&gt;3、刷入阶段&lt;/p&gt;
+&lt;p&gt;由于Store Buffer的存在，数据不会被立刻刷入L1 Cache，而是会在稍后的某个时刻被刷入L1 Cache。CPU会根据当前的负载和其他因素来决定何时将Store Buffer中的数据刷入L1 Cache。&lt;/p&gt;
+&lt;h5&gt;CPU乱序与内存序&lt;/h5&gt;
+&lt;p&gt;从理论上讲，内存操作的乱序总共有四种组合：&lt;code&gt;Store-Store&lt;/code&gt;、&lt;code&gt;Load-Store&lt;/code&gt;、&lt;code&gt;Load-Load&lt;/code&gt; 和 &lt;code&gt;Store-Load&lt;/code&gt;。对于&lt;code&gt;release&lt;/code&gt;语义，要求禁止&lt;code&gt;Store-Store&lt;/code&gt;和&lt;code&gt;Load-Store&lt;/code&gt;重排，对于&lt;code&gt;acquire&lt;/code&gt;语义，要求禁止&lt;code&gt;Load-Store&lt;/code&gt;和&lt;code&gt;Load-Load&lt;/code&gt;重排。&lt;/p&gt;
+&lt;p&gt;可以看出，对于&lt;code&gt;release-acquire&lt;/code&gt;语义，无法阻止&lt;code&gt;Store-Load&lt;/code&gt;重排。&lt;/p&gt;
+&lt;p&gt;对于x86架构来说，x86是完全存储定序架构（Total Store Order, TSO），其天然保证禁止&lt;code&gt;Store-Store&lt;/code&gt;、&lt;code&gt;Load-Store&lt;/code&gt;和&lt;code&gt;Load-Load&lt;/code&gt;重排，但不保证禁止&lt;code&gt;Store-Load&lt;/code&gt;重排。因此，在x86架构上，对于&lt;code&gt;release&lt;/code&gt;和&lt;code&gt;acquire&lt;/code&gt;语义，编译器不需要插入额外的内存屏障指令，因为x86架构已经保证了这些重排的禁止。&lt;/p&gt;
+&lt;p&gt;对于&lt;code&gt;Store-Store&lt;/code&gt;重排，指令在ROB中退休后，由于x86架构的Store Buffer是FIFO，因此先发生的Store操作会先被处理，从而保证了&lt;code&gt;Store-Store&lt;/code&gt;重排的禁止。&lt;/p&gt;
+&lt;p&gt;对于&lt;code&gt;Load-Load&lt;/code&gt;重排，x86架构比较复杂，首先会有Load Buffer和推测执行，当CPU遇到连续的两个Load时，会把它们放入Load Buffer中，如果Load A发生cache miss，此时CPU会推测执行Load B，如果Load B发生cache hit，此时B的结果会被返回，而A的结果还没有返回，事实上发生了&lt;code&gt;Load-Load&lt;/code&gt;重排。&lt;/p&gt;
+&lt;p&gt;虽然 B 的数据提前读到了，但 x86 架构规定，所有指令的最终结果必须存入 Reorder Buffer 中，并且严格按照程序原本的顺序提交或者退休（Retire）。这意味着，哪怕 B 提前执行完，它的结果也只能以“未决状态”暂存在 CPU 内部，等待 A 读取完成并提交后，B 才能跟着提交。&lt;/p&gt;
+&lt;p&gt;此时，还会发生其他情况，比如其他CPU核心修改了B的值，因此在A的值还未读到，B的值就已经被修改了，此时B的结果就不正确了。CPU引入了缓存嗅探（Cache Snooping），如果收到了B的invalidate请求，CPU会检查Load Buffer中的所有未决Load，如果发现有一个Load正在等待B的结果，那么这个Load就会被标记为无效（Invalid），并且重新执行。&lt;/p&gt;
+&lt;p&gt;对于&lt;code&gt;Load-Store&lt;/code&gt;重排，x86通过Store Buffer和Reorder Buffer配合来保证禁止&lt;code&gt;Load-Store&lt;/code&gt;重排。当CPU执行一个Store时，会把其放入Store Buffer中，x86架构要求，所有指令乱序执行，但&lt;strong&gt;必须严格按照程序原本的代码顺序进行提交（Retire）&lt;/strong&gt;，这由Reorder Buffer保证，只有当排在前面的Load指令提交后，后面的Store指令才能提交，从而保证了&lt;code&gt;Load-Store&lt;/code&gt;重排的禁止。&lt;/p&gt;
+&lt;p&gt;而对于&lt;code&gt;Store-Load&lt;/code&gt;重排，x86架构并不禁止这种重排，因为它的内存模型允许&lt;code&gt;Store-Load&lt;/code&gt;重排。这是由于Store Buffer的存在，尽管Reorder Buffer保证了指令的提交顺序，但Store Buffer中的数据可能会在后续的Load指令之后才刷入缓存，导致可见性问题，从而导致&lt;code&gt;Store-Load&lt;/code&gt;重排。&lt;/p&gt;
+&lt;h2&gt;fence的特殊性&lt;/h2&gt;
+&lt;p&gt;对于原子变量的store和load，比如对于release的store：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;no reads or writes in the current thread can be reordered after this store.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;但是对于fence的release，&lt;code&gt;std::atomic_thread_fence(std::memory_order_release)&lt;/code&gt;该指令没有涉及任何内存操作，那么他的语义是哪个变量？&lt;/p&gt;
+&lt;p&gt;事实上，根据&lt;a href=&quot;https://en.cppreference.com/cpp/atomic/atomic_thread_fence&quot;&gt;cppref&lt;/a&gt;：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;an atomic_thread_fence with std::memory_order_release ordering prevents all preceding reads and writes from moving past ALL subsequent stores.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;即，&lt;code&gt;std::atomic_thread_fence(std::memory_order_release)&lt;/code&gt;的语义是：在这个fence之前的内存操作（无论是读还是写），都不能被重排到这个fence之后的&lt;strong&gt;任何&lt;/strong&gt;Store操作之后。&lt;/p&gt;
+</content:encoded></item><item><title>MurmurHash：一种高性能哈希函数</title><link>https://blog.xiaobaizhang.top/posts/murmur_hash/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/murmur_hash/</guid><pubDate>Fri, 24 Apr 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;MurmurHash 是一种非加密哈希函数，广泛应用于高性能计算和数据处理领域。它由 Austin Appleby 在 2008 年开发，旨在提供快速且高质量的哈希值生成。MurmurHash 的设计目标是实现高速度和良好的分布特性，使其适用于各种应用场景，如哈希表、数据去重和分布式系统中的负载均衡。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;p&gt;它的核心思想是通过混合输入数据的位来生成哈希值，从而减少碰撞的可能性。MurmurHash 使用了一系列的位操作和乘法来混合输入数据，确保生成的哈希值具有良好的分布特性。此外，MurmurHash 还支持不同的种子值，使得同一输入数据可以生成不同的哈希值，进一步增强了其安全性和适用性。&lt;/p&gt;
 &lt;p&gt;HFT中一般在扁平哈希表中使用这个算法，从而可以减少碰撞，该算法主要有如下四个步骤：&lt;/p&gt;
@@ -284,26 +398,6 @@ systemctl --user enable docker
 &lt;h1&gt;Reference&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&quot;https://docs.docker.com/engine/security/rootless/&quot;&gt;Rootless Docker&lt;/a&gt;
 &lt;a href=&quot;https://stackoverflow.com/questions/59373710/gpu-with-rootless-docker&quot;&gt;GPU&lt;/a&gt;&lt;/p&gt;
-</content:encoded></item><item><title>给无外网的Ubuntu服务器安装VSCode Server及插件</title><link>https://blog.xiaobaizhang.top/posts/ubuntu-vscode/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/ubuntu-vscode/</guid><pubDate>Sun, 06 Oct 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;如何给无外网的Ubuntu服务器安装VSCode Server及插件。&lt;/p&gt;
-&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
-&lt;h1&gt;安装Code Server&lt;/h1&gt;
-&lt;p&gt;使用remote ssh连接服务器，VSCode会自动下载Code Server，此时下载不通。记录下下载地址，手动下载，文件应为：&lt;code&gt;https://update.code.visualstudio.com/commit:&amp;lt;COMMIT_ID&amp;gt;/server-linux-x64/stable&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;下载完成后，在远程服务器上：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;rm ~/.vscode-server/bin/* -rf  #把$HOME/.vscode-server/bin下的内容删干净，防止出错
-cd ~/.vscode-server/bin
-tar -zxf vscode-server-linux-x64.tar.gz
-mv vscode-server-linux-x64 ${commit_id} # 注意把:${commit_id}替换成对应的Commit ID
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;此时，应该就可以打开服务器了。&lt;/p&gt;
-&lt;h1&gt;安装插件&lt;/h1&gt;
-&lt;p&gt;以&lt;code&gt;pyhon&lt;/code&gt;为例和&lt;code&gt;Docker&lt;/code&gt;为例。&lt;/p&gt;
-&lt;h2&gt;下载插件&lt;/h2&gt;
-&lt;p&gt;在本地机器上，在VSCode中找到插件，点击右侧的&lt;code&gt;marketplace&lt;/code&gt;，在打开的网页中，右侧点击&lt;code&gt;Download Extension&lt;/code&gt;，选择对应的平台后下载。&lt;/p&gt;
-&lt;h2&gt;上传插件&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;scp C:\LOCAL\FILE\PATH\test.file username@remote_ip:/home/SOME_FOLDER
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;安装插件&lt;/h2&gt;
-&lt;p&gt;在侧边栏打开插件后，点击右上方的三个点，然后选择&lt;code&gt;从VSIX&lt;/code&gt;中安装&lt;/p&gt;
 </content:encoded></item><item><title>破解Termius</title><link>https://blog.xiaobaizhang.top/posts/termius-crack/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/termius-crack/</guid><pubDate>Sun, 06 Oct 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Termius一定要登录才能使用，而我在公共的机器上显然不想登录。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;安装前置&lt;/h1&gt;
@@ -368,6 +462,26 @@ return .......
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h1&gt;使用&lt;/h1&gt;
 &lt;p&gt;启动&lt;code&gt;Termius&lt;/code&gt;然后登录，自动有pro权限，登出后也不需要再次登录。&lt;/p&gt;
+</content:encoded></item><item><title>给无外网的Ubuntu服务器安装VSCode Server及插件</title><link>https://blog.xiaobaizhang.top/posts/ubuntu-vscode/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/ubuntu-vscode/</guid><pubDate>Sun, 06 Oct 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;如何给无外网的Ubuntu服务器安装VSCode Server及插件。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;安装Code Server&lt;/h1&gt;
+&lt;p&gt;使用remote ssh连接服务器，VSCode会自动下载Code Server，此时下载不通。记录下下载地址，手动下载，文件应为：&lt;code&gt;https://update.code.visualstudio.com/commit:&amp;lt;COMMIT_ID&amp;gt;/server-linux-x64/stable&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;下载完成后，在远程服务器上：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;rm ~/.vscode-server/bin/* -rf  #把$HOME/.vscode-server/bin下的内容删干净，防止出错
+cd ~/.vscode-server/bin
+tar -zxf vscode-server-linux-x64.tar.gz
+mv vscode-server-linux-x64 ${commit_id} # 注意把:${commit_id}替换成对应的Commit ID
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;此时，应该就可以打开服务器了。&lt;/p&gt;
+&lt;h1&gt;安装插件&lt;/h1&gt;
+&lt;p&gt;以&lt;code&gt;pyhon&lt;/code&gt;为例和&lt;code&gt;Docker&lt;/code&gt;为例。&lt;/p&gt;
+&lt;h2&gt;下载插件&lt;/h2&gt;
+&lt;p&gt;在本地机器上，在VSCode中找到插件，点击右侧的&lt;code&gt;marketplace&lt;/code&gt;，在打开的网页中，右侧点击&lt;code&gt;Download Extension&lt;/code&gt;，选择对应的平台后下载。&lt;/p&gt;
+&lt;h2&gt;上传插件&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;scp C:\LOCAL\FILE\PATH\test.file username@remote_ip:/home/SOME_FOLDER
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;安装插件&lt;/h2&gt;
+&lt;p&gt;在侧边栏打开插件后，点击右上方的三个点，然后选择&lt;code&gt;从VSIX&lt;/code&gt;中安装&lt;/p&gt;
 </content:encoded></item><item><title>给无网络链接的Ubuntu安装NV驱动</title><link>https://blog.xiaobaizhang.top/posts/ubuntu-offline/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/ubuntu-offline/</guid><pubDate>Sun, 08 Sep 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;需要使用ssh服务，&lt;code&gt;sudo systemctl status ssh&lt;/code&gt;来检查ssh服务是否启动，否则&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo apt update
 sudo apt install openssh-server
