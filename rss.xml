@@ -1,4 +1,969 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>张小白的小窝</title><description>Welcome!</description><link>https://blog.xiaobaizhang.top/</link><language>zh_CN</language><item><title>原子操作简介</title><link>https://blog.xiaobaizhang.top/posts/atomic-operation/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/atomic-operation/</guid><pubDate>Sat, 20 Jun 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;在高频交易（HFT）和其他需要极高性能的领域中，原子操作是一种重要的工具。原子操作是一种不可分割的操作，它要么完全执行，要么完全不执行。这意味着在多线程环境中，原子操作可以确保数据的一致性和正确性，而无需使用锁或其他同步机制。&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>张小白的小窝</title><description>Welcome!</description><link>https://blog.xiaobaizhang.top/</link><language>zh_CN</language><item><title>应用绑核简介</title><link>https://blog.xiaobaizhang.top/posts/bind_core/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/bind_core/</guid><pubDate>Fri, 07 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;绑核能够比较好的隔离CPU资源，减少上下文切换，提高应用的性能。事实上，这是FPGA进行onload之前需要做的事情。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;Sysjitter&lt;/h1&gt;
+&lt;p&gt;Sysjitter工具用于衡量系统产生的抖动程度，以及这些抖动对用户级进程的影响。该工具会在每个处理器核心上运行一个线程，当该线程从核心中移除后，工具会记录其持续的时间。&lt;a href=&quot;https://github.com/Xilinx-CNS/cns-sysjitter/&quot;&gt;地址&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;./sysjitter --runtime 10 200 | column -t
+core_i:          0           1           2           3
+threshold(ns):   200         200         200         200
+cpu_mhz:         3215        3215        3215        3215
+runtime(ns):     9987653973  9987652245  9987652070  9987652027
+runtime(s):      9.988       9.988       9.988       9.988
+int_n:           10001       10130       10012       10001
+int_n_per_sec:   1001.336    1014.252    1002.438    1001.336
+int_min(ns):     1333        1247        1299        1446
+int_median(ns):  1390        1330        1329        1470
+int_mean(ns):    1424        1452        1452        1502
+int_90(ns):      1437        1372        1357        1519
+int_99(ns):      1619        5046        2392        1688
+int_999(ns):     5065        22977       15604       3694
+int_9999(ns):    31260       39017       184305      36419
+int_99999(ns):   40613       45065       347097      49998
+int_max(ns):     40613       45065       347097      49998
+int_total(ns):   14244846    14719972    14541991    15031294
+int_total(%):    0.143       0.147       0.146       0.150
+&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;字段&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;threshold (ns)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;忽略所有持续时间少于此时间的中断。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;cpu_mhz&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;CPU 速度&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;runtime (ns)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;sysjitter 的运行时间 - 以纳秒为单位&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;runtime (s)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;sysjitter 的运行时间 - 以秒为单位&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;int_n&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;用户线程被中断的次数&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;int_n_per_sec&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;每秒中用户线程被中断的次数&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;int_min (ns)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;由于中断导致用户线程被暂停的最低时间长度&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;int_median (ns)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;由于中断导致用户线程等待的时间中位数&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;int_mean (ns)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;由于中断导致用户线程的占用时间延长&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;int_90 (ns)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;90%分位数值&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;int_99 (ns)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;99%分位数值&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;int_999 (ns)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;99.9%的分位数值&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;int_9999 (ns)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;99.99%的分位数值&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;int_99999 (ns)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;99.999%的分位数值&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;int_max (ns)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;用户线程所占用的时间最大值&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;int_total (ns)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;未处理用户线程的总时间&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;int_total (%)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;int_total (ns)&lt;/code&gt; 占总运行时间的百分比&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1&gt;隔离核心的基本设置&lt;/h1&gt;
+&lt;h2&gt;BIOS&lt;/h2&gt;
+&lt;p&gt;关闭CPU C-States和P-States，禁用超线程。&lt;/p&gt;
+&lt;h2&gt;修改内核启动参数&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;# /etc/default/grub
+GRUB_CMDLINE_LINUX=&quot;isolcpus=1-5 nohz_full=1-5 rcu_nocbs=1-5&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;修改后更新GRUB并重启：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo update-grub  # Ubuntu/Debian
+# 或 sudo grub2-mkconfig -o /boot/grub2/grub.cfg # CentOS/RHEL
+sudo reboot
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;处理硬件中断&lt;/h2&gt;
+&lt;p&gt;系统默认会使用 &lt;code&gt;irqbalance&lt;/code&gt; 服务在所有 CPU 上负载均衡硬件中断。这会破坏设置好的核心隔离。&lt;/p&gt;
+&lt;h3&gt;关闭&lt;code&gt;irqbalance&lt;/code&gt;&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;sudo systemctl stop irqbalance
+sudo systemctl disable irqbalance
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;手动绑定硬件中断到其他核心&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# 设置新中断的默认亲和性
+echo f | sudo tee /proc/irq/default_smp_affinity
+
+# 遍历现有的所有硬件中断，强制绑定到 0-3 核
+for irq in $(ls /proc/irq/ | grep -E &apos;^[0-9]+&apos;); do
+    echo f | sudo tee /proc/irq/$irq/smp_affinity 2&amp;gt;/dev/null
+done
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;或者设置：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;for irq_dir in /proc/irq/[0-9]*; do
+    irq=$(basename $irq_dir)
+    # 尝试将中断绑定到 0-63 核心 (过滤掉错误输出，因为某些特殊中断无法更改亲和性)
+    sudo sh -c &quot;echo &apos;0-63&apos; &amp;gt; $irq_dir/smp_affinity_list&quot; 2&amp;gt;/dev/null
+done
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;驱逐内核工作队列&lt;/h3&gt;
+&lt;p&gt;内核的 &lt;code&gt;kworker&lt;/code&gt; 线程会产生软中断。必须将未绑定的工作队列限制在管家核心上：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# 将 0-3 核的十六进制掩码 (f) 写入工作队列配置
+echo f | sudo tee /sys/devices/virtual/workqueue/cpumask
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;观测结果&lt;/h3&gt;
+&lt;h4&gt;观测核心中断类型&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;cat &amp;lt;&amp;lt; &apos;EOF&apos; &amp;gt; watch_isol_irq.sh
+#!/bin/bash
+
+# 检查是否传入了参数
+if [ -z &quot;$1&quot; ]; then
+    echo &quot;用法: $0 &amp;lt;起始核心&amp;gt;-&amp;lt;结束核心&amp;gt;  或  $0 &amp;lt;单个核心&amp;gt;&quot;
+    echo &quot;示例: $0 64-70&quot;
+    echo &quot;      $0 64&quot;
+    exit 1
+fi
+
+# 解析输入参数 (支持 64-70 或 64 格式)
+IFS=&apos;-&apos; read -r start_cpu end_cpu &amp;lt;&amp;lt;&amp;lt; &quot;$1&quot;
+# 如果没有输入结束核心，则起始和结束相同（单核模式）
+[ -z &quot;$end_cpu&quot; ] &amp;amp;&amp;amp; end_cpu=$start_cpu
+
+# 将解析出的 start 和 end 传给 awk
+awk -v start=&quot;$start_cpu&quot; -v end=&quot;$end_cpu&quot; &apos;
+NR==1 {
+    printf &quot;%-10s&quot;, &quot;IRQ&quot;
+    for(i=1; i&amp;lt;=NF; i++) {
+        if ($i ~ /^CPU/) {
+            cpu_num = substr($i, 4) + 0
+            if (cpu_num &amp;gt;= start &amp;amp;&amp;amp; cpu_num &amp;lt;= end) {
+                target_cols[i+1] = 1
+                printf &quot;%10s&quot;, $i
+            }
+            last_cpu_col = i+1
+        }
+    }
+    print &quot;  NAME&quot;
+}
+NR&amp;gt;1 {
+    sum = 0
+    for (i=2; i&amp;lt;=last_cpu_col; i++) {
+        if (target_cols[i]) sum += $i
+    }
+    # 只有在这几个指定核上中断数总和大于0，才打印这一行
+    if (sum &amp;gt; 0) {
+        printf &quot;%-10s&quot;, $1
+        for (i=2; i&amp;lt;=last_cpu_col; i++) {
+            if (target_cols[i]) printf &quot;%10s&quot;, $i
+        }
+        desc = &quot;&quot;
+        for (i=last_cpu_col+1; i&amp;lt;=NF; i++) {
+            desc = desc &quot; &quot; $i
+        }
+        printf &quot; %s\n&quot;, desc
+    }
+}&apos; /proc/interrupts
+EOF
+chmod +x watch_isol_irq.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;通过这个脚本可以查看某个或某些核心的终端情况：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;./watch_isol_irq.sh 64
+./watch_isol_irq.sh 64-70
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;或者结合&lt;code&gt;watch&lt;/code&gt;来使用：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;watch -n 1 -d &quot;./watch_isol_irq.sh 64-70&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;观测核心上有什么程序在运行&lt;/h4&gt;
+&lt;p&gt;检查有什么程序在64核上运行：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ps -eLo psr,pid,tid,stat,cls,rtprio,comm | awk &apos;NR==1 || $1==64&apos;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;内存亲和性&lt;/h1&gt;
+&lt;p&gt;内存也需要设置亲和性，不然可能会导致内存访问延迟增加，影响性能。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;numastat -m
+numastat -p 123456
+taskset -acp 123456
+ps -T -p 123456 -o pid,tid,pcpu,psr,comm
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;查看node和cpu的关系：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;numactl --hardware # numactl -H
+cat /sys/devices/system/node/node&amp;lt;N&amp;gt;/cpulist
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded></item><item><title>FPGA调优总结</title><link>https://blog.xiaobaizhang.top/posts/fpga_onload/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/fpga_onload/</guid><pubDate>Thu, 06 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;FPGA调优是提高硬件性能的重要手段。本文将总结一些常见的FPGA调优技巧和方法，从我实际的经验出发，分享在FPGA开发过程中的感悟。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;丢包情况检查&lt;/h1&gt;
+&lt;p&gt;网卡如果存在丢包可以通过以下方式检查：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# 查看网卡统计信息
+ifconfig
+
+# 如果没有ifconfig
+ip -s link show enp161s0f0
+
+# 查看特定网卡的统计信息
+ethtool -S enp161s0f0 | grep drop
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;确定onload是否被挂载：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;onload_stackdump | less
+cat /proc/&amp;lt;PID&amp;gt;/maps | grep libonloa
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;使用&lt;code&gt;onload&lt;/code&gt;来启动程序&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;EF_RXQ_SIZE=4096 EF_MAX_PACKETS=524288 EF_MAX_RX_PACKETS=393216 EF_HIGH_THROUGHPUT_MODE=1 EF_STACK_PER_THREAD=1 EF_TCP=0 EF_UDP=1 onload --profile=latency ./程序
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;轮询和中断&lt;/h2&gt;
+&lt;h3&gt;轮询处理&lt;/h3&gt;
+&lt;p&gt;上面的参数中 &lt;code&gt;--profile=latency&lt;/code&gt; 表示使用低延迟配置，这些配置文件通常都是一些&lt;code&gt;.opf&lt;/code&gt;文件，可以通过下面的命令查看参数：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cat /usr/libexec/onload/profiles/latency.opf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其中最重要的参数就是其中的&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;EF_POLL_USEC=100000
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;通常情况下，当应用程序尝试从Socket读取数据但未能获取到数据时，应用程序会进入操作系统内核并陷入阻塞状态。当数据可用后，网络适配器会中断 CPU 的运作，从而使内核能够重新安排应用程序的继续执行流程。&lt;/p&gt;
+&lt;p&gt;Onload 可以配置为在用户模式下在处理器上持续运行，持续时间为指定的微秒数，同时等待来自网络的数据。如果持续运行的时间到期，处理器将恢复到传统的阻塞模式。而非阻塞Socket则始终会立即返回结果，因为它们不受持续运行的影响。&lt;/p&gt;
+&lt;p&gt;Onload 使用 &lt;code&gt;EF_POLL_USEC&lt;/code&gt; 环境变量来配置旋转超时的时间长度。&lt;/p&gt;
+&lt;p&gt;设置 &lt;code&gt;EF_POLL_USEC&lt;/code&gt; 参数。这会使 Onload 在处理器上运行一段时间，持续时间最多为指定的微秒数，之后才会被阻塞。此设置适用于 TCP 和 UDP 协议，同时也在 &lt;code&gt;recv()&lt;/code&gt; 、 &lt;code&gt;select()&lt;/code&gt; 、 &lt;code&gt;pselect()&lt;/code&gt; 和 &lt;code&gt;poll()&lt;/code&gt; 、 &lt;code&gt;ppoll()&lt;/code&gt; 和 &lt;code&gt;epoll_wait()&lt;/code&gt; 、 &lt;code&gt;epoll_pwait()&lt;/code&gt; 和 &lt;code&gt;onload_ordered_epoll_wait()&lt;/code&gt; 中应用。&lt;/p&gt;
+&lt;p&gt;如果 &lt;code&gt;EF_POLL_USEC&lt;/code&gt; 和 &lt;code&gt;EF_SPIN_USEC&lt;/code&gt; 这两个参数都没有被设置，那么 Onload 将会采用默认的中断驱动行为，因为 EF_INT_DRIVEN 环境变量默认是启用的。&lt;/p&gt;
+&lt;p&gt;设置 &lt;code&gt;EF_POLL_USEC&lt;/code&gt; 变量的同时，也会设置以下环境变量。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;EF_SPIN_USEC=EF_POLL_USEC
+EF_SELECT_SPIN=1
+EF_EPOLL_SPIN=1
+EF_POLL_SPIN=1
+EF_PKT_WAIT_SPIN=1
+EF_TCP_SEND_SPIN=1
+EF_UDP_RECV_SPIN=1
+EF_UDP_SEND_SPIN=1
+EF_TCP_RECV_SPIN=1
+EF_BUZZ_USEC=MIN(EF_POLL_USEC, 100)
+EF_SOCK_LOCK_BUZZ=1
+EF_STACK_LOCK_BUZZ=1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;注意，这里需要系统关闭自适应调节功能，并将中断调节的优先级设置为较高值（以微秒为单位），以避免系统因过多的中断而陷入混乱。请使用以下命令来实现这一操作：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/sbin/ethtool -C eth2 rx-usecs 60 adaptive-rx off
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;使用&lt;code&gt;onload_stackdump&lt;/code&gt;&lt;/h1&gt;
+&lt;p&gt;查看文档：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;onload_stackdump doc
+onload_stackdump -h
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;输出stack信息：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;onload_stackdump
+#stack-id stack-name      pids
+6         teststack       28570
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;输出所有&lt;code&gt;lots&lt;/code&gt;输出的统计信息和描述：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;onload_stackdump 4 describe_stats
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;输出onload加载的进程：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;onload_stackdump processes
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;输出onload加载的进程的环境变量：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;onload_stackdump env
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;减少内存分配&lt;/h2&gt;
+&lt;p&gt;建议预先分配内存，以避免由于分配和内存映射所带来的延迟抖动问题。&lt;/p&gt;
+&lt;p&gt;可以设置 &lt;code&gt;EF_PREALLOC_PACKETS&lt;/code&gt; 和 &lt;code&gt;EF_MAX_PACKETS&lt;/code&gt; 环境变量，以便在堆栈创建时分配数据包缓冲区。例如：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;EF_PREALLOC_PACKETS=1 EF_MAX_PACKETS=64000 onload &amp;lt;myapplication&amp;gt;...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;为某个堆栈分配预缓存包缓冲区会占用其他堆栈可用的缓冲区数量。用户应当考虑，为某个堆栈过度分配缓冲区容量意味着可以分配给其他位置的额外缓存空间。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;尽量在用户空间中处理&lt;/h2&gt;
+&lt;p&gt;许多应用程序在大部分处理工作在用户级别而非内核级别时，能够表现得更加出色。要了解某个应用程序的性能表现，请执行以下命令：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;onload_stackdump lots | grep polls
+&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;计数器&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;k_polls&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;从内核处获取套接字事件队列的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;u_polls&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;从用户空间轮询套接字事件队列的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;periodic_polls&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;周期性计时器进行事件查询的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;interrupt_polls&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;用于轮询网络事件的中断次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;deferred_polls&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;该轮询被推迟到堆栈锁持有者手中的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;timeout_interrupt_polls&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;用于轮询网络事件超时的中断次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;通过设置&lt;code&gt;EF_POLL_USEC&lt;/code&gt;参数来尽量在用户空间进行轮询处理。&lt;/p&gt;
+&lt;h2&gt;中断越少越好&lt;/h2&gt;
+&lt;p&gt;一个设计良好的应用程序能够实现处理的中断次数与完成的实际工作量的平衡。例如，通过每次中断处理多个数据包，而不是只处理一个数据包，就可以提高处理效率。即使是那些需要持续运行的应用程序也能从偶尔发生的中断中受益。例如，当一个持续运行的线程从 CPU 上被移除后，在 250 微秒后发生的超时中断会促使该线程重新执行任务。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;onload_stackdump lots | grep ^interrupt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;计数器&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Interrupts&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;堆栈接收到的中断总数量。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Interrupt polls&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;堆栈被轮询的次数，通过中断调用实现。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Interrupt events&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;当被中断请求调用时，所处理的事件数量。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Interrupt wakes&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;应用程序因中断而被唤醒的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Interrupt primes&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;在通过自旋或轮询堆栈后，中断被重新激活的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Interrupt no events&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;没有发生需要恢复的事件的堆栈调查数量。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Interrupt lock contends&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;该应用程序在中断触发之前就已经获取了锁资源。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Interrupt budget limited&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;在通过中断处理轮询时，当达到 NAPI 预算限制时，轮询会被停止。此时，剩余的事件会被处理在堆栈工作队列中。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;如果中断较多，应当增加&lt;code&gt;EF_POLL_USEC&lt;/code&gt;的值。&lt;/p&gt;
+&lt;h2&gt;减少丢包&lt;/h2&gt;
+&lt;p&gt;网络性能的优劣会受到任何数据包丢失情况的影响。这一点在那些基于单播或组播 UDP Socket 构建的可靠数据传输协议中表现得尤为明显。&lt;/p&gt;
+&lt;p&gt;首先，需要检查数据包是否在到达 Onload 堆栈之前就被网络适配器丢弃了。可以使用 &lt;code&gt;ethtool&lt;/code&gt; 从网络适配器中直接获取统计信息。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ethtool -S enp161s0f0 | grep drop
+&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;计数器&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rx_noskb_drops&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;当没有更多的套接字缓冲区可供使用时，会丢失多少数据包。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;port_rx_nodesc_drops&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;当接收环缓冲区中没有更多的描述符可供接收时，会丢失多少个数据包。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;port_rx_dp_di_dropped_packets&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;由于过滤器认为某些数据包应该被丢弃，因此产生了丢包的情况。这种情况发生在数据包不符合任何过滤条件时，或者匹配到的过滤器指示该数据包应该被丢弃时。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;port_rx_dp_q_disabled_packets&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;发送到不存在的队列中的数据包数量。在初始化或销毁过程中可能会看到少量此类情况，但如果数量较大或持续增加，则表明 VI 集的大小与实际 VI 的数量之间存在不匹配的问题。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;port_rx_pm_discard_bb_overflow&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;由于数据包内存缓冲区溢出，导致的一些数据包被丢弃。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;port_rx_pm_discard_vfifo_full&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;由于适配器没有足够的主包内存来接收数据包，导致数据包被丢弃的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;port_rx_pm_discard_mapping&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;由于设置了 802.1p 优先级，导致的数据包被丢弃的数量。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;出现这种情况的最常见原因是应用程序被重新调度了。可以通过查看 &lt;code&gt;cat /proc/&amp;lt;pid&amp;gt;/sched&lt;/code&gt; 提供的应用程序调度统计信息来发现这一点。 &lt;code&gt;nr_involuntary_switches&lt;/code&gt; 计数器记录了该进程被重新调度的次数，这通常是因为有中断处理程序或其他任务在同一 CPU 核心上运行所导致的。应确保应用程序使用的 CPU 核心能够被隔离，以避免重新调度。如果无法将核心隔离起来，那么可以考虑切换到中断模式运行。&lt;/p&gt;
+&lt;p&gt;如果在网络层面观察到数据包丢失现象，原因是接收缓冲区不足，可以尝试通过调整 &lt;code&gt;EF_RXQ_SIZE&lt;/code&gt; 参数来增大接收描述符队列的大小。如果在套接字层面出现数据包丢失的情况，请参考相关应用程序文档。或许还可以尝试调整套接字缓冲区的尺寸（参见 &lt;code&gt;EF_UDP_RCVBUF&lt;/code&gt;）。将 &lt;code&gt;EF_EVS_PER_POLL&lt;/code&gt; 变量的值设置为更高的值也能提高效率。&lt;/p&gt;
+&lt;h2&gt;最小化锁争用&lt;/h2&gt;
+&lt;p&gt;锁争用现象会严重影响性能。当多个线程共享一个栈时，持有栈锁的线程会阻止其他线程执行有用的操作。对于线程数量较少的应用程序来说，或许可以为每个线程创建一个独立的栈（参考 &lt;code&gt;EF_STACK_PER_THREAD&lt;/code&gt; 和 &lt;a href=&quot;https://docs.amd.com/r/s2nMuPQOb~9k5Wmhyeif1g/e5_uHkVWKsFRTir4qNHmXw&quot;&gt;Stacks API&lt;/a&gt;）。&lt;/p&gt;
+&lt;p&gt;使用 &lt;code&gt;onload_stackdump&lt;/code&gt; 来标识锁定争用的情况：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;onload_stackdump lots | egrep &quot;(lock_)|(sleep)&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;计数器&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;periodic_lock_contends&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;周期性计时器无法锁定堆栈的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;interrupt_lock_contends&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;中断处理程序尝试获取堆栈锁的次数，因为该锁已经被用户级或其他上下文持有而无法获取。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;timeout_interrupt_lock_contends&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;由于超时中断的原因，堆栈锁定时断了多次。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;sock_sleeps&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;单个套接字上某个线程处于阻塞状态的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;sock_sleep_primes&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;选中/轮询/epoll 功能启用的中断次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;unlock_slow&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;采用较慢的路径来解锁堆栈锁的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;unlock_slow_pkt_waiter&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;由于数据包内存不足，导致解锁操作延迟的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;unlock_slow_socket_list&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;延迟的套接字列表引发解锁慢路径的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;unlock_slow_need_prime&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;中断触发程序引发解锁慢路径出现的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;unlock_slow_wake&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;采用解锁慢路径来唤醒线程的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;unlock_slow_swf_update&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;为了更新 SW 过滤器，采用了多少次解锁慢路径的方式。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;unlock_slow_close&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;采用解锁慢路径来关闭插座/管道的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;unlock_slow_syscall&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;在解锁慢路径时，需要调用系统调用的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;lock_wakes&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;当线程被阻塞在堆栈锁上时，该线程被唤醒的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;stack_lock_buzz&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;线程在等待堆栈锁时重复执行的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;sock_lock_sleeps&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;线程等待互斥锁锁定的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;sock_lock_buzz&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;线程在等待 sock 锁时重复执行的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;tcp_send_ni_lock_contends&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;TCP 在堆栈锁上竞争的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;udp_send_ni_lock_contends&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;UDP 进程尝试获取堆栈锁的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;getsockopt_ni_lock_contends&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;getsockopt() 尝试锁定栈锁定的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;setsockopt_ni_lock_contends&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;setsockopt() 尝试锁定栈锁定的次数。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;lock_dropped_icmps&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;由于竞争导致未能处理的 ICMP 消息数量。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;当堆栈争用情况降至最低时，性能将会提升。当线程共享堆栈时，线程在等待堆栈锁的情况下，最好采用自旋而非睡眠。可以通过增加 &lt;code&gt;EF_BUZZ_USEC&lt;/code&gt; 的值来减少“睡眠”时间。在可能的情况下，建议使用每个线程一个堆栈。&lt;/p&gt;
+&lt;p&gt;一个 Onload Stack 指的是一个 TCP/IP 协议的栈实例。该栈包含了传输和接收缓冲区、已打开的连接以及相关的端口号和栈选项。每个栈都会关联一个或多个虚拟网卡（通常每个物理端口对应一个虚拟网卡）。&lt;/p&gt;
+&lt;p&gt;在正常的使用场景中，每个加速进程都会拥有自己的 Onload Stack，该堆栈由该进程创建的所有连接共享。此外，多个进程也可以共享同一个 Onload 堆栈实例。一个应用程序还可以拥有多个 Onload 堆栈。&lt;/p&gt;
+&lt;h2&gt;对于其中关于&lt;code&gt;UDP&lt;/code&gt;的输出&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Sample Output&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;UDP&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Socket configuration:&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;4:1&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Stack:socket id.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;lcl=192.168.1.2:38142&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Local ip:port address.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rmt=192.168.1.1:42638&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Remote ip:port address.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;UDP&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Connection is UDP.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;lock: 20000000 LOCKED&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Internal socket lock status, as a hexadecimal number, followed by status names including:&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;LOCKED&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;CONTENDED.&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rx_wake=000e69b0&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Internal sequence value that is incremented each time a receive queue is &apos;woken&apos;.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;&lt;code&gt;(RQ)&lt;/code&gt; indicates that a wake has been requested.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;tx_wake=000e69b1&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Internal sequence value that is incremented each time a transmit queue is &apos;woken&apos;.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;&lt;code&gt;(RQ)&lt;/code&gt; indicates that a wake has been requested.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;flags:&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Flags (if any), including:&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;WK_TX&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;WK_RX&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;TCP_PP&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;ORPH&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;ACCEPTQ&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;DEFERRED&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;AVOID_INT&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;O_ASYNC&lt;/code&gt;,&lt;code&gt;O_NONBLOCK&lt;/code&gt;,&lt;code&gt;O_NDELAY&lt;/code&gt;, &lt;code&gt;O_APPEND&lt;/code&gt;, &lt;code&gt;O_CLOEXE&lt;/code&gt;C&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;CACHE&lt;/code&gt;, &lt;code&gt;PASSIVE_CACHE&lt;/code&gt;, &lt;code&gt;CACHE_NO_FD&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;OS_BACKED&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;NONB_UNSYNCED&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ul_poll:&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;User-level &lt;code&gt;poll()&lt;/code&gt;:&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;0 spin cycles&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;in spin cycles&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;0 (usec)&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;in μs.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;uid=0&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;User id that owns this socket.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;s_flags: FILTER&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Socket flags, including:&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;CORK&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;SHUTRD&lt;/code&gt; , &lt;code&gt;SHUTWR&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;TCP_NODELAY&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;ACK&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;REUSE&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;KALIVE&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;BCAST&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;OOBIN&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;LINGER&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;DONTROUTE&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;FILTER&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;BOUND&lt;/code&gt; , &lt;code&gt;ABOUND&lt;/code&gt; , &lt;code&gt;PBOUND&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;SNDBUF&lt;/code&gt; , &lt;code&gt;RCVBUF&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;SW_FILTER_FULL&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;TRANSPARENT&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;SCALACTIVE&lt;/code&gt; , &lt;code&gt;SCALPASSIVE&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;MAC_FILTER&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;REUSEPORT&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;BOUND_ALIEN&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;CONNECT_MUST_BIND&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;PMTU_DO&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;ALWAYS_DF&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;IP_TTL&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;DEFERRED_BIND&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;V6ONLY&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;NOMCAST.&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rcvbuf=129024&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Socket receive buffer size.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;sndbuf=129024&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Socket send buffer size.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;bindtodev=-1(01,0:0)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Device to which the socket is bound, given as an interface, or -1 if unbound. This is followed by an (interface index, hardware port:vlan) tuple.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ttl=64&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Initial TTL value.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rcvtimeo_ms=0&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Timeout value (microseconds) before an error is generated for receive functions, as set by SO_RCVTIMEO.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;sndtimeo_ms=0&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Timeout value (microseconds) before an error is generated for send functions, as set by SO_SNDTIMEO.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;sigown=0&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;The PID receiving signals from this socket.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;cmsg=&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Current message flags, including: &amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;NO_MCAST_TX.&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rx_errno=0&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Zero whilst data can still arrive, otherwise contains error code.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;tx_errno=0&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Zero if transmit can still happen, otherwise contains error code.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;so_error=0&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Current socket error, or zero if no error.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;os_sock=0&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;0 if the socket is handled by Onload, 1 if the socket is handled by the OS and not by Onload.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;TX&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Socket is being used for transmit.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;epoll3: ready_list_id 0&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;List of ready sockets from the epoll3 set.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;udpflags: FILT MCAST_LOOP RXOS&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;UDP flags currently set for this socket, including: &amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;FILT&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;MCAST_LOOP&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;IMP_BIND&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;EFSND&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;LAST_RCV_ON&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;BIND&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;MC_B2D&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;NO_MC_B2D&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;PEEKOS&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;SO_TS&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;MC&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;MC_FILT&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;NO_UC_FILT&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rcv:&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Receive data:&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;q_pkts=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of packets currently in receive queue.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;reap=2&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of packet buffers in the process of being freed for reuse.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;tot_pkts=944560&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Total number of packet buffers used.&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;Note any packets that are delivered to multiple receive queues get wrapped in an additional 0-length buffer, to reference those queues.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rcv:&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Further receive data:&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;oflow_drop=0(0%)&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of packets dropped because the buffer is full.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;mem_drop=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of packets dropped due to running out of packet buffer memory.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;eagain=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of times the application tried to read from a socket when there is no data ready. This value can be ignored on the receive side.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;pktinfo=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of times an IP_PKTINFO control message was received.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;q_max_pkts=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Maximum depth reached by the receive queue (packets).&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rcv:&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Further receive data:&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;os=0(0%)&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of packets received via the operating system, both as a number and as a percentage of total packets received.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;os_slow=0&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of packets received via the operating system slow path.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;os_error=0&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of times a recv() function call via the operating system returned an error.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;snd:&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Send data:&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;q=0+0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of bytes sent to the interface but not yet transmitted, + number of bytes waiting because the interface lock is contended in sendmsg().&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;ul=944561&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of packets sent via Onload.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;os=0(0%)&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of packets sent via the operating system, both as a number and as a percentage of total packets sent.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;snd:&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Send data…&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;LOCK&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;…about locks:&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;cp=1(0%)&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Count of locks held while updating the control plane.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;pkt=737815(99%)&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Count of locks to get a packet buffer.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;snd=3(0%)&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Count of locks held when sending.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;poll=0(0%)&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Count of locks held to poll the stack.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;defer=1(0%)&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Count of sends deferred to the lock holder.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;snd:&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Send data…&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;MCAST&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;…about multicast:&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;if=9&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;The interfaces being used by the UDP stack.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;src=172.16.128.28&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Source IP address for multicast.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;ttl=1&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Initial TTL value.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;snd:&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Send data…&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;TO&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;…about unconnected sends:&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;n=737820&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Total number of UDP packets sent on this socket via Onload.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;match=737819(99%)&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of packets that matched the cache, both as a number and as a percentage of total packets sent.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;lookup=1+0(0%)&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of packets needing lookup, from the control plane + because unlocked, both as numbers and as a percentage of total packets sent.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;Onloaded(Valid)&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;Status of cached control plane information, one of: &amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;Onloaded&lt;/code&gt; = can reach the destination via an accelerated interface&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;NoMac&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;NoRoute&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;ViaOs&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;Local&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;MacFail&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;followed by its validity:&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;(Valid): information is up-to-date. Can send immediately using this information.&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;(Old): information might be out-of-date. On next send Onload will do a control plane lookup - this will add some latency.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;snd:&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Further send data…&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;TO&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;…about unconnected sends:&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;if=9&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Interface being used.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;mtu=1500&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;MTU being used.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;intf_i=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Intf_i value.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;vlan=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;VLAN being used.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;encap=4&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Types of encapsulation supported by the NIC, as a hexadecimal mask.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;snd:&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Further send data…&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;TO&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;…about unconnected sends:&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;172.16.128.28:34645 =&amp;gt;&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;UDP send multicast source ip:port address.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;224.1.2.3:8001&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;UDP send multicast ip:port address.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;snd:&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Further send data…&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;TO&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;…about unconnected sends:&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;n=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Total number of UDP packets sent on this socket via Onload.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;lookup=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of packets needing lookup from the control plane.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;NoRoute(Old)&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;Status of cached control plane information, one of:&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;Onloaded&lt;/code&gt; = can reach the destination via an accelerated interface&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;NoMac&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;NoRoute&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;ViaOs&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;Local&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;MacFail&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;followed by its validity:&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;(Valid): information is up-to-date. Can send immediately using this information.&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;(Old): information might be out-of-date. On next send Onload will do a control plane lookup - this will add some latency.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;snd:&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Further send data…&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;TO&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;…about unconnected sends:&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;if=9&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Interface being used.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;mtu=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;MTU being used.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;intf_i=-1&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Intf_i value.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;vlan=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;VLAN being used.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;encap=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Types of encapsulation supported by the NIC, as a hexadecimal mask.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;snd:&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Further send data:&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;eagain=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Count of the number of times the application tried to send data, but the transmit queue is already full. A high value on the send side might indicate transmit issues.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;spin=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of times process had to spin when the send queue was full.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;block=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of times process had to block when the send queue was full.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;snd:&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Further send data:&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;poll_avoids_full=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of times polling created space in the send queue.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;fragments=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of (non first) fragments sent.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;confirm=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of packets sent with MSG_CONFIRM flag.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;snd:&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Further send data:&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;os_slow=1&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of packets sent via the operating system slow path.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;os_late=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of packets sent via the operating system after copying.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;unconnect_late=0&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of packets silently dropped when process/thread becomes disconnected during a send procedure.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;&lt;code&gt;nomac=0(0%)&lt;/code&gt;&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;td&gt;&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;Number of times when no MAC address was known, so ARP was required before delivering traffic.&amp;lt;/li&amp;gt;&amp;lt;/ul&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1&gt;Parameter Reference&lt;/h1&gt;
+&lt;p&gt;所有参数的介绍见&lt;a href=&quot;https://docs.amd.com/r/en-US/ug1586-onload-user/Parameter-Reference&quot;&gt;这里&lt;/a&gt;。&lt;/p&gt;
+&lt;h3&gt;&lt;code&gt;EF_RXQ_SIZE&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;最大值为&lt;code&gt;32768&lt;/code&gt;，设置接收描述符环的大小。该数值必须是 &lt;code&gt;2&lt;/code&gt; 的幂次值。具体有效值取决于架构类型。对于 EF10 架构，对应的数值为 &lt;code&gt;512&lt;/code&gt; 、 &lt;code&gt;1024&lt;/code&gt; 、 &lt;code&gt;2048&lt;/code&gt; 或 &lt;code&gt;4096&lt;/code&gt; 。&lt;/p&gt;
+&lt;p&gt;更大的环尺寸可以吸收更大的数据包流量，而不会出现性能下降的情况，不过由于工作集的大小增加，效率可能会降低。&lt;/p&gt;
+&lt;h3&gt;&lt;code&gt;EF_MAX_PACKETS&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;默认值为&lt;code&gt;32768&lt;/code&gt;，最小值为&lt;code&gt;1024&lt;/code&gt;。每个 Onload 堆栈中数据包缓冲区的数量上限。数据包缓冲区需要硬件资源，如果多个堆栈各自使用大量数据包缓冲区，就会成为限制因素。可以使用此选项来限制堆栈所使用的硬件资源和内存数量。该选项的上限由 &lt;code&gt;max_packets_per_stack&lt;/code&gt; Onload 模块选项决定。&lt;/p&gt;
+&lt;h3&gt;&lt;code&gt;EF_MAX_RX_PACKETS&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;接收数据路径可以使用的协议栈中数据包缓冲区的最大数量。此值应小于 &lt;code&gt;EF_MAX_PACKETS&lt;/code&gt;，以确保为发送路径保留一些数据包缓冲区。&lt;/p&gt;
+&lt;h3&gt;&lt;code&gt;EF_HIGH_THROUGHPUT_MODE&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&amp;lt;!-- 这段描述对吗 --&amp;gt;
+名称是&lt;code&gt;rx_merge_mode&lt;/code&gt;，默认值为&lt;code&gt;0&lt;/code&gt;。启用高吞吐量模式。该模式会在接收路径中启用数据包合并功能，从而提高吞吐量。该模式会增加延迟来强化吞吐。&lt;/p&gt;
+&lt;h3&gt;&lt;code&gt;EF_STACK_PER_THREAD&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;名称是``stack_per_thread&lt;code&gt;，默认值为&lt;/code&gt;0`。启用每线程堆栈模式。该模式会为每个线程创建一个独立的 Onload 堆栈实例，从而减少锁争用和提高性能。&lt;/p&gt;
+&lt;h3&gt;&lt;code&gt;EF_TCP&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;名称是&lt;code&gt;ul_tcp&lt;/code&gt;，默认值为&lt;code&gt;1&lt;/code&gt;。启用 TCP 协议栈。设置为&lt;code&gt;0&lt;/code&gt;时，可以关闭Onload对TCP的加速。&lt;/p&gt;
+&lt;h3&gt;&lt;code&gt;EF_UDP&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;名称是&lt;code&gt;ul_udp&lt;/code&gt;，默认值为&lt;code&gt;1&lt;/code&gt;。启用 UDP 协议栈。设置为&lt;code&gt;0&lt;/code&gt;时，可以关闭Onload对UDP的加速。&lt;/p&gt;
+</content:encoded></item><item><title>原子操作简介</title><link>https://blog.xiaobaizhang.top/posts/atomic-operation/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/atomic-operation/</guid><pubDate>Sat, 20 Jun 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;在高频交易（HFT）和其他需要极高性能的领域中，原子操作是一种重要的工具。原子操作是一种不可分割的操作，它要么完全执行，要么完全不执行。这意味着在多线程环境中，原子操作可以确保数据的一致性和正确性，而无需使用锁或其他同步机制。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;为什么需要原子操作&lt;/h1&gt;
 &lt;p&gt;原子操作主要解决两个问题：不可分割性和可见性。&lt;/p&gt;
