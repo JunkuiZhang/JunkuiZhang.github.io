@@ -216,6 +216,9 @@ ps -T -p 123456 -o pid,tid,pcpu,psr,comm
 &lt;pre&gt;&lt;code&gt;numactl --hardware # numactl -H
 cat /sys/devices/system/node/node&amp;lt;N&amp;gt;/cpulist
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;查看网卡的node节点：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cat /sys/class/net/enp161s0f0/device/numa_node
+&lt;/code&gt;&lt;/pre&gt;
 </content:encoded></item><item><title>FPGA调优总结</title><link>https://blog.xiaobaizhang.top/posts/fpga_onload/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/fpga_onload/</guid><pubDate>Thu, 06 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;FPGA调优是提高硬件性能的重要手段。本文将总结一些常见的FPGA调优技巧和方法，从我实际的经验出发，分享在FPGA开发过程中的感悟。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;丢包情况检查&lt;/h1&gt;
