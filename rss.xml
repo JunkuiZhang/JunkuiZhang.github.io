@@ -2541,6 +2541,33 @@ def build_clash():
         # mode 值需要小写
         if &apos;mode&apos; in config_data:
             config_data[&apos;mode&apos;] = config_data[&apos;mode&apos;].lower()
+
+        # 强制设置 TUN MTU，避免 WSL / TUN 场景下因 MTU 过大导致连接卡住
+        tun_config = config_data.get(&apos;tun&apos;)
+        if not isinstance(tun_config, dict):
+            tun_config = {}
+        tun_config[&apos;mtu&apos;] = 1280
+
+        # 尽量将 tun 放到 proxies 前面，保持最终 YAML 结构清晰
+        if &apos;tun&apos; in config_data:
+            del config_data[&apos;tun&apos;]
+        if hasattr(config_data, &apos;insert&apos;) and &apos;proxies&apos; in config_data:
+            # ruamel.yaml 的 CommentedMap 支持按位置插入
+            proxies_index = list(config_data.keys()).index(&apos;proxies&apos;)
+            config_data.insert(proxies_index, &apos;tun&apos;, tun_config)
+        else:
+            # PyYAML / 普通 dict：重建字典以保证 tun 位于 proxies 前
+            reordered = {}
+            inserted = False
+            for key, value in config_data.items():
+                if key == &apos;proxies&apos;:
+                    reordered[&apos;tun&apos;] = tun_config
+                    inserted = True
+                reordered[key] = value
+            if not inserted:
+                reordered[&apos;tun&apos;] = tun_config
+            config_data = reordered
+
         # 期望的策略组结构（用于变更检测）
         EXPECTED_GROUPS = [
             &apos;🚀 节点选择&apos;,
