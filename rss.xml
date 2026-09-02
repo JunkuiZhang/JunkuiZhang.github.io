@@ -207,7 +207,9 @@ chmod +x watch_isol_irq.sh
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;观测某个程序的绑核和运行状况&lt;/h4&gt;
 &lt;p&gt;其中&lt;code&gt;12345&lt;/code&gt;是进程PID，查看该进程的所有线程的绑核情况：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;PID=12345; ps -T -o spid,psr,pcpu,comm -p $PID | tail -n +2 | while read tid psr pcpu comm; do affinity=$(taskset -c -p $tid | awk &apos;{print $NF}&apos;); printf &quot;TID: %-8s 当前核心(PSR): %-5s CPU使用率: %-7s 绑核设定(Affinity): %-15s 线程名: %s\n&quot; &quot;$tid&quot; &quot;$psr&quot; &quot;${pcpu}%&quot; &quot;$affinity&quot; &quot;$comm&quot;; done
+&lt;pre&gt;&lt;code&gt;PID=12345
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;ps -T -o spid,psr,pcpu,comm -p $PID | tail -n +2 | while read tid psr pcpu comm; do affinity=$(taskset -c -p $tid | awk &apos;{print $NF}&apos;); printf &quot;TID: %-8s 当前核心(PSR): %-5s CPU使用率: %-7s 绑核设定(Affinity): %-15s 线程名: %s\n&quot; &quot;$tid&quot; &quot;$psr&quot; &quot;${pcpu}%&quot; &quot;$affinity&quot; &quot;$comm&quot;; done
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h1&gt;内存亲和性&lt;/h1&gt;
 &lt;p&gt;内存也需要设置亲和性，不然可能会导致内存访问延迟增加，影响性能。&lt;/p&gt;
