@@ -201,6 +201,17 @@ chmod +x watch_isol_irq.sh
 &lt;p&gt;或者结合&lt;code&gt;watch&lt;/code&gt;来使用：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;watch -n 1 -d &quot;./watch_isol_irq.sh 64-70&quot;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;统计系统所有进程的绑核情况&lt;/h4&gt;
+&lt;p&gt;以下这个脚本会统计系统中所有进程的绑核情况，并显示每个核心上有多少个进程在运行：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;for pid in $(ps -e -o pid=); do taskset -pc $pid 2&amp;gt;/dev/null; done | awk -F&apos;: &apos; &apos;{print $2}&apos; | sort | uniq -c
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;详细显示每个进程的绑核情况：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ps -e -T -o pid=,spid=,comm= | while read pid spid comm; do mask=$(taskset -pc $spid 2&amp;gt;/dev/null | awk -F&apos;: &apos; &apos;{print $2}&apos;); printf &quot;%-15s PID:%-8s TID:%-8s %s\n&quot; &quot;$mask&quot; &quot;$pid&quot; &quot;$spid&quot; &quot;$comm&quot;; done | grep -v &quot;^0-95 &quot; | sort -k1,1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其中，&lt;code&gt;0-95&lt;/code&gt;是要排除的默认绑核范围，实际使用时请根据自己的系统调整。&lt;/p&gt;
+&lt;h4&gt;观察所有核心上的进程运行情况&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;ps -e -T -o pid,spid,psr,%cpu,comm | sort -k3,3n -k4,4nr | less
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;观测核心上有什么程序在运行&lt;/h4&gt;
 &lt;p&gt;检查有什么程序在64核上运行：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;ps -eLo psr,pid,tid,stat,cls,rtprio,comm | awk &apos;NR==1 || $1==64&apos;
