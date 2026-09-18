@@ -1,4 +1,66 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>张小白的小窝</title><description>Welcome!</description><link>https://blog.xiaobaizhang.top/</link><language>zh_CN</language><item><title>应用绑核简介</title><link>https://blog.xiaobaizhang.top/posts/bind_core/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/bind_core/</guid><pubDate>Fri, 07 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;绑核能够比较好的隔离CPU资源，减少上下文切换，提高应用的性能。事实上，这是FPGA进行onload之前需要做的事情。&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>张小白的小窝</title><description>Welcome!</description><link>https://blog.xiaobaizhang.top/</link><language>zh_CN</language><item><title>常用Linux命令总结</title><link>https://blog.xiaobaizhang.top/posts/linux_commands/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/linux_commands/</guid><pubDate>Thu, 17 Sep 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;本文总结了一些常用的Linux命令，主要用于日常操作和系统管理。希望对学习Linux的朋友有所帮助。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;h1&gt;查看某个PID是如何启动的&lt;/h1&gt;
+&lt;p&gt;在 Linux 中，要查看一个进程（已知 PID）具体是“怎么拉起来的”，最核心的手段是查看 &lt;code&gt;/proc&lt;/code&gt; 虚拟文件系统下的对应进程目录。&lt;/p&gt;
+&lt;p&gt;假设进程 PID 是 &lt;code&gt;1234&lt;/code&gt;，可以通过以下几个步骤全面还原它的启动现场：&lt;/p&gt;
+&lt;h2&gt;查看完整的启动命令 (cmdline)&lt;/h2&gt;
+&lt;p&gt;这是最准确的方法，能看到启动程序时传入的所有参数。由于该文件中的参数是以隐藏的 &lt;code&gt;\0&lt;/code&gt;（空字符）分隔的，直接查看会粘在一起，建议配合 &lt;code&gt;tr&lt;/code&gt; 命令将其替换为空格：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cat /proc/1234/cmdline | tr &apos;\0&apos; &apos; &apos;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;这会输出类似：&lt;code&gt;/usr/bin/python3 /opt/app/main.py --config /etc/config.json&lt;/code&gt;，让你清楚地看到它是带了什么参数启动的。&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;查看真正的可执行文件路径 (exe)&lt;/h2&gt;
+&lt;p&gt;如果你看到启动命令里用的是相对路径（比如 &lt;code&gt;./start.sh&lt;/code&gt;）或者系统别名，想知道到底指向硬盘上的哪个实际文件，可以查看 &lt;code&gt;exe&lt;/code&gt; 软链接：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ls -l /proc/1234/exe
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;输出结果会指向程序真正的物理路径（例如 &lt;code&gt;-&amp;gt; /usr/local/bin/node&lt;/code&gt;）。&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;查看启动时的当前工作目录 (cwd)&lt;/h2&gt;
+&lt;p&gt;程序的运行往往依赖它启动时所在的目录（比如读取相对路径的配置文件）。通过查看 &lt;code&gt;cwd&lt;/code&gt; (Current Working Directory) 可以知道进程是从哪个目录下被拉起的：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ls -l /proc/1234/cwd
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;箭头指向的目录就是程序启动时所在的路径。&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;查看运行时的环境变量 (environ)&lt;/h2&gt;
+&lt;p&gt;有些程序是通过环境变量配置拉起的（比如 &lt;code&gt;JAVA_HOME&lt;/code&gt; 或 &lt;code&gt;ENV=prod&lt;/code&gt;）。你可以查看它启动时加载的所有环境变量：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cat /proc/1234/environ | tr &apos;\0&apos; &apos;\n&apos;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;这里用换行符替换空字符，方便一行一行检查它的环境配置是否正确。&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;快捷替代方案：使用 ps 命令&lt;/h2&gt;
+&lt;p&gt;如果你只需要粗略看一下，也可以直接用 &lt;code&gt;ps&lt;/code&gt; 命令：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ps -fww -p 1234
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-f&lt;/code&gt; 表示全格式显示（包含 UID、父进程 PPID、启动时间等）。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-ww&lt;/code&gt; 表示加宽输出，防止启动命令太长被屏幕截断。&lt;/li&gt;
+&lt;li&gt;注意：如果该进程是通过 &lt;code&gt;systemd&lt;/code&gt; 拉起的后台服务，你也可以直接执行 &lt;code&gt;systemctl status 1234&lt;/code&gt; 来查看它的服务状态和对应的 &lt;code&gt;ExecStart&lt;/code&gt; 启动配置。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;改变文件夹权限&lt;/h1&gt;
+&lt;p&gt;在 Linux 中，如果从别人的 home 目录复制文件，通常需要使用 &lt;code&gt;chown&lt;/code&gt;（修改所有者）和 &lt;code&gt;chmod&lt;/code&gt;（修改读写权限）这两个命令来将文件完全“变成你的”。&lt;/p&gt;
+&lt;p&gt;具体操作步骤如下：&lt;/p&gt;
+&lt;h2&gt;修改文件的所有者 (chown)&lt;/h2&gt;
+&lt;p&gt;如果你是用 &lt;code&gt;sudo&lt;/code&gt; 复制的，或者保留了原文件的属性，文件的所有者可能还是原来的用户或 root。你需要将其改回你自己的账号。&lt;/p&gt;
+&lt;p&gt;打开终端，使用以下命令（&lt;code&gt;-R&lt;/code&gt; 表示递归，如果是文件夹会连同里面的所有文件一起修改）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo chown -R $USER:$USER /目标文件或文件夹的路径
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;注：&lt;code&gt;$USER&lt;/code&gt; 是 Linux 的环境变量，会自动识别为你当前登录的用户名。冒号前后的 &lt;code&gt;$USER&lt;/code&gt; 分别代表“所属用户”和“所属用户组”。&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;添加读写权限 (chmod)&lt;/h2&gt;
+&lt;p&gt;有时候，即便你变成了文件的所有者，但如果原文件是“只读”的，你复制过来后依然无法修改或删除。你需要给自己加上读写（甚至执行）权限：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# 给自己（所有者，u代表user）添加读（r）和写（w）权限
+chmod -R u+rw /目标文件或文件夹的路径
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;场景举例：&lt;/strong&gt;
+假设你把别人目录下的 &lt;code&gt;project_data&lt;/code&gt; 文件夹复制到了自己的 &lt;code&gt;~/Documents&lt;/code&gt; 下，一整套最稳妥的处理命令就是：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo chown -R $USER:$USER ~/Documents/project_data
+chmod -R u+rw ~/Documents/project_data
+
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded></item><item><title>应用绑核简介</title><link>https://blog.xiaobaizhang.top/posts/bind_core/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/bind_core/</guid><pubDate>Fri, 07 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;绑核能够比较好的隔离CPU资源，减少上下文切换，提高应用的性能。事实上，这是FPGA进行onload之前需要做的事情。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;Sysjitter&lt;/h1&gt;
 &lt;p&gt;Sysjitter工具用于衡量系统产生的抖动程度，以及这些抖动对用户级进程的影响。该工具会在每个处理器核心上运行一个线程，当该线程从核心中移除后，工具会记录其持续的时间。&lt;a href=&quot;https://github.com/Xilinx-CNS/cns-sysjitter/&quot;&gt;地址&lt;/a&gt;&lt;/p&gt;
