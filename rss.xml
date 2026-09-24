@@ -6,31 +6,26 @@
 &lt;h2&gt;查看完整的启动命令 (cmdline)&lt;/h2&gt;
 &lt;p&gt;这是最准确的方法，能看到启动程序时传入的所有参数。由于该文件中的参数是以隐藏的 &lt;code&gt;\0&lt;/code&gt;（空字符）分隔的，直接查看会粘在一起，建议配合 &lt;code&gt;tr&lt;/code&gt; 命令将其替换为空格：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;cat /proc/1234/cmdline | tr &apos;\0&apos; &apos; &apos;
-
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;em&gt;这会输出类似：&lt;code&gt;/usr/bin/python3 /opt/app/main.py --config /etc/config.json&lt;/code&gt;，让你清楚地看到它是带了什么参数启动的。&lt;/em&gt;&lt;/p&gt;
 &lt;h2&gt;查看真正的可执行文件路径 (exe)&lt;/h2&gt;
 &lt;p&gt;如果你看到启动命令里用的是相对路径（比如 &lt;code&gt;./start.sh&lt;/code&gt;）或者系统别名，想知道到底指向硬盘上的哪个实际文件，可以查看 &lt;code&gt;exe&lt;/code&gt; 软链接：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;ls -l /proc/1234/exe
-
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;em&gt;输出结果会指向程序真正的物理路径（例如 &lt;code&gt;-&amp;gt; /usr/local/bin/node&lt;/code&gt;）。&lt;/em&gt;&lt;/p&gt;
 &lt;h2&gt;查看启动时的当前工作目录 (cwd)&lt;/h2&gt;
 &lt;p&gt;程序的运行往往依赖它启动时所在的目录（比如读取相对路径的配置文件）。通过查看 &lt;code&gt;cwd&lt;/code&gt; (Current Working Directory) 可以知道进程是从哪个目录下被拉起的：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;ls -l /proc/1234/cwd
-
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;em&gt;箭头指向的目录就是程序启动时所在的路径。&lt;/em&gt;&lt;/p&gt;
 &lt;h2&gt;查看运行时的环境变量 (environ)&lt;/h2&gt;
 &lt;p&gt;有些程序是通过环境变量配置拉起的（比如 &lt;code&gt;JAVA_HOME&lt;/code&gt; 或 &lt;code&gt;ENV=prod&lt;/code&gt;）。你可以查看它启动时加载的所有环境变量：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;cat /proc/1234/environ | tr &apos;\0&apos; &apos;\n&apos;
-
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;em&gt;这里用换行符替换空字符，方便一行一行检查它的环境配置是否正确。&lt;/em&gt;&lt;/p&gt;
 &lt;h2&gt;快捷替代方案：使用 ps 命令&lt;/h2&gt;
 &lt;p&gt;如果你只需要粗略看一下，也可以直接用 &lt;code&gt;ps&lt;/code&gt; 命令：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;ps -fww -p 1234
-
 &lt;/code&gt;&lt;/pre&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;-f&lt;/code&gt; 表示全格式显示（包含 UID、父进程 PPID、启动时间等）。&lt;/li&gt;
@@ -44,7 +39,6 @@
 &lt;p&gt;如果你是用 &lt;code&gt;sudo&lt;/code&gt; 复制的，或者保留了原文件的属性，文件的所有者可能还是原来的用户或 root。你需要将其改回你自己的账号。&lt;/p&gt;
 &lt;p&gt;打开终端，使用以下命令（&lt;code&gt;-R&lt;/code&gt; 表示递归，如果是文件夹会连同里面的所有文件一起修改）：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo chown -R $USER:$USER /目标文件或文件夹的路径
-
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;em&gt;注：&lt;code&gt;$USER&lt;/code&gt; 是 Linux 的环境变量，会自动识别为你当前登录的用户名。冒号前后的 &lt;code&gt;$USER&lt;/code&gt; 分别代表“所属用户”和“所属用户组”。&lt;/em&gt;&lt;/p&gt;
 &lt;h2&gt;添加读写权限 (chmod)&lt;/h2&gt;
@@ -53,13 +47,35 @@
 chmod -R u+rw /目标文件或文件夹的路径
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
 &lt;p&gt;&lt;strong&gt;场景举例：&lt;/strong&gt;
 假设你把别人目录下的 &lt;code&gt;project_data&lt;/code&gt; 文件夹复制到了自己的 &lt;code&gt;~/Documents&lt;/code&gt; 下，一整套最稳妥的处理命令就是：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo chown -R $USER:$USER ~/Documents/project_data
 chmod -R u+rw ~/Documents/project_data
-
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;比较两个文件是否相同&lt;/h1&gt;
+&lt;p&gt;如果这两个文件分别在两台不同的 Linux 机器上，最稳妥且节省带宽的方法是&lt;strong&gt;分别计算哈希值进行比对&lt;/strong&gt;，或者&lt;strong&gt;通过 SSH 管道直接比对&lt;/strong&gt;。&lt;/p&gt;
+&lt;h2&gt;分别计算哈希值（最推荐，无需跨网传文件）&lt;/h2&gt;
+&lt;p&gt;如果可执行文件很大，直接把文件传过来对比会很慢。你只需要在两台机器上分别生成文件的“数字指纹”，对比指纹即可。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在&lt;strong&gt;机器 A&lt;/strong&gt; 上执行：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;sha256sum /path/to/fileA
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;在&lt;strong&gt;机器 B&lt;/strong&gt; 上执行：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;sha256sum /path/to/fileB
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;对比两边终端输出的一长串字符串，如果完全一样，说明底层的二进制代码100%相同。&lt;/p&gt;
+&lt;h2&gt;通过 SSH 管道一行命令直接比对（适合自动化）&lt;/h2&gt;
+&lt;p&gt;如果你已经在机器 A 上，并且配置了到机器 B 的 SSH 免密登录，可以利用管道（Pipe）直接把机器 B 的文件流拉过来，在内存中与机器 A 的文件进行逐字节比对，无需在本地生成临时文件。&lt;/p&gt;
+&lt;p&gt;在&lt;strong&gt;机器 A&lt;/strong&gt; 上执行：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ssh user@machine_B_ip &quot;cat /path/to/remote_fileB&quot; | cmp /path/to/local_fileA -
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;如何看结果：&lt;/strong&gt; 如果执行完没有任何输出，说明两个文件一模一样。如果出现类似 &lt;code&gt;differ: byte 1, line 1&lt;/code&gt; 的提示，说明它们不一样。&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;(注：命令末尾的 &lt;code&gt;-&lt;/code&gt; 连字符不能漏掉，它代表将 SSH 传过来的数据流作为 &lt;code&gt;cmp&lt;/code&gt; 命令的第二个对比文件。)&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </content:encoded></item><item><title>应用绑核简介</title><link>https://blog.xiaobaizhang.top/posts/bind_core/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/bind_core/</guid><pubDate>Fri, 07 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;绑核能够比较好的隔离CPU资源，减少上下文切换，提高应用的性能。事实上，这是FPGA进行onload之前需要做的事情。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;Sysjitter&lt;/h1&gt;
