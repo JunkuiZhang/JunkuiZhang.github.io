@@ -1,4 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>张小白的小窝</title><description>Welcome!</description><link>https://blog.xiaobaizhang.top/</link><language>zh_CN</language><item><title>常用Linux命令总结</title><link>https://blog.xiaobaizhang.top/posts/linux_commands/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/linux_commands/</guid><pubDate>Thu, 17 Sep 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;本文总结了一些常用的Linux命令，主要用于日常操作和系统管理。希望对学习Linux的朋友有所帮助。&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>张小白的小窝</title><description>Welcome!</description><link>https://blog.xiaobaizhang.top/</link><language>zh_CN</language><item><title>WSL迁移</title><link>https://blog.xiaobaizhang.top/posts/wsl_migration/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/wsl_migration/</guid><pubDate>Sat, 03 Oct 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;本教程讲述关于迁移WSL的一些内容。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wsl --manage archlinux --move &quot;C:\wsl\archlinux&quot;
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded></item><item><title>常用Linux命令总结</title><link>https://blog.xiaobaizhang.top/posts/linux_commands/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/linux_commands/</guid><pubDate>Thu, 17 Sep 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;本文总结了一些常用的Linux命令，主要用于日常操作和系统管理。希望对学习Linux的朋友有所帮助。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;查看某个PID是如何启动的&lt;/h1&gt;
 &lt;p&gt;在 Linux 中，要查看一个进程（已知 PID）具体是“怎么拉起来的”，最核心的手段是查看 &lt;code&gt;/proc&lt;/code&gt; 虚拟文件系统下的对应进程目录。&lt;/p&gt;
