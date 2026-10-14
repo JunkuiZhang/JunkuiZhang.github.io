@@ -49,7 +49,6 @@
 &lt;p&gt;有时候，即便你变成了文件的所有者，但如果原文件是“只读”的，你复制过来后依然无法修改或删除。你需要给自己加上读写（甚至执行）权限：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# 给自己（所有者，u代表user）添加读（r）和写（w）权限
 chmod -R u+rw /目标文件或文件夹的路径
-
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;场景举例：&lt;/strong&gt;
 假设你把别人目录下的 &lt;code&gt;project_data&lt;/code&gt; 文件夹复制到了自己的 &lt;code&gt;~/Documents&lt;/code&gt; 下，一整套最稳妥的处理命令就是：&lt;/p&gt;
@@ -80,6 +79,30 @@ chmod -R u+rw ~/Documents/project_data
 &lt;li&gt;&lt;strong&gt;如何看结果：&lt;/strong&gt; 如果执行完没有任何输出，说明两个文件一模一样。如果出现类似 &lt;code&gt;differ: byte 1, line 1&lt;/code&gt; 的提示，说明它们不一样。&lt;/li&gt;
 &lt;li&gt;&lt;em&gt;(注：命令末尾的 &lt;code&gt;-&lt;/code&gt; 连字符不能漏掉，它代表将 SSH 传过来的数据流作为 &lt;code&gt;cmp&lt;/code&gt; 命令的第二个对比文件。)&lt;/em&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h1&gt;修复动态库路径&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;export LD_LIBRARY_PATH=../Interfaces:$LD_LIBRARY_PATH
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;压缩文件夹&lt;/h1&gt;
+&lt;p&gt;最常用的是使用 &lt;code&gt;tar&lt;/code&gt; 命令，将文件夹打包并压缩成 &lt;code&gt;.tar.gz&lt;/code&gt; 格式。&lt;/p&gt;
+&lt;p&gt;基本命令如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;tar -czvf 压缩包名称.tar.gz 要打包的文件夹名/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;参数快速回忆：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-c&lt;/code&gt; : &lt;strong&gt;C&lt;/strong&gt;reate，创建新的压缩包&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-z&lt;/code&gt; : g&lt;strong&gt;z&lt;/strong&gt;ip，使用 gzip 进行压缩&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-v&lt;/code&gt; : &lt;strong&gt;V&lt;/strong&gt;erbose，在终端显示正在打包的文件（如果不喜欢刷屏可以去掉）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-f&lt;/code&gt; : &lt;strong&gt;F&lt;/strong&gt;ile，指定压缩包的文件名（&lt;strong&gt;注意：&lt;code&gt;-f&lt;/code&gt; 必须放在所有参数的最后&lt;/strong&gt;，紧跟压缩包名字）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;其他常见需求：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. 如果需要打包成 &lt;code&gt;.zip&lt;/code&gt; 格式&lt;/strong&gt;（方便发给 Windows 环境解压）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;zip -r 压缩包名称.zip 要打包的文件夹名/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;(&lt;code&gt;-r&lt;/code&gt; 代表递归压缩文件夹内的所有内容)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. 顺便附上解压命令&lt;/strong&gt;（将 &lt;code&gt;-c&lt;/code&gt; 换成 &lt;code&gt;-x&lt;/code&gt; 即可）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;tar -xzvf 压缩包名称.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
 </content:encoded></item><item><title>应用绑核简介</title><link>https://blog.xiaobaizhang.top/posts/bind_core/</link><guid isPermaLink="true">https://blog.xiaobaizhang.top/posts/bind_core/</guid><pubDate>Fri, 07 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;绑核能够比较好的隔离CPU资源，减少上下文切换，提高应用的性能。事实上，这是FPGA进行onload之前需要做的事情。&lt;/p&gt;
 &lt;p&gt;&amp;lt;!--more--&amp;gt;&lt;/p&gt;
 &lt;h1&gt;Sysjitter&lt;/h1&gt;
